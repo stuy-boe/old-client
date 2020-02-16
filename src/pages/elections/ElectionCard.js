@@ -21,6 +21,8 @@ import {generatePath, Link} from "react-router-dom";
 
 import moment from "moment";
 
+import {resolve} from "url";
+
 export const ElectionCard = (props) => {
 	// noinspection JSCheckFunctionSignatures
 	const start = new Date(props.election.start_time);
@@ -40,7 +42,9 @@ export const ElectionCard = (props) => {
 				<CardPrimaryAction>
 					<CardMedia
 						sixteenByNine
-						style={{backgroundImage: `url(${props.election.picture})`}}
+						style={{
+							backgroundImage: `url(${resolve(process.env.REACT_APP_API_URL, props.election.picture)})`
+						}}
 					/>
 					<div style={{padding: '0 1rem 1rem 1rem'}}>
 						<Typography use="headline6" tag="h2">
