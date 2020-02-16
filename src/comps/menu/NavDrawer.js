@@ -23,7 +23,7 @@ export const NavDrawer = (props) => {
 	};
 
 	const attemptLogout = () => {
-		fetch("/auth/logout")
+		fetch(`${process.env.REACT_APP_API_URL}/auth/logout`)
 			.then(res => res.json())
 			.then(data => {
 				if(data.success)

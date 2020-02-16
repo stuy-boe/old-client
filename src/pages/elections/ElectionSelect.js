@@ -17,7 +17,7 @@ export class ElectionSelect extends React.Component {
 	}
 
 	setStateFromFetch(){
-		fetch("/api/elections", {cache: "default"})
+		fetch(`${process.env.REACT_APP_API_URL}/api/elections`, {cache: "default"})
 			.then(res => res.json())
 			.then(data => this.setState(data))
 			.catch(er => {

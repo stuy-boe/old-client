@@ -12,7 +12,7 @@ export const AuthButton = (props) => {
 	const [payload, setPayload] = React.useState({unset: true});
 
 	const attemptLogin = (data = payload) => {
-		fetch("/auth/login", {
+		fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
 			method: "POST",
 			headers: {'Content-Type': 'application/json'},
 			body: JSON.stringify({idToken: data.tokenId})
