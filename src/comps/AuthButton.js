@@ -15,7 +15,8 @@ export const AuthButton = (props) => {
 		fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
 			method: "POST",
 			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({idToken: data.tokenId})
+			body: JSON.stringify({idToken: data.tokenId}),
+			credentials: "include"
 		})
 			.then(res => res.json())
 			.then(res => {

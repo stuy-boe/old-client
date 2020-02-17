@@ -29,7 +29,7 @@ export class AppProvider extends React.Component {
 
 	updateState() {
 		this.setState({error: false});
-		fetch(`${process.env.REACT_APP_API_URL}/api/state`, {cache: "no-store"})
+		fetch(`${process.env.REACT_APP_API_URL}/api/state`, {cache: "no-store", credentials: "include"})
 			.then(res => res.json())
 			.then(data => {
 				data.initialized = true;
