@@ -4,6 +4,7 @@ import {ElectionCard} from "./ElectionCard";
 
 import {Grid, GridCell} from "@rmwc/grid";
 import '@material/layout-grid/dist/mdc.layout-grid.css';
+import {Helmet} from "react-helmet/es/Helmet";
 
 export class ElectionSelect extends React.Component {
 	constructor(props) {
@@ -35,6 +36,12 @@ export class ElectionSelect extends React.Component {
 	render() {
 		return (
 			<div>
+				<Helmet>
+					<title>Elections | Stuy BOE Voting Site</title>
+					<meta property="og:title" content="Elections | Stuy BOE Voting Site"/>
+					<meta property="og:description" content="View results of elections from the past as well as up to date information about current elections."/>
+				</Helmet>
+
 				<h2>Active Elections:</h2>
 				<Grid fixedColumnWidth align={"left"}>
 					{this.state.active.map(election => (
