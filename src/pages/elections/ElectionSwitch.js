@@ -7,7 +7,7 @@ export function ElectionSwitch(){
 	return (
 		<Switch>
 			<Route path={"/elections"} exact component={ElectionSelect} />
-			<Route path={"/elections/:public_url/"} exact component={Overview} />
+			<Route path={"/elections/:publicUrl/"} exact component={Overview} />
 		</Switch>
 	)
 }

@@ -45,14 +45,14 @@ export class ElectionSelect extends React.Component {
 				<h2>Active Elections:</h2>
 				<Grid fixedColumnWidth align={"left"}>
 					{this.state.active.map(election => (
-						<ElectionCell election={election} key={election.public_url} />
+						<ElectionCell election={election} key={election.publicUrl} />
 					))}
 				</Grid>
 
 				<h2>Completed Elections:</h2>
 				<Grid fixedColumnWidth align={"left"}>
 					{this.state.completed.map(election => (
-						<ElectionCell election={election} key={election.public_url} />
+						<ElectionCell election={election} key={election.publicUrl} />
 					))}
 				</Grid>
 			</div>
@@ -62,6 +62,6 @@ export class ElectionSelect extends React.Component {
 
 const ElectionCell = ({election}) => (
 	<GridCell span={4}>
-		<ElectionCard to={"/elections/:public_url"} election={election}/>
+		<ElectionCard to={"/elections/:publicUrl"} election={election}/>
 	</GridCell>
 );

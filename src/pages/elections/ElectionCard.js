@@ -25,9 +25,9 @@ import {resolve} from "url";
 
 export const ElectionCard = (props) => {
 	// noinspection JSCheckFunctionSignatures
-	const start = new Date(props.election.start_time);
+	const start = new Date(props.election.startTime);
 	// noinspection JSCheckFunctionSignatures
-	const end = new Date(props.election.end_time);
+	const end = new Date(props.election.endTime);
 
 	const [now, setNow] = React.useState(new Date());
 
@@ -65,7 +65,7 @@ export const ElectionCard = (props) => {
 							tag="div"
 							theme="textSecondaryOnBackground"
 						>
-							{props.election.public_results ?
+							{props.election.publicResults ?
 								"Results are publicly visible" :
 								"Results are not publicly visible"
 							}

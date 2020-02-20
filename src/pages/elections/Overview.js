@@ -5,7 +5,7 @@ import {Helmet} from "react-helmet/es/Helmet";
 import {resolve as resolveUrl} from "url";
 
 export function Overview(props) {
-	const { public_url } = useParams();
+	const { publicUrl } = useParams();
 
 	const [electionData, setElectionData] = React.useState(null);
 	const [loaded, setLoaded] = React.useState(false);
@@ -13,7 +13,7 @@ export function Overview(props) {
 
 	useEffect(() => {
 		if(! loaded)
-			fetch(`${process.env.REACT_APP_API_URL}/api/elections/${public_url}`, {credentials: "include"})
+			fetch(`${process.env.REACT_APP_API_URL}/api/elections/${publicUrl}`, {credentials: "include"})
 				.then(res => res.json())
 				.then(data => {
 					setLoaded(true);
@@ -44,7 +44,7 @@ export function Overview(props) {
 				</Helmet>
 			}
 
-			{public_url} is the current election
+			{publicUrl} is the current election
 		</div>
 	)
 }
