@@ -4,24 +4,28 @@ import {ElectionCard} from "./ElectionCard";
 
 import {Grid, GridCell} from "@rmwc/grid";
 import '@material/layout-grid/dist/mdc.layout-grid.css';
-import {Helmet} from "react-helmet/es/Helmet";
+import {Helmet} from "react-helmet";
+import {Loading} from "../../comps/Loading";
 
 export class ElectionSelect extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			active: [],
-			completed: []
+			completed: [],
+			error: false,
+			loaded: false
 		};
 
-		this.setStateFromFetch = this.setStateFromFetch.bind(this);
+		this.fetchElections = this.fetchElections.bind(this);
 	}
 
-	setStateFromFetch(){
-		fetch(`${process.env.REACT_APP_API_URL}/api/elections`, {cache: "default", credentials: "include"})
+	fetchElections(){
+		this.setState({error: false});
+		fetch(`${process.env.REACT_APP_API_URL}/api/elections`)
 			.then(res => res.json())
-			.then(data => this.setState(data))
-			.catch(er => {
+			.then(data => this.setState({loaded: true, ...data}))
+			.catch(() => {
 				MessageQueue.notify({
 					body: "Could not fetch elections. Check your network connection.",
 					actions: [{"icon": "close"}]
@@ -30,10 +34,20 @@ export class ElectionSelect extends React.Component {
 	}
 
 	componentDidMount() {
-		this.setStateFromFetch();
+		this.fetchElections();
 	}
 
 	render() {
+
+		if(! this.state.loaded)
+			return (
+				<Loading
+					error={this.state.error}
+					errorMessage={"There was an error getting the elections."}
+					onRetry={this.fetchElections}
+					/>
+			);
+
 		return (
 			<div>
 				<Helmet>

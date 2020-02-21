@@ -1,13 +1,13 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import {ElectionSelect} from "./ElectionSelect";
-import {Overview} from "./Overview";
+import {SelectedElectionRouter} from "./selected/SelectedElectionRouter";
 
-export function ElectionSwitch(){
+export const ElectionRouter = () => {
 	return (
 		<Switch>
 			<Route path={"/elections"} exact component={ElectionSelect} />
-			<Route path={"/elections/:publicUrl/"} exact component={Overview} />
+			<Route path={"/elections/:publicUrl"} component={SelectedElectionRouter} />
 		</Switch>
 	)
-}
+};

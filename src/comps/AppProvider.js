@@ -1,10 +1,6 @@
 import React from "react";
 
-import {Button} from "@rmwc/button";
-import '@material/button/dist/mdc.button.css';
-
-import {CircularProgress} from "@rmwc/circular-progress";
-import '@rmwc/circular-progress/circular-progress.css';
+import {Loading} from "./Loading";
 
 
 export const AppContext = React.createContext({initialized: false});
@@ -29,7 +25,10 @@ export class AppProvider extends React.Component {
 
 	updateState() {
 		this.setState({error: false});
-		fetch(`${process.env.REACT_APP_API_URL}/api/state`, {cache: "no-store", credentials: "include"})
+		fetch(
+			`${process.env.REACT_APP_API_URL}/api/state`,
+			{cache: "no-store", credentials: "include"}
+			)
 			.then(res => res.json())
 			.then(data => {
 				data.initialized = true;
@@ -45,31 +44,15 @@ export class AppProvider extends React.Component {
 	}
 
 	render(){
-
-		if(this.state.error)
-			return (
-				<div style={{paddingTop: "calc(50vh - 72px)"}}>
-					{/*	Error screen with a refresh button */}
-					<h3 style={{textAlign: "center"}}>There was an error loading the app</h3>
-
-					<div className={["flex-center"]}>
-						<Button outlined onClick={this.updateState}>Retry</Button>
-					</div>
-				</div>
-			);
-
 		if(! this.state.initialized)
 			return (
-				<div
-					className={["flex-center"]}
-					style={{
-						paddingTop: "calc(50vh - 72px)"
-					}}
-				>
-					{/*	Loading Screen */}
-					<CircularProgress size={72} />
-				</div>
+				<Loading
+					error={this.state.error}
+					errorMessage={"There was an error loading the app"}
+					onRetry={this.updateState}
+					/>
 			);
+
 
 		return (
 			<AppContext.Provider value={this.state}>

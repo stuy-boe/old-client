@@ -2,8 +2,8 @@ import React from "react";
 import {AuthButton} from "./AuthButton";
 import {AppContext} from "./AppProvider";
 import {Switch, Route, useLocation} from "react-router-dom";
-import {ElectionSwitch} from "../pages/elections/ElectionSwitch";
-import {Helmet} from "react-helmet/es/Helmet";
+import {ElectionRouter} from "../pages/elections/ElectionRouter";
+import {Helmet} from "react-helmet";
 
 export const Content = (props) => {
 	const context = React.useContext(AppContext);
@@ -22,7 +22,7 @@ export const Content = (props) => {
 
 			<Switch>
 				<Route path={"/"} component={Hello} exact/>
-				<Route path={"/elections"} component={ElectionSwitch}/>
+				<Route path={"/elections"} component={ElectionRouter}/>
 			</Switch>
 
 			{
