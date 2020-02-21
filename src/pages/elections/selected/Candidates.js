@@ -13,7 +13,7 @@ export const Candidates: React.FC = props => {
 	const getCandidates = () => {
 		fetch(`${process.env.REACT_APP_API_URL}/api/elections/${election.publicUrl}/candidates`)
 			.then(res => res.json())
-			.then(res => setCandidates(res.payload) && setLoaded(true))
+			.then(res => setCandidates(res.payload) & setLoaded(true))
 			.catch(() => setError(true));
 	};
 
