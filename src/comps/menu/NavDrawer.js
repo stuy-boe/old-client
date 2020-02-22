@@ -7,9 +7,9 @@ import '@material/list/dist/mdc.list.css';
 import '@rmwc/list/collapsible-list.css';
 import {AppContext} from "../AppProvider";
 import {useLocation, useRouteMatch} from "react-router-dom";
-import {MessageQueue} from "../MessageQueue";
-import {splitPath} from "../../tools/splitPath";
+import {splitPath} from "../../utils/splitPath";
 import {MenuItem} from "./MenuItem";
+import backend from "../../utils/backend";
 
 export const NavDrawer = (props) => {
 	const context = React.useContext(AppContext);
@@ -23,25 +23,17 @@ export const NavDrawer = (props) => {
 	};
 
 	const attemptLogout = () => {
-		fetch(`${process.env.REACT_APP_API_URL}/auth/logout`, {credentials: "include"})
-			.then(res => res.json())
-			.then(data => {
+		backend.get("/auth/logout")
+			.then(({data}) => {
 				if(data.success)
 					context.updateState();
-				else throw new Error();
-			})
-			.catch(() => {
-				MessageQueue.notify({
-					body: "Could not sign out. Check your network connection.",
-					actions: [{"icon": "close"}]
-				});
 			});
 	};
 
 	let electionIsSelected = useRouteMatch("/elections/:id");
 
 	return (
-		<div style={{ }}>
+		<div>
 			<Drawer dismissible open={props.drawerOpen} className={["NavDrawer"]} style={{position: "fixed"}}>
 				<DrawerHeader>
 					<img src={"/logo192.png"} width={100} alt={"StuyBOE Logo"} style={{paddingTop: '1em'}}/>

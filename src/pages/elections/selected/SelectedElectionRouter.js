@@ -7,6 +7,7 @@ import {Vote} from "./Vote";
 import {Candidates} from "./Candidates";
 import {Results} from "./Results";
 import {resolve as resolveUrl} from "url";
+import backend from "../../../utils/backend";
 
 export const ElectionContext = React.createContext({});
 
@@ -27,10 +28,10 @@ export class SelectedElectionRouter extends React.Component{
 		this.setState({error: false});
 		const {publicUrl} = this.props.match.params;
 
-		fetch(`${process.env.REACT_APP_API_URL}/api/elections/${publicUrl}`)
-			.then(res => res.json())
-			.then(res => this.setState({ loaded: true, election: res.payload }))
-			.catch(() => this.setState({error: true}))
+		backend.get(`/api/elections/${publicUrl}`)
+			.then(({data}) => this.setState({ loaded: true, election: data.payload }))
+			.catch(() => this.setState({error: true}));
+
 	}
 
 	componentDidMount(): void {

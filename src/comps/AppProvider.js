@@ -1,6 +1,7 @@
 import React from "react";
 
 import {Loading} from "./Loading";
+import backend from "../utils/backend";
 
 
 export const AppContext = React.createContext({initialized: false});
@@ -25,18 +26,10 @@ export class AppProvider extends React.Component {
 
 	updateState() {
 		this.setState({error: false});
-		fetch(
-			`${process.env.REACT_APP_API_URL}/api/state`,
-			{cache: "no-store", credentials: "include"}
-			)
-			.then(res => res.json())
-			.then(data => {
-				data.initialized = true;
-				this.setState(data);
-			})
-			.catch(er => {
-				this.setState({error: true});
-			});
+
+		backend.get("/api/state")
+			.then(({data}) => this.setState({initialized: true, ...data.payload}))
+			.catch(er => this.setState({error: true}));
 	}
 
 	componentDidMount() {

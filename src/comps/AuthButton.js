@@ -6,28 +6,25 @@ import {MessageQueue} from "./MessageQueue";
 import {SimpleDialog} from "@rmwc/dialog";
 import '@material/dialog/dist/mdc.dialog.css';
 import '@material/button/dist/mdc.button.css';
+import backend from "../utils/backend";
 
 export const AuthButton = (props) => {
 	const context = React.useContext(AppContext);
 	const [payload, setPayload] = React.useState({unset: true});
 
 	const attemptLogin = (data = payload) => {
-		fetch(`${process.env.REACT_APP_API_URL}/auth/login`, {
-			method: "POST",
-			headers: {'Content-Type': 'application/json'},
-			body: JSON.stringify({idToken: data.tokenId}),
-			credentials: "include"
-		})
-			.then(res => res.json())
-			.then(res => {
-				if(! res.success)
+
+		backend.post("/auth/login", {idToken: data.tokenId})
+			.then(({data}) => {
+				if(! data.success)
 					MessageQueue.notify({
-						body: res.error,
+						body: data.error,
 						actions: [{"icon": "close"}]
 					});
 				else
-					context.updateState() && window.sessionStorage.clear();
-			})
+					context.updateState() || window.sessionStorage.clear();
+			});
+
 	};
 
 	const handleSuccess = (data) => {

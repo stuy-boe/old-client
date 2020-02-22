@@ -1,11 +1,11 @@
 import React from "react";
-import {MessageQueue} from "../../comps/MessageQueue";
 import {ElectionCard} from "./ElectionCard";
 
 import {Grid, GridCell} from "@rmwc/grid";
 import '@material/layout-grid/dist/mdc.layout-grid.css';
 import {Helmet} from "react-helmet";
 import {Loading} from "../../comps/Loading";
+import backend from "../../utils/backend";
 
 export class ElectionSelect extends React.Component {
 	constructor(props) {
@@ -22,15 +22,8 @@ export class ElectionSelect extends React.Component {
 
 	fetchElections(){
 		this.setState({error: false});
-		fetch(`${process.env.REACT_APP_API_URL}/api/elections`)
-			.then(res => res.json())
-			.then(data => this.setState({loaded: true, ...data}))
-			.catch(() => {
-				MessageQueue.notify({
-					body: "Could not fetch elections. Check your network connection.",
-					actions: [{"icon": "close"}]
-				});
-			});
+		backend.get("/api/elections")
+			.then(({data}) => this.setState({loaded: true, data: data.payload}));
 	}
 
 	componentDidMount() {
