@@ -52,6 +52,7 @@ export const AuthButton = (props) => {
 				buttonText="Login with Google"
 				onSuccess={handleSuccess}
 				onFailure={(er) => {console.log(er)}}
+				cookiePolicy={'single_host_origin'}
 			/>
 		</div>
 	)

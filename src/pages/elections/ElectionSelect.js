@@ -23,7 +23,7 @@ export class ElectionSelect extends React.Component {
 	fetchElections(){
 		this.setState({error: false});
 		backend.get("/api/elections")
-			.then(({data}) => this.setState({loaded: true, data: data.payload}));
+			.then(({data}) => this.setState({loaded: true, ...data.payload}));
 	}
 
 	componentDidMount() {
