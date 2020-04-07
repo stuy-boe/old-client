@@ -13,7 +13,7 @@
     "react-helmet": "^5.2.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "^3.4.0",
-    "rmwc": "^5.7.2"
+    "rmwc": "^6.0.14"
   },
   "scripts": {
     "start": "react-scripts start",
