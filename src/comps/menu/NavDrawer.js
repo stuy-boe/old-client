@@ -55,7 +55,7 @@ export const NavDrawer = (props) => {
 
 						{
 							context.signedIn &&
-							context.admin.is_admin &&
+							context.admin.status &&
 							<MenuItem
 								to={"/admin"}
 								text={"Admin"}
@@ -66,7 +66,7 @@ export const NavDrawer = (props) => {
 
 						{
 							context.signedIn &&
-							context.campaign.is_manager &&
+							context.campaignManager.status &&
 							<MenuItem
 								to={"/campaign"}
 								text={"Campaign"}

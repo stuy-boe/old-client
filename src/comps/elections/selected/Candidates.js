@@ -1,32 +1,46 @@
+// @flow
 import React, {useEffect} from "react";
 import {ElectionContext} from "./SelectedElectionRouter";
-import {Loading} from "../../../comps/Loading";
+import Loading from "../../Loading";
 import {Helmet} from "react-helmet";
 import backend from "../../../utils/backend";
+import Retry from "../../Retry";
 
 
-export const Candidates: React.FC = props => {
+const Candidates: React = () => {
 	const election = React.useContext(ElectionContext);
-	const [loaded, setLoaded] = React.useState(false);
-	const [error, setError] = React.useState(false);
+	const [status, setStatus] = React.useState("loading");
 	const [candidates, setCandidates] = React.useState([]);
 
 	const getCandidates = () => {
 		backend.get(`/api/elections/${election.publicUrl}/candidates`)
-			.then(({data}) => setCandidates(data.payload) & setLoaded(true))
-			.catch(() => setError(true));
+			.then(({data}) => {
+
+				setCandidates(data.payload);
+				setStatus("loaded");
+
+			})
+			.catch(() => {
+
+				setStatus("error");
+
+			});
 	};
 
 	useEffect(getCandidates, []);
 
-	if(! loaded)
+	if( status === "loading" ) {
+		return <Loading/>
+	}
+
+	if( status === "error" ){
 		return (
-			<Loading
-				error={error}
-				errorMessage={"There was an error getting the candidates for this election."}
+			<Retry
 				onRetry={getCandidates}
+				message={"There was an error getting the candidates"}
 			/>
-		);
+		)
+	}
 
 	return (
 		<div>
@@ -42,3 +56,5 @@ export const Candidates: React.FC = props => {
 		</div>
 	);
 };
+
+export default Candidates;

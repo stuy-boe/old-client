@@ -1,7 +1,8 @@
 import React from "react";
 
-import {Loading} from "./Loading";
+import Loading from "./Loading";
 import backend from "../utils/backend";
+import Retry from "./Retry";
 
 
 export const AppContext = React.createContext({initialized: false});
@@ -13,23 +14,26 @@ export class AppProvider extends React.Component {
 
 		this.updateState = this.updateState.bind(this);
 		this.state = {
-			initialized: false,
 			signedIn: false,
 			user: {},
 			admin: {},
-			campaign: {},
+			campaignManager: {},
 			updateState: this.updateState,
-			error: false
+			status: "loading"
 		};
 
 	}
 
 	updateState() {
-		this.setState({error: false});
+		this.setState({status: "loading"});
 
 		backend.get("/api/state")
-			.then(({data}) => this.setState({initialized: true, ...data.payload}))
-			.catch(er => this.setState({error: true}));
+			.then(({data}) => this.setState({status: "loaded", ...data.payload}))
+			.catch(er => {
+
+				this.setState({status: "error"});
+
+			});
 	}
 
 	componentDidMount() {
@@ -37,15 +41,21 @@ export class AppProvider extends React.Component {
 	}
 
 	render(){
-		if(! this.state.initialized)
-			return (
-				<Loading
-					error={this.state.error}
-					errorMessage={"There was an error loading the app"}
-					onRetry={this.updateState}
-					/>
-			);
 
+		if( this.state.status === "loading" ) {
+			return (
+				<Loading />
+			);
+		}
+
+		if( this.state.status === "error" ){
+			return (
+				<Retry
+					onRetry={this.updateState}
+					message={"There was an error loading the app."}
+				/>
+			)
+		}
 
 		return (
 			<AppContext.Provider value={this.state}>

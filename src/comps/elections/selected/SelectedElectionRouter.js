@@ -1,10 +1,10 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import {Overview} from "./Overview";
-import {Loading} from "../../../comps/Loading";
+import Loading from "../../Loading";
 import {Helmet} from "react-helmet";
 import {Vote} from "./Vote";
-import {Candidates} from "./Candidates";
+import Candidates from "./Candidates";
 import {Results} from "./Results";
 import {resolve as resolveUrl} from "url";
 import backend from "../../../utils/backend";
@@ -41,11 +41,7 @@ export class SelectedElectionRouter extends React.Component{
 	render() : React.ReactNode {
 		if(! this.state.loaded)
 			return (
-				<Loading
-					error={this.state.error}
-					onRetry={this.fetchElection}
-					errorMessage={"We weren't able to get the details for that election."}
-				/>
+				<Loading />
 			);
 
 		if(this.state.election === null)

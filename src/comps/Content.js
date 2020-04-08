@@ -2,7 +2,7 @@ import React from "react";
 import {AuthButton} from "./AuthButton";
 import {AppContext} from "./AppProvider";
 import {Switch, Route, useLocation} from "react-router-dom";
-import {ElectionRouter} from "../pages/elections/ElectionRouter";
+import {Elections} from "./../pages/Elections";
 import {Helmet} from "react-helmet";
 
 export const Content = (props) => {
@@ -22,7 +22,7 @@ export const Content = (props) => {
 
 			<Switch>
 				<Route path={"/"} component={Hello} exact/>
-				<Route path={"/elections"} component={ElectionRouter}/>
+				<Route path={"/elections"} component={Elections}/>
 			</Switch>
 
 			{
