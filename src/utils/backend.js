@@ -10,10 +10,14 @@ backend.defaults.withCredentials = true;
 backend.interceptors.response.use((response) => {
 	return response;
 }, (error) => {
-	MessageQueue.notify({
-		body: "There was an error performing that action. Check your internet status.",
-		actions: [{"icon": "close"}]
-	});
+
+	if( ! error.response ){
+		MessageQueue.notify({
+			body: "There was an error performing that action. Check your internet status.",
+			actions: [{"icon": "close"}]
+		});
+	}
+
 	return Promise.reject(error);
 });
 

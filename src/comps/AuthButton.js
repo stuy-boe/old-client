@@ -14,15 +14,20 @@ export const AuthButton = (props) => {
 
 	const attemptLogin = (data = payload) => {
 
-		backend.post("/auth/login", {idToken: data.tokenId})
+		backend.post("/api/auth/login", {idToken: data.tokenId})
 			.then(({data}) => {
-				if(! data.success)
+				context.updateState() || window.sessionStorage.clear();
+			})
+			.catch((request) => {
+
+				if(request.response) {
+
 					MessageQueue.notify({
-						body: data.error,
+						body: request.response.data.error.message,
 						actions: [{"icon": "close"}]
 					});
-				else
-					context.updateState() || window.sessionStorage.clear();
+
+				}
 			});
 
 	};
