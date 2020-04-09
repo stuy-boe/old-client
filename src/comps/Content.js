@@ -2,7 +2,7 @@ import React from "react";
 import {AuthButton} from "./AuthButton";
 import {AppContext} from "./AppProvider";
 import {Switch, Route, useLocation} from "react-router-dom";
-import {Elections} from "./../pages/Elections";
+import {Elections} from "../pages/Elections";
 import {Helmet} from "react-helmet";
 
 export const Content = (props) => {
@@ -19,6 +19,9 @@ export const Content = (props) => {
 				<meta property="og:image" content={process.env.PUBLIC_URL + "/logo512.png"}/>
 				<title>Stuy BOE Voting Site</title>
 			</Helmet>
+
+			{new Date().toLocaleTimeString()}<br/>
+			{context.getDate().toLocaleTimeString()}
 
 			<Switch>
 				<Route path={"/"} component={Hello} exact/>
