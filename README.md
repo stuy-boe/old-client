@@ -1,9 +1,32 @@
-Michael Nath was here : )
+# vote.stuysu.org
+The front-end of the Stuyvesant High School Board of Elections voting site.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Production
+[![Stuyvesant Board of Elections](https://circleci.com/gh/stuy-boe/api-vote.stuysu.org.svg?style=svg)](https://github.com/stuy-boe/api.vote.stuysu.org) 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/10fe90c0-0522-4dc2-aa7d-701dbf20a1a2/deploy-status)](https://app.netlify.com/sites/vote-stuysu-org/deploys)
 
-## Available Scripts
+The production app is automatically re-deployed by Netlify upon new commits to the master branch.
 
+For this reason access to the master branch will be restricted.
+
+Pull requests to the master branch from the dev branch must:
+- [ ] Pass Circle CI Build and Test steps
+- [ ] Successfully build on Netlify
+- [ ] Have at least one code review
+
+
+## Development
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/dev-vote-stuysu-org/deploys)
+
+The development branch is [dev](https://github.com/stuy-boe/api-vote.stuysu.org). 
+
+Any commits to it will also re-deploy [the development app](https://dev-vote.stuysu.org)
+
+For this reason, any contributions must be first made to an unprotected branch.
+
+The only requirement for merging into the dev branch is to pass the CircleCI build and test steps.
+
+## React Scripts
 In the project directory, you can run:
 
 ### `npm start`
