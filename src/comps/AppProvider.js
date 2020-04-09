@@ -53,7 +53,7 @@ export class AppProvider extends React.Component {
 
 			const requestStartTime = new Date();
 			const getDate = await backend.get("/api/date");
-			const serverDateString = getDate.date.payload.date;
+			const serverDateString = getDate.data.payload.date;
 
 			const now = new Date();
 			const requestDuration = now.getTime() - requestStartTime.getTime();
