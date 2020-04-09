@@ -13,22 +13,55 @@ export class AppProvider extends React.Component {
 		super(props);
 
 		this.updateState = this.updateState.bind(this);
+		this.getDate = this.getDate.bind(this);
+
 		this.state = {
 			signedIn: false,
 			user: {},
 			admin: {},
 			campaignManager: {},
+			dateOffset: 0,
 			updateState: this.updateState,
+			getDate: this.getDate,
 			status: "loading"
 		};
 
 	}
 
+
+	getDate() {
+
+		const localTimestamp = new Date().getTime();
+
+		return new Date( localTimestamp +  this.state.dateOffset);
+
+	}
+
 	updateState() {
+		const requestStartTime = new Date();
+
 		this.setState({status: "loading"});
 
 		backend.get("/api/state")
-			.then(({data}) => this.setState({status: "loaded", ...data.payload}))
+			.then(({data}) => {
+
+				const payload = data.payload;
+
+				const now = new Date();
+				const requestDuration = now.getTime() - requestStartTime.getTime();
+				const serverStartTime = new Date(payload.date);
+
+				const serverTime = new Date( serverStartTime.getTime() + requestDuration );
+
+				const dateOffset = serverTime.getTime() - now.getTime();
+
+				this.setState({
+					status: "loaded",
+					dateOffset,
+					...payload
+				});
+
+			})
 			.catch(er => {
 
 				this.setState({status: "error"});
