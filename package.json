@@ -44,5 +44,4 @@
     "prop-types": "^15.7.2"
   },
   "proxy": "http://dev-vote-stuysu-org.herokuapp.com"
-  }
 }
