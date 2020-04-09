@@ -37,36 +37,44 @@ export class AppProvider extends React.Component {
 
 	}
 
-	updateState() {
-		const requestStartTime = new Date();
+	async updateState() {
 
 		this.setState({status: "loading"});
 
-		backend.get("/api/state")
-			.then(({data}) => {
+		try {
 
-				const payload = data.payload;
+			// The reason we make two requests is because the server might be sleeping
+			// That would then result in inaccurate request duration calculations
+			// The first /api/state request would wake up the server
+			// Then the server is already awake when we get /api/date
 
-				const now = new Date();
-				const requestDuration = now.getTime() - requestStartTime.getTime();
-				const serverStartTime = new Date(payload.date);
+			const getState = await backend.get("/api/state");
+			const payload = getState.data.payload;
 
-				const serverTime = new Date( serverStartTime.getTime() + requestDuration );
+			const requestStartTime = new Date();
+			const getDate = await backend.get("/api/date");
+			const serverDateString = getDate.data.payload.date;
 
-				const dateOffset = serverTime.getTime() - now.getTime();
+			const now = new Date();
+			const requestDuration = now.getTime() - requestStartTime.getTime();
+			const serverStartTime = new Date(serverDateString);
 
-				this.setState({
-					status: "loaded",
-					dateOffset,
-					...payload
-				});
+			const serverTime = new Date( serverStartTime.getTime() + requestDuration );
 
-			})
-			.catch(er => {
+			const dateOffset = serverTime.getTime() - now.getTime();
 
-				this.setState({status: "error"});
-
+			this.setState({
+				status: "loaded",
+				dateOffset,
+				...payload
 			});
+
+		} catch (e) {
+
+			this.setState({status: "error"});
+
+		}
+
 	}
 
 	componentDidMount() {
