@@ -9,22 +9,21 @@ The production app is automatically re-deployed by Netlify upon new commits to t
 
 For this reason access to the master branch will be restricted.
 
-Pull requests to the master branch from the dev branch must:
+Pull requests to the master branch from the staging branch must:
 - [ ] Pass Circle CI Build and Test steps
+- [ ] Pass Guardrails security test
 - [ ] Successfully build on Netlify
 - [ ] Have at least one code review
 
 
-## Development
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/dev-vote-stuysu-org/deploys)
+## Staging
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/dev-vote-stuysu-org/deploys) 
 
-The development branch is [dev](https://github.com/stuy-boe/api-vote.stuysu.org). 
-
-Any commits to it will also re-deploy [the development app](https://dev-vote.stuysu.org)
+Any commits to the [staging](https://github.com/stuy-boe/vote.stuysu.org/tree/staging) branch will also re-deploy [the staging app](https://staging-vote.stuysu.org)
 
 For this reason, any contributions must be first made to an unprotected branch.
 
-The only requirement for merging into the dev branch is to pass the CircleCI build and test steps.
+The only requirement for merging into the staging branch is to pass the CircleCI build and test steps as well as the Guardrails security test.
 
 ## React Scripts
 In the project directory, you can run:
