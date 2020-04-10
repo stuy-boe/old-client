@@ -4,7 +4,6 @@ import Loading from "./Loading";
 import backend from "../utils/backend";
 import Retry from "./Retry";
 
-
 export const AppContext = React.createContext({initialized: false});
 
 export class AppProvider extends React.Component {
