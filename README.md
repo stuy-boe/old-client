@@ -1,8 +1,10 @@
 # vote.stuysu.org
 The front-end of the Stuyvesant High School Board of Elections voting site.
 
-## Production
 [![Stuyvesant Board of Elections](https://circleci.com/gh/stuy-boe/api-vote.stuysu.org.svg?style=svg)](https://github.com/stuy-boe/api.vote.stuysu.org) 
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
+## Production
 [![Netlify Status](https://api.netlify.com/api/v1/badges/10fe90c0-0522-4dc2-aa7d-701dbf20a1a2/deploy-status)](https://app.netlify.com/sites/vote-stuysu-org/deploys)
 
 The production app is automatically re-deployed by Netlify upon new commits to the master branch.
