@@ -2,18 +2,6 @@
 	min-height: 100vh;
 }
 
-.AppBar {
-	background-color: white !important;
-	color: black !important;
-}
-
-.AppBar .rmwc-icon {
-	color: black !important;
-}
-
-.NavDrawer {
-	border-right: 0 !important;
-}
 
 .DrawerContent a {
 	text-decoration: none;

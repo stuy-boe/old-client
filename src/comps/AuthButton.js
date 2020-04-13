@@ -7,8 +7,9 @@ import { SimpleDialog } from '@rmwc/dialog';
 import '@material/dialog/dist/mdc.dialog.css';
 import '@material/button/dist/mdc.button.css';
 import backend from '../utils/backend';
+import { GOOGLE_CLIENT_ID } from '../constants';
 
-export const AuthButton = props => {
+export const AuthButton = () => {
 	const context = React.useContext(AppContext);
 	const [payload, setPayload] = React.useState({
 		unset: true
@@ -57,7 +58,7 @@ export const AuthButton = props => {
 			/>
 
 			<GoogleLogin
-				clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+				clientId={GOOGLE_CLIENT_ID}
 				buttonText="Login with Google"
 				onSuccess={handleSuccess}
 				onFailure={er => {

@@ -22,6 +22,7 @@ import { generatePath, Link } from 'react-router-dom';
 import moment from 'moment';
 
 import { resolve } from 'url';
+import { API_URL } from '../../constants';
 
 export const ElectionCard = props => {
 	// noinspection JSCheckFunctionSignatures
@@ -44,7 +45,7 @@ export const ElectionCard = props => {
 						sixteenByNine
 						style={{
 							backgroundImage: `url(${resolve(
-								process.env.REACT_APP_API_URL,
+								API_URL,
 								props.election.picture
 							)})`
 						}}

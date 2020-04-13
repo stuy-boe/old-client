@@ -1,4 +1,3 @@
-// @flow
 import React, { useEffect } from 'react';
 import { ElectionContext } from './SelectedElectionRouter';
 import Loading from '../../Loading';
@@ -6,7 +5,7 @@ import { Helmet } from 'react-helmet';
 import backend from '../../../utils/backend';
 import Retry from '../../Retry';
 
-const Candidates: React = () => {
+const Candidates = () => {
 	const election = React.useContext(ElectionContext);
 	const [status, setStatus] = React.useState('loading');
 	const [candidates, setCandidates] = React.useState([]);

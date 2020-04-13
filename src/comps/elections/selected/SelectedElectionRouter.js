@@ -8,6 +8,7 @@ import Candidates from './Candidates';
 import { Results } from './Results';
 import { resolve as resolveUrl } from 'url';
 import backend from '../../../utils/backend';
+import { API_URL } from '../../../constants';
 
 export const ElectionContext = React.createContext({});
 
@@ -70,7 +71,7 @@ export class SelectedElectionRouter extends React.Component {
 					<meta
 						property="og:image"
 						content={resolveUrl(
-							process.env.REACT_APP_API_URL,
+							API_URL,
 							this.state.election.picture
 						)}
 					/>
