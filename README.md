@@ -22,7 +22,7 @@ Pull requests to the master branch from the staging branch must:
 
 ## Staging
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/dev-vote-stuysu-org/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/staging-vote-stuysu-org/deploys)
 
 Any commits to the [staging](https://github.com/stuy-boe/vote.stuysu.org/tree/staging) branch will also re-deploy [the staging app](https://staging-vote.stuysu.org)
 

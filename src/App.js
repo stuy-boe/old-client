@@ -19,10 +19,14 @@ function App() {
 	const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
 	window.onresize = () => {
-		const isDesktop = window.innerWidth > 800;
+		const screenIsDesktop = window.innerWidth > 800;
 
-		if (window.innerWidth !== window.outerWidth && drawerOpen !== isDesktop)
+		if (
+			window.innerWidth !== window.outerWidth &&
+			drawerOpen !== screenIsDesktop
+		) {
 			setDrawerOpen(window.innerWidth > 800);
+		}
 	};
 
 	return (
