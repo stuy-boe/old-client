@@ -30,9 +30,7 @@ export class AppProvider extends React.Component {
 	getDate() {
 		const localTimestamp = new Date().getTime();
 
-		return new Date(
-			localTimestamp + this.state.dateOffset
-		);
+		return new Date(localTimestamp + this.state.dateOffset);
 	}
 
 	async updateState() {
@@ -44,29 +42,22 @@ export class AppProvider extends React.Component {
 			// The first /api/state request would wake up the server
 			// Then the server is already awake when we get /api/date
 
-			const getState = await backend.get(
-				'/api/state'
-			);
+			const getState = await backend.get('/api/state');
 			const payload = getState.data.payload;
 
 			const requestStartTime = new Date();
 			const getDate = await backend.get('/api/date');
-			const serverDateString =
-				getDate.data.payload.date;
+			const serverDateString = getDate.data.payload.date;
 
 			const now = new Date();
-			const requestDuration =
-				now.getTime() - requestStartTime.getTime();
-			const serverStartTime = new Date(
-				serverDateString
-			);
+			const requestDuration = now.getTime() - requestStartTime.getTime();
+			const serverStartTime = new Date(serverDateString);
 
 			const serverTime = new Date(
 				serverStartTime.getTime() + requestDuration
 			);
 
-			const dateOffset =
-				serverTime.getTime() - now.getTime();
+			const dateOffset = serverTime.getTime() - now.getTime();
 
 			this.setState({
 				status: 'loaded',
@@ -91,9 +82,7 @@ export class AppProvider extends React.Component {
 			return (
 				<Retry
 					onRetry={this.updateState}
-					message={
-						'There was an error loading the app.'
-					}
+					message={'There was an error loading the app.'}
 				/>
 			);
 		}

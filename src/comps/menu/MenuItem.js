@@ -4,8 +4,7 @@ import { SimpleListItem } from '@rmwc/list';
 
 export const MenuItem = props => {
 	let activated = useRouteMatch(props.activeRoute);
-	if (Boolean(activated) && props.exactRoute)
-		activated = activated.isExact;
+	if (Boolean(activated) && props.exactRoute) activated = activated.isExact;
 
 	return (
 		<Link to={props.to}>

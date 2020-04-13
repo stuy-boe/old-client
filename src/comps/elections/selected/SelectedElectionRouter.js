@@ -50,10 +50,7 @@ export class SelectedElectionRouter extends React.Component {
 			return (
 				<div>
 					<Helmet>
-						<title>
-							Election Not Found | Stuy BOE
-							Voting Site
-						</title>
+						<title>Election Not Found | Stuy BOE Voting Site</title>
 						<meta
 							property="og:title"
 							content={`Election Not Found | Stuy BOE Voting Site`}
@@ -80,35 +77,24 @@ export class SelectedElectionRouter extends React.Component {
 				</Helmet>
 
 				<Switch>
-					<ElectionContext.Provider
-						value={this.state.election}
-					>
+					<ElectionContext.Provider value={this.state.election}>
 						<Route
 							path={this.props.match.path}
 							exact
 							component={Overview}
 						/>
 						<Route
-							path={
-								this.props.match.path +
-								'/candidates'
-							}
+							path={this.props.match.path + '/candidates'}
 							exact
 							component={Candidates}
 						/>
 						<Route
-							path={
-								this.props.match.path +
-								'/vote'
-							}
+							path={this.props.match.path + '/vote'}
 							exact
 							component={Vote}
 						/>
 						<Route
-							path={
-								this.props.match.path +
-								'/results'
-							}
+							path={this.props.match.path + '/results'}
 							exact
 							component={Results}
 						/>

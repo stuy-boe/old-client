@@ -9,18 +9,11 @@ import {
 } from '@rmwc/drawer';
 import '@material/drawer/dist/mdc.drawer.css';
 
-import {
-	CollapsibleList,
-	List,
-	SimpleListItem
-} from '@rmwc/list';
+import { CollapsibleList, List, SimpleListItem } from '@rmwc/list';
 import '@material/list/dist/mdc.list.css';
 import '@rmwc/list/collapsible-list.css';
 import { AppContext } from '../AppProvider';
-import {
-	useLocation,
-	useRouteMatch
-} from 'react-router-dom';
+import { useLocation, useRouteMatch } from 'react-router-dom';
 import { splitPath } from '../../utils/splitPath';
 import { MenuItem } from './MenuItem';
 import backend from '../../utils/backend';
@@ -42,9 +35,7 @@ export const NavDrawer = props => {
 		});
 	};
 
-	let electionIsSelected = useRouteMatch(
-		'/elections/:id'
-	);
+	let electionIsSelected = useRouteMatch('/elections/:id');
 
 	return (
 		<div>
@@ -62,24 +53,17 @@ export const NavDrawer = props => {
 						style={{ paddingTop: '1em' }}
 					/>
 					<DrawerTitle>
-						{context.signedIn
-							? context.user.name
-							: 'Not Signed In'}
+						{context.signedIn ? context.user.name : 'Not Signed In'}
 					</DrawerTitle>
 					<DrawerSubtitle>
-						{context.signedIn
-							? context.user.email
-							: ''}
+						{context.signedIn ? context.user.email : ''}
 					</DrawerSubtitle>
 				</DrawerHeader>
 
-				<DrawerContent
-					className={['DrawerContent']}
-				>
+				<DrawerContent className={['DrawerContent']}>
 					<List
 						onClick={() =>
-							window.innerWidth < 600 &&
-							props.toggleDrawer()
+							window.innerWidth < 600 && props.toggleDrawer()
 						}
 					>
 						{context.signedIn && (
@@ -90,28 +74,23 @@ export const NavDrawer = props => {
 							/>
 						)}
 
-						{context.signedIn &&
-							context.admin.status && (
-								<MenuItem
-									to={'/admin'}
-									text={'Admin'}
-									icon={'build'}
-									activeRoute={'/admin'}
-								/>
-							)}
+						{context.signedIn && context.admin.status && (
+							<MenuItem
+								to={'/admin'}
+								text={'Admin'}
+								icon={'build'}
+								activeRoute={'/admin'}
+							/>
+						)}
 
-						{context.signedIn &&
-							context.campaignManager
-								.status && (
-								<MenuItem
-									to={'/campaign'}
-									text={'Campaign'}
-									icon={'assignment_ind'}
-									activeRoute={
-										'/campaign'
-									}
-								/>
-							)}
+						{context.signedIn && context.campaignManager.status && (
+							<MenuItem
+								to={'/campaign'}
+								text={'Campaign'}
+								icon={'assignment_ind'}
+								activeRoute={'/campaign'}
+							/>
+						)}
 
 						<MenuItem
 							to={'/'}
@@ -127,12 +106,8 @@ export const NavDrawer = props => {
 									to={'/elections'}
 									text={'Elections'}
 									icon={'how_to_vote'}
-									activeRoute={
-										'/elections'
-									}
-									metaIcon={
-										'chevron_right'
-									}
+									activeRoute={'/elections'}
+									metaIcon={'chevron_right'}
 									exactRoute
 								/>
 							}
@@ -142,46 +117,29 @@ export const NavDrawer = props => {
 								to={getModifiedPath(2, '')}
 								text={'Overview'}
 								icon={'dashboard'}
-								activeRoute={
-									'/elections/:id'
-								}
+								activeRoute={'/elections/:id'}
 								exactRoute
 							/>
 
 							<MenuItem
-								to={getModifiedPath(
-									2,
-									'candidates'
-								)}
+								to={getModifiedPath(2, 'candidates')}
 								text={'Candidates'}
 								icon={'people'}
-								activeRoute={
-									'/elections/:id/candidates'
-								}
+								activeRoute={'/elections/:id/candidates'}
 							/>
 
 							<MenuItem
-								to={getModifiedPath(
-									2,
-									'vote'
-								)}
+								to={getModifiedPath(2, 'vote')}
 								text={'Vote'}
 								icon={'where_to_vote'}
-								activeRoute={
-									'/elections/:id/vote'
-								}
+								activeRoute={'/elections/:id/vote'}
 							/>
 
 							<MenuItem
-								to={getModifiedPath(
-									2,
-									'results'
-								)}
+								to={getModifiedPath(2, 'results')}
 								text={'Results'}
 								icon={'ballot'}
-								activeRoute={
-									'/elections/:id/results'
-								}
+								activeRoute={'/elections/:id/results'}
 								fillParams
 							/>
 						</CollapsibleList>

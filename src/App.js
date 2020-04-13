@@ -14,17 +14,14 @@ import '@material/button/dist/mdc.button.css';
 import { Obfuscator } from './comps/Obfuscator';
 
 function App() {
-	const [drawerOpen, setDrawerOpen] = React.useState(
-		window.innerWidth > 800
-	);
+	const [drawerOpen, setDrawerOpen] = React.useState(window.innerWidth > 800);
 
 	const toggleDrawer = () => setDrawerOpen(!drawerOpen);
 
 	window.onresize = () => {
-		if (
-			window.innerWidth !== window.outerWidth &&
-			drawerOpen !== window.innerWidth > 800
-		)
+		const isDesktop = window.innerWidth > 800;
+
+		if (window.innerWidth !== window.outerWidth && drawerOpen !== isDesktop)
 			setDrawerOpen(window.innerWidth > 800);
 	};
 
@@ -38,10 +35,7 @@ function App() {
 						toggleDrawer={toggleDrawer}
 					>
 						<Obfuscator
-							open={
-								drawerOpen &&
-								window.innerWidth < 800
-							}
+							open={drawerOpen && window.innerWidth < 800}
 							toggleDrawer={toggleDrawer}
 						/>
 						<Content />
@@ -49,9 +43,7 @@ function App() {
 				</AppProvider>
 			</BrowserRouter>
 
-			<SnackbarQueue
-				messages={MessageQueue.messages}
-			/>
+			<SnackbarQueue messages={MessageQueue.messages} />
 		</div>
 	);
 }

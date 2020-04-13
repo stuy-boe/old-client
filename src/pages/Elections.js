@@ -6,11 +6,7 @@ import { SelectedElectionRouter } from '../comps/elections/selected/SelectedElec
 export const Elections = () => {
 	return (
 		<Switch>
-			<Route
-				path={'/elections'}
-				exact
-				component={ElectionSelect}
-			/>
+			<Route path={'/elections'} exact component={ElectionSelect} />
 			<Route
 				path={'/elections/:publicUrl'}
 				component={SelectedElectionRouter}

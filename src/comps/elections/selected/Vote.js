@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet';
 
 import moment from 'moment-timezone';
 
-export const Vote: React.FC = props => {
+export const Vote: React.FC = () => {
 	const election = React.useContext(ElectionContext);
 
 	const startTimestring = moment(election.startTime)
@@ -14,10 +14,7 @@ export const Vote: React.FC = props => {
 	return (
 		<div>
 			<Helmet>
-				<title>
-					Vote: {election.name} | Stuy BOE Voting
-					Site
-				</title>
+				<title>Vote: {election.name} | Stuy BOE Voting Site</title>
 				<meta
 					property="og:title"
 					content={`Vote: ${election.name} | Stuy BOE Voting Site`}

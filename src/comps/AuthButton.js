@@ -20,15 +20,12 @@ export const AuthButton = props => {
 				idToken: data.tokenId
 			})
 			.then(({ data }) => {
-				context.updateState() ||
-					window.sessionStorage.clear();
+				context.updateState() || window.sessionStorage.clear();
 			})
 			.catch(request => {
 				if (request.response) {
 					MessageQueue.notify({
-						body:
-							request.response.data.error
-								.message,
+						body: request.response.data.error.message,
 						actions: [{ icon: 'close' }]
 					});
 				}
@@ -60,9 +57,7 @@ export const AuthButton = props => {
 			/>
 
 			<GoogleLogin
-				clientId={
-					process.env.REACT_APP_GOOGLE_CLIENT_ID
-				}
+				clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
 				buttonText="Login with Google"
 				onSuccess={handleSuccess}
 				onFailure={er => {

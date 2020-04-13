@@ -44,8 +44,7 @@ export const ElectionCard = props => {
 						sixteenByNine
 						style={{
 							backgroundImage: `url(${resolve(
-								process.env
-									.REACT_APP_API_URL,
+								process.env.REACT_APP_API_URL,
 								props.election.picture
 							)})`
 						}}
@@ -55,10 +54,7 @@ export const ElectionCard = props => {
 							padding: '0 1rem 1rem 1rem'
 						}}
 					>
-						<Typography
-							use="headline6"
-							tag="h2"
-						>
+						<Typography use="headline6" tag="h2">
 							{props.election.name}
 						</Typography>
 
@@ -69,9 +65,7 @@ export const ElectionCard = props => {
 							style={{ marginTop: '-1rem' }}
 						>
 							Starts:{' '}
-							{moment(start).format(
-								'MMM Do, YYYY hh:mma'
-							)}
+							{moment(start).format('MMM Do, YYYY hh:mma')}
 						</Typography>
 
 						<Typography
@@ -89,13 +83,8 @@ export const ElectionCard = props => {
 
 			<CardActions>
 				<CardActionButtons>
-					<Link
-						to={to}
-						className={['UnstyledLink']}
-					>
-						<CardActionButton>
-							View
-						</CardActionButton>
+					<Link to={to} className={['UnstyledLink']}>
+						<CardActionButton>View</CardActionButton>
 					</Link>
 				</CardActionButtons>
 

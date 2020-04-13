@@ -20,13 +20,14 @@
 		"build": "react-scripts build",
 		"test": "react-scripts test",
 		"eject": "react-scripts eject",
-		"flow": "flow"
+		"flow": "flow",
+		"prettier": "prettier --write ."
 	},
 	"eslintConfig": {
 		"extends": "react-app"
 	},
 	"prettier": {
-		"printWidth": 60,
+		"printWidth": 80,
 		"singleQuote": true,
 		"trailingComma": "none",
 		"arrowParens": "avoid",

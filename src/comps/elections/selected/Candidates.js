@@ -13,9 +13,7 @@ const Candidates: React = () => {
 
 	const getCandidates = () => {
 		backend
-			.get(
-				`/api/elections/${election.publicUrl}/candidates`
-			)
+			.get(`/api/elections/${election.publicUrl}/candidates`)
 			.then(({ data }) => {
 				setCandidates(data.payload);
 				setStatus('loaded');
@@ -35,9 +33,7 @@ const Candidates: React = () => {
 		return (
 			<Retry
 				onRetry={getCandidates}
-				message={
-					'There was an error getting the candidates'
-				}
+				message={'There was an error getting the candidates'}
 			/>
 		);
 	}
@@ -46,8 +42,7 @@ const Candidates: React = () => {
 		<div>
 			<Helmet>
 				<title>
-					Candidates: {election.name} | Stuy BOE
-					Voting Site
+					Candidates: {election.name} | Stuy BOE Voting Site
 				</title>
 				<meta
 					property="og:title"

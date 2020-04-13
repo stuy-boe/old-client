@@ -16,9 +16,7 @@ const Retry = (props: Props) => {
 		<div style={{ paddingTop: 'calc(50vh - 72px)' }}>
 			{typeof props.message === 'string' ? (
 				// If the message is a string, enclose it in a heading
-				<h1 style={{ textAlign: 'center' }}>
-					{props.message}
-				</h1>
+				<h1 style={{ textAlign: 'center' }}>{props.message}</h1>
 			) : (
 				// Otherwise it is a component and we should render as-is
 				props.message

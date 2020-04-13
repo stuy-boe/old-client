@@ -9,9 +9,7 @@ export function Overview(props) {
 	return (
 		<div>
 			<Helmet>
-				<title>
-					{election.name} | Stuy BOE Voting Site
-				</title>
+				<title>{election.name} | Stuy BOE Voting Site</title>
 				<meta
 					property="og:title"
 					content={`${election.name} | Stuy BOE Voting Site`}

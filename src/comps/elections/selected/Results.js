@@ -8,10 +8,7 @@ export const Results = props => {
 	return (
 		<div>
 			<Helmet>
-				<title>
-					Results: {election.name} | Stuy BOE
-					Voting Site
-				</title>
+				<title>Results: {election.name} | Stuy BOE Voting Site</title>
 				<meta
 					property="og:title"
 					content={`Results: ${election.name} | Stuy BOE Voting Site`}
@@ -23,10 +20,7 @@ export const Results = props => {
 			</Helmet>
 
 			{!election.publicResults && (
-				<p>
-					Results are currently not available for
-					this election.
-				</p>
+				<p>Results are currently not available for this election.</p>
 			)}
 
 			{/*	TODO: Early result viewing for people who are admins */}

@@ -1,11 +1,7 @@
 import React from 'react';
 import { AuthButton } from './AuthButton';
 import { AppContext } from './AppProvider';
-import {
-	Switch,
-	Route,
-	useLocation
-} from 'react-router-dom';
+import { Switch, Route, useLocation } from 'react-router-dom';
 import { Elections } from '../pages/Elections';
 import { Helmet } from 'react-helmet';
 
@@ -19,27 +15,16 @@ export const Content = props => {
 			<Helmet>
 				<meta
 					property="og:url"
-					content={
-						process.env.PUBLIC_URL +
-						location.pathname
-					}
+					content={process.env.PUBLIC_URL + location.pathname}
 				/>
 				<meta
 					property="og:site_name"
-					content={
-						'Stuyvesant Board of Elections Voting Site'
-					}
+					content={'Stuyvesant Board of Elections Voting Site'}
 				/>
-				<meta
-					property="og:type"
-					content={'website'}
-				/>
+				<meta property="og:type" content={'website'} />
 				<meta
 					property="og:image"
-					content={
-						process.env.PUBLIC_URL +
-						'/logo512.png'
-					}
+					content={process.env.PUBLIC_URL + '/logo512.png'}
 				/>
 				<title>Stuy BOE Voting Site</title>
 			</Helmet>
@@ -50,10 +35,7 @@ export const Content = props => {
 
 			<Switch>
 				<Route path={'/'} component={Hello} exact />
-				<Route
-					path={'/elections'}
-					component={Elections}
-				/>
+				<Route path={'/elections'} component={Elections} />
 			</Switch>
 
 			{!context.signedIn && <AuthButton />}
@@ -65,9 +47,7 @@ function Hello() {
 	return (
 		<div>
 			<Helmet>
-				<title>
-					{'Home | Stuy BOE Voting Site'}
-				</title>
+				<title>{'Home | Stuy BOE Voting Site'}</title>
 				<meta
 					property="og:title"
 					content={'Home | Stuy BOE Voting Site'}

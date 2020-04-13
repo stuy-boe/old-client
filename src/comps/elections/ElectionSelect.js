@@ -37,9 +37,7 @@ const ElectionSelect = () => {
 		return (
 			<Retry
 				onRetry={getElections}
-				message={
-					'There was an error getting the elections.'
-				}
+				message={'There was an error getting the elections.'}
 			/>
 		);
 	}
@@ -47,9 +45,7 @@ const ElectionSelect = () => {
 	return (
 		<div>
 			<Helmet>
-				<title>
-					Elections | Stuy BOE Voting Site
-				</title>
+				<title>Elections | Stuy BOE Voting Site</title>
 				<meta
 					property="og:title"
 					content="Elections | Stuy BOE Voting Site"
@@ -73,10 +69,7 @@ const ElectionGrid = ({ elections }) => {
 	return (
 		<Grid fixedColumnWidth align={'left'}>
 			{elections.map(election => (
-				<ElectionCell
-					election={election}
-					key={election.publicUrl}
-				/>
+				<ElectionCell election={election} key={election.publicUrl} />
 			))}
 		</Grid>
 	);
@@ -84,10 +77,7 @@ const ElectionGrid = ({ elections }) => {
 
 const ElectionCell = ({ election }) => (
 	<GridCell span={4}>
-		<ElectionCard
-			to={'/elections/:publicUrl'}
-			election={election}
-		/>
+		<ElectionCard to={'/elections/:publicUrl'} election={election} />
 	</GridCell>
 );
 
