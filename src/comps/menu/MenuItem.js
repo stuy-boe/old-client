@@ -1,8 +1,8 @@
-import React from "react";
-import {Link, useRouteMatch} from "react-router-dom";
-import {SimpleListItem} from "@rmwc/list";
+import React from 'react';
+import { Link, useRouteMatch } from 'react-router-dom';
+import { SimpleListItem } from '@rmwc/list';
 
-export const MenuItem = (props) => {
+export const MenuItem = props => {
 	let activated = useRouteMatch(props.activeRoute);
 	if (Boolean(activated) && props.exactRoute)
 		activated = activated.isExact;
@@ -16,5 +16,5 @@ export const MenuItem = (props) => {
 				metaIcon={props.metaIcon}
 			/>
 		</Link>
-	)
+	);
 };

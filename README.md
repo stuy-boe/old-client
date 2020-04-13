@@ -1,8 +1,12 @@
 # vote.stuysu.org
+
 The front-end of the Stuyvesant High School Board of Elections voting site.
 
+[![Stuyvesant Board of Elections](https://circleci.com/gh/stuy-boe/api-vote.stuysu.org.svg?style=svg)](https://github.com/stuy-boe/api.vote.stuysu.org)
+[![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+
 ## Production
-[![Stuyvesant Board of Elections](https://circleci.com/gh/stuy-boe/api-vote.stuysu.org.svg?style=svg)](https://github.com/stuy-boe/api.vote.stuysu.org) 
+
 [![Netlify Status](https://api.netlify.com/api/v1/badges/10fe90c0-0522-4dc2-aa7d-701dbf20a1a2/deploy-status)](https://app.netlify.com/sites/vote-stuysu-org/deploys)
 
 The production app is automatically re-deployed by Netlify upon new commits to the master branch.
@@ -10,14 +14,15 @@ The production app is automatically re-deployed by Netlify upon new commits to t
 For this reason access to the master branch will be restricted.
 
 Pull requests to the master branch from the staging branch must:
-- [ ] Pass Circle CI Build and Test steps
-- [ ] Pass Guardrails security test
-- [ ] Successfully build on Netlify
-- [ ] Have at least one code review
 
+-   [ ] Pass Circle CI Build and Test steps
+-   [ ] Pass Guardrails security test
+-   [ ] Successfully build on Netlify
+-   [ ] Have at least one code review
 
 ## Staging
-[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/dev-vote-stuysu-org/deploys) 
+
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d6c0fd89-b051-48b5-92c2-36244ebd3145/deploy-status)](https://app.netlify.com/sites/dev-vote-stuysu-org/deploys)
 
 Any commits to the [staging](https://github.com/stuy-boe/vote.stuysu.org/tree/staging) branch will also re-deploy [the staging app](https://staging-vote.stuysu.org)
 
@@ -26,6 +31,7 @@ For this reason, any contributions must be first made to an unprotected branch.
 The only requirement for merging into the staging branch is to pass the CircleCI build and test steps as well as the Guardrails security test.
 
 ## React Scripts
+
 In the project directory, you can run:
 
 ### `npm start`
