@@ -1,23 +1,13 @@
 .App {
 	min-height: 100vh;
 }
-
-
-.DrawerContent a {
-	text-decoration: none;
-}
-
-.App-logo {
-	height: 40vmin;
+a {
+	text-decoration: unset;
+	color: unset;
 }
 
 .flex-center {
 	display: flex;
 	justify-content: center;
 	align-items: center;
-}
-
-.UnstyledLink {
-	text-decoration-line: unset;
-	color: unset;
 }

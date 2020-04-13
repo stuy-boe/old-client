@@ -21,34 +21,40 @@ import { generatePath, Link } from 'react-router-dom';
 
 import moment from 'moment';
 
-import { resolve } from 'url';
+import urlJoin from 'url-join';
+
 import { API_URL } from '../../constants';
+import { AppContext } from '../AppProvider';
 
 export const ElectionCard = props => {
-	// noinspection JSCheckFunctionSignatures
 	const start = new Date(props.election.startTime);
-	// noinspection JSCheckFunctionSignatures
 	const end = new Date(props.election.endTime);
 
-	const [now, setNow] = React.useState(new Date());
+	const context = React.useContext(AppContext);
 
-	if (!props.election.completed && now <= end)
-		setTimeout(setNow, 1000, new Date());
+	const [now, setNow] = React.useState(context.getDate());
+
+	if (!props.election.completed && now <= end) {
+		// We passed it as a function object to prevent calling it immediately
+		setTimeout(getter => setNow(getter()), 1000, context.getDate);
+	}
 
 	let to = generatePath(props.to, props.election);
 
+	const electionPic = urlJoin(
+		API_URL,
+		'/api/s3',
+		props.election.picture,
+		`?width=360`
+	);
+
 	return (
 		<Card>
-			<Link to={to} className={['UnstyledLink']}>
+			<Link to={to}>
 				<CardPrimaryAction>
 					<CardMedia
 						sixteenByNine
-						style={{
-							backgroundImage: `url(${resolve(
-								API_URL,
-								props.election.picture
-							)})`
-						}}
+						style={{ backgroundImage: `url(${electionPic})` }}
 					/>
 					<div
 						style={{
@@ -84,7 +90,7 @@ export const ElectionCard = props => {
 
 			<CardActions>
 				<CardActionButtons>
-					<Link to={to} className={['UnstyledLink']}>
+					<Link to={to}>
 						<CardActionButton>View</CardActionButton>
 					</Link>
 				</CardActionButtons>
