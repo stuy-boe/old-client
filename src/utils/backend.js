@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {MessageQueue} from "../comps/MessageQueue";
+import { MessageQueue } from '../comps/MessageQueue';
 
 const backend = axios.create({
 	baseURL: process.env.REACT_APP_API_URL
@@ -7,18 +7,21 @@ const backend = axios.create({
 
 backend.defaults.withCredentials = true;
 
-backend.interceptors.response.use((response) => {
-	return response;
-}, (error) => {
+backend.interceptors.response.use(
+	response => {
+		return response;
+	},
+	error => {
+		if (!error.response) {
+			MessageQueue.notify({
+				body:
+					'There was an error performing that action. Check your internet status.',
+				actions: [{ icon: 'close' }]
+			});
+		}
 
-	if( ! error.response ){
-		MessageQueue.notify({
-			body: "There was an error performing that action. Check your internet status.",
-			actions: [{"icon": "close"}]
-		});
+		return Promise.reject(error);
 	}
-
-	return Promise.reject(error);
-});
+);
 
 export default backend;
