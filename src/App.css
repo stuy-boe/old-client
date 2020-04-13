@@ -1,35 +1,35 @@
 .App {
-    min-height: 100vh;
+	min-height: 100vh;
 }
 
 .AppBar {
-    background-color: white !important;
-    color: black !important;
+	background-color: white !important;
+	color: black !important;
 }
 
 .AppBar .rmwc-icon {
-    color: black !important;
+	color: black !important;
 }
 
 .NavDrawer {
-    border-right: 0 !important;
+	border-right: 0 !important;
 }
 
 .DrawerContent a {
-    text-decoration: none;
+	text-decoration: none;
 }
 
 .App-logo {
-    height: 40vmin;
+	height: 40vmin;
 }
 
 .flex-center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 .UnstyledLink {
-    text-decoration-line: unset;
-    color: unset;
+	text-decoration-line: unset;
+	color: unset;
 }

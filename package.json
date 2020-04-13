@@ -1,48 +1,56 @@
 {
-  "name": "vote.stuysu.org-client",
-  "version": "0.1.0",
-  "private": true,
-  "dependencies": {
-    "axios": "^0.19.2",
-    "flow-bin": "^0.122.0",
-    "moment": "^2.24.0",
-    "moment-timezone": "^0.5.28",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-google-login": "^5.1.3",
-    "react-helmet": "^6.0.0",
-    "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.4.1",
-    "rmwc": "^6.0.14"
-  },
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "flow": "flow"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "devDependencies": {
-    "@testing-library/jest-dom": "^5.5.0",
-    "@testing-library/react": "^10.0.2",
-    "@testing-library/user-event": "^10.0.1",
-    "prettier": "^2.0.4",
-    "prop-types": "^15.7.2"
-  },
-  "proxy": "http://staging-vote-stuysu-org.herokuapp.com"
+	"name": "vote.stuysu.org-client",
+	"version": "0.1.0",
+	"private": true,
+	"dependencies": {
+		"axios": "^0.19.2",
+		"flow-bin": "^0.122.0",
+		"moment": "^2.24.0",
+		"moment-timezone": "^0.5.28",
+		"react": "^16.13.1",
+		"react-dom": "^16.13.1",
+		"react-google-login": "^5.1.3",
+		"react-helmet": "^6.0.0",
+		"react-router-dom": "^5.1.2",
+		"react-scripts": "^3.4.1",
+		"rmwc": "^6.0.14"
+	},
+	"scripts": {
+		"start": "react-scripts start",
+		"build": "react-scripts build",
+		"test": "react-scripts test",
+		"eject": "react-scripts eject",
+		"flow": "flow"
+	},
+	"eslintConfig": {
+		"extends": "react-app"
+	},
+	"prettier": {
+		"printWidth": 60,
+		"singleQuote": true,
+		"trailingComma": "none",
+		"arrowParens": "avoid",
+		"useTabs": true,
+		"tabWidth": 4
+	},
+	"browserslist": {
+		"production": [
+			">0.2%",
+			"not dead",
+			"not op_mini all"
+		],
+		"development": [
+			"last 1 chrome version",
+			"last 1 firefox version",
+			"last 1 safari version"
+		]
+	},
+	"devDependencies": {
+		"@testing-library/jest-dom": "^5.5.0",
+		"@testing-library/react": "^10.0.2",
+		"@testing-library/user-event": "^10.0.1",
+		"prettier": "^2.0.4",
+		"prop-types": "^15.7.2"
+	},
+	"proxy": "http://staging-vote-stuysu-org.herokuapp.com"
 }

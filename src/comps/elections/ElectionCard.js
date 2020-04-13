@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react';
 
 import {
 	Card,
@@ -9,21 +9,21 @@ import {
 	CardActions,
 	CardMedia,
 	CardPrimaryAction
-} from "@rmwc/card";
+} from '@rmwc/card';
 import '@material/card/dist/mdc.card.css';
 import '@material/button/dist/mdc.button.css';
 import '@material/icon-button/dist/mdc.icon-button.css';
 
-import {Typography} from "@rmwc/typography";
+import { Typography } from '@rmwc/typography';
 import '@material/typography/dist/mdc.typography.css';
 
-import {generatePath, Link} from "react-router-dom";
+import { generatePath, Link } from 'react-router-dom';
 
-import moment from "moment";
+import moment from 'moment';
 
-import {resolve} from "url";
+import { resolve } from 'url';
 
-export const ElectionCard = (props) => {
+export const ElectionCard = props => {
 	// noinspection JSCheckFunctionSignatures
 	const start = new Date(props.election.startTime);
 	// noinspection JSCheckFunctionSignatures
@@ -38,16 +38,27 @@ export const ElectionCard = (props) => {
 
 	return (
 		<Card>
-			<Link to={to} className={["UnstyledLink"]}>
+			<Link to={to} className={['UnstyledLink']}>
 				<CardPrimaryAction>
 					<CardMedia
 						sixteenByNine
 						style={{
-							backgroundImage: `url(${resolve(process.env.REACT_APP_API_URL, props.election.picture)})`
+							backgroundImage: `url(${resolve(
+								process.env
+									.REACT_APP_API_URL,
+								props.election.picture
+							)})`
 						}}
 					/>
-					<div style={{padding: '0 1rem 1rem 1rem'}}>
-						<Typography use="headline6" tag="h2">
+					<div
+						style={{
+							padding: '0 1rem 1rem 1rem'
+						}}
+					>
+						<Typography
+							use="headline6"
+							tag="h2"
+						>
 							{props.election.name}
 						</Typography>
 
@@ -55,9 +66,12 @@ export const ElectionCard = (props) => {
 							use="subtitle2"
 							tag="h3"
 							theme="textSecondaryOnBackground"
-							style={{marginTop: '-1rem'}}
+							style={{ marginTop: '-1rem' }}
 						>
-							Starts: {moment(start).format("MMM Do, YYYY hh:mma")}
+							Starts:{' '}
+							{moment(start).format(
+								'MMM Do, YYYY hh:mma'
+							)}
 						</Typography>
 
 						<Typography
@@ -65,33 +79,31 @@ export const ElectionCard = (props) => {
 							tag="div"
 							theme="textSecondaryOnBackground"
 						>
-							{props.election.publicResults ?
-								"Results are publicly visible" :
-								"Results are not publicly visible"
-							}
+							{props.election.publicResults
+								? 'Results are publicly visible'
+								: 'Results are not publicly visible'}
 						</Typography>
-
 					</div>
 				</CardPrimaryAction>
 			</Link>
 
 			<CardActions>
 				<CardActionButtons>
-
-					<Link to={to} className={["UnstyledLink"]}>
+					<Link
+						to={to}
+						className={['UnstyledLink']}
+					>
 						<CardActionButton>
 							View
 						</CardActionButton>
 					</Link>
-
 				</CardActionButtons>
 
 				<CardActionIcons>
 					{/*TODO ADD SHARE DIALOG*/}
-					<CardActionIcon icon="share"/>
+					<CardActionIcon icon="share" />
 				</CardActionIcons>
-
 			</CardActions>
 		</Card>
-	)
+	);
 };
