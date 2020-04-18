@@ -19,7 +19,7 @@ type PropTypes = {
 
 const FlexCenter = (props: PropTypes) => {
 	const fullHeight = Boolean(props.fullHeight);
-	const classes = useStyles({ fullHeight });
+	const classes: Object = useStyles({ fullHeight });
 
 	return <div className={classes.FlexCenter}>{props.children}</div>;
 };

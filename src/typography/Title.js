@@ -6,7 +6,8 @@ import clampNumber from '../utils/clampNumber';
 
 const useStyles = createUseStyles({
 	Title: {
-		fontSize: props => `${3.4 - props.level * 0.4}rem`
+		fontSize: props => `${3.4 - props.level * 0.4}rem`,
+		textAlign: props => (props.center ? 'center' : null)
 	}
 });
 
@@ -14,7 +15,7 @@ type Props = {
 	children: string,
 	center: boolean,
 	style: Object,
-	className: string | Array,
+	className: string,
 	level: number,
 	theme: string
 };
@@ -24,23 +25,11 @@ const Title = (props: Props) => {
 
 	const level = clampNumber(props.level, 1, 6) || 1;
 
-	let classesArray = props.className;
+	const center = Boolean(props.center);
 
-	if (typeof classesArray === 'string') {
-		classesArray = props.className.split(' ');
-	}
+	const classes: Object = useStyles({ level, center });
 
-	const defaultClasses = useStyles({ level });
-
-	const titleClasses = defaultClasses.Title.split(' ');
-
-	let classes = [...titleClasses, ...classesArray];
-
-	if (props.center) {
-		classes.push('text-center');
-	}
-
-	const classesString = classes.filter(Boolean).join(' ');
+	const classesString = `${classes.Title} ${props.className}`;
 
 	return (
 		<Theme use={props.theme}>

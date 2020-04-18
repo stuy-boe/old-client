@@ -1,30 +1,29 @@
+// @flow
 import React from 'react';
 import { Theme } from '@rmwc/theme';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+	Text: {
+		textAlign: props => (props.center ? 'center' : null)
+	}
+});
 
 type Props = {
 	children: string,
 	center: boolean,
 	style: Object,
-	className: Array | string,
+	className: string,
 	theme: string
 };
 
 const Text = (props: Props) => {
 	const styles = props.style;
 
-	let classesArray = props.className;
+	const center = Boolean(props.center);
+	const classes: Object = useStyles({ center });
 
-	if (typeof classesArray === 'string') {
-		classesArray = props.className.split(' ');
-	}
-
-	const classes = classesArray;
-
-	if (props.center) {
-		classes.push('text-center');
-	}
-
-	const classesString = classes.filter(Boolean).join(' ');
+	const classesString = `${classes.Text} ${props.className}`;
 
 	return (
 		<Theme use={props.theme}>
@@ -39,7 +38,7 @@ Text.defaultProps = {
 	children: '',
 	center: false,
 	style: {},
-	className: [],
+	className: '',
 	theme: 'textPrimaryOnBackground'
 };
 
