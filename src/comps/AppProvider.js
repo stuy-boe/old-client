@@ -4,11 +4,19 @@ import Loading from './Loading';
 import backend from '../utils/backend';
 import Retry from './Retry';
 
+import withStyles from 'react-jss';
+
+const styles = {
+	LoadingContainer: {
+		height: '100vh'
+	}
+};
+
 export const AppContext = React.createContext({
 	initialized: false
 });
 
-export class AppProvider extends React.Component {
+class AppProvider extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -74,16 +82,18 @@ export class AppProvider extends React.Component {
 	}
 
 	render() {
-		if (this.state.status === 'loading') {
-			return <Loading />;
-		}
-
-		if (this.state.status === 'error') {
+		if (this.state.status !== 'loaded') {
 			return (
-				<Retry
-					onRetry={this.updateState}
-					message={'There was an error loading the app.'}
-				/>
+				<div className={this.props.classes.LoadingContainer}>
+					{this.state.status === 'loading' && <Loading />}
+
+					{this.state.status === 'error' && (
+						<Retry
+							onRetry={this.updateState}
+							message={'There was an error loading the app.'}
+						/>
+					)}
+				</div>
 			);
 		}
 
@@ -94,3 +104,5 @@ export class AppProvider extends React.Component {
 		);
 	}
 }
+
+export default withStyles(styles)(AppProvider);

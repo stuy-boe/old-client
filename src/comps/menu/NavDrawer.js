@@ -16,7 +16,7 @@ import '@rmwc/list/collapsible-list.css';
 import { AppContext } from '../AppProvider';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import { splitPath } from '../../utils/splitPath';
-import { MenuItem } from './MenuItem';
+import MenuItem from './MenuItem';
 import backend from '../../utils/backend';
 
 import { createUseStyles } from 'react-jss';
@@ -35,7 +35,7 @@ const useStyles = createUseStyles({
 	}
 });
 
-export const NavDrawer = props => {
+const NavDrawer = props => {
 	const classes = useStyles();
 
 	const context = React.useContext(AppContext);

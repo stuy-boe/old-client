@@ -1,17 +1,17 @@
 import React from 'react';
 import './App.css';
 
-import { Content } from './comps/Content';
+import Content from './comps/Content';
 import AppBar from './comps/menu/AppBar';
 import NavDrawer from './comps/menu/NavDrawer';
 import { BrowserRouter } from 'react-router-dom';
-import { AppProvider } from './comps/AppProvider';
+import AppProvider from './comps/AppProvider';
 
 import { SnackbarQueue } from '@rmwc/snackbar';
-import { MessageQueue } from './comps/MessageQueue';
+import MessageQueue from './comps/MessageQueue';
 import '@material/snackbar/dist/mdc.snackbar.css';
 import '@material/button/dist/mdc.button.css';
-import { Obfuscator } from './comps/Obfuscator';
+import Obfuscator from './comps/Obfuscator';
 import ThemeProvider from './comps/ThemeProvider';
 
 const App = () => {

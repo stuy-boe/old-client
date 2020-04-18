@@ -1,5 +1,5 @@
 import React from 'react';
-import { AuthButton } from './AuthButton';
+import AuthButton from './AuthButton';
 import { AppContext } from './AppProvider';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { Elections } from '../pages/Elections';
@@ -7,7 +7,7 @@ import { Helmet } from 'react-helmet';
 import { PUBLIC_URL } from '../constants';
 import { sendPageView } from '../utils/GoogleAnalytics';
 
-export const Content = () => {
+const Content = () => {
 	const context = React.useContext(AppContext);
 	const location = useLocation();
 
@@ -67,3 +67,5 @@ function Hello() {
 		</div>
 	);
 }
+
+export default Content;

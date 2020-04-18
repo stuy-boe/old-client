@@ -29,7 +29,7 @@ const AppBar = props => {
 					<span className={classes.Title}>Board of Elections</span>
 				}
 				navigationIcon={true}
-				onNav={props.toggleDrawer}
+				onNav={() => props.toggleDrawer()}
 				className={classes.AppBar}
 				fixed
 			/>

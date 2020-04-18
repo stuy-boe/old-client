@@ -13,10 +13,12 @@ const useStyles = createUseStyles({
 	}
 });
 
-export const Obfuscator = ({ open, toggleDrawer }) => {
+const Obfuscator = ({ open, toggleDrawer }) => {
 	const classes = useStyles();
 
 	if (!open) return null;
 
 	return <div className={classes.Obfuscator} onClick={toggleDrawer} />;
 };
+
+export default Obfuscator;

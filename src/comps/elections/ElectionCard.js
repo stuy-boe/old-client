@@ -4,8 +4,6 @@ import {
 	Card,
 	CardActionButton,
 	CardActionButtons,
-	CardActionIcon,
-	CardActionIcons,
 	CardActions,
 	CardMedia,
 	CardPrimaryAction
@@ -13,9 +11,6 @@ import {
 import '@material/card/dist/mdc.card.css';
 import '@material/button/dist/mdc.button.css';
 import '@material/icon-button/dist/mdc.icon-button.css';
-
-import { Typography } from '@rmwc/typography';
-import '@material/typography/dist/mdc.typography.css';
 
 import { generatePath, Link } from 'react-router-dom';
 
@@ -26,7 +21,24 @@ import urlJoin from 'url-join';
 import { API_URL } from '../../constants';
 import { AppContext } from '../AppProvider';
 
-export const ElectionCard = props => {
+import { createUseStyles } from 'react-jss';
+import Title from '../../typography/Title';
+import Subtitle from '../../typography/Subtitle';
+
+const useStyles = createUseStyles({
+	Media: {
+		backgroundImage: props => `url(${props.electionPic})`
+	},
+	TextContainer: {
+		padding: '0 1rem 1rem 1rem'
+	},
+	Title: {
+		fontWeight: 400,
+		marginBottom: '0.2rem'
+	}
+});
+
+const ElectionCard = props => {
 	const start = new Date(props.election.startTime);
 	const end = new Date(props.election.endTime);
 
@@ -48,42 +60,23 @@ export const ElectionCard = props => {
 		`?width=360`
 	);
 
+	const classes = useStyles({ electionPic });
+
 	return (
 		<Card>
 			<Link to={to}>
 				<CardPrimaryAction>
-					<CardMedia
-						sixteenByNine
-						style={{ backgroundImage: `url(${electionPic})` }}
-					/>
-					<div
-						style={{
-							padding: '0 1rem 1rem 1rem'
-						}}
-					>
-						<Typography use="headline6" tag="h2">
-							{props.election.name}
-						</Typography>
+					<CardMedia sixteenByNine className={classes.Media} />
 
-						<Typography
-							use="subtitle2"
-							tag="h3"
-							theme="textSecondaryOnBackground"
-							style={{ marginTop: '-1rem' }}
-						>
+					<div className={classes.TextContainer}>
+						<Title level={5} className={classes.Title}>
+							{props.election.name}
+						</Title>
+
+						<Subtitle className={classes.Subtitle}>
 							Starts:{' '}
 							{moment(start).format('MMM Do, YYYY hh:mma')}
-						</Typography>
-
-						<Typography
-							use="body1"
-							tag="div"
-							theme="textSecondaryOnBackground"
-						>
-							{props.election.publicResults
-								? 'Results are publicly visible'
-								: 'Results are not publicly visible'}
-						</Typography>
+						</Subtitle>
 					</div>
 				</CardPrimaryAction>
 			</Link>
@@ -98,3 +91,5 @@ export const ElectionCard = props => {
 		</Card>
 	);
 };
+
+export default ElectionCard;

@@ -1,7 +1,7 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { AppContext } from './AppProvider';
-import { MessageQueue } from './MessageQueue';
+import MessageQueue from './MessageQueue';
 
 import { SimpleDialog } from '@rmwc/dialog';
 import '@material/dialog/dist/mdc.dialog.css';
@@ -9,7 +9,7 @@ import '@material/button/dist/mdc.button.css';
 import backend from '../utils/backend';
 import { GOOGLE_CLIENT_ID } from '../constants';
 
-export const AuthButton = () => {
+const AuthButton = () => {
 	const context = React.useContext(AppContext);
 	const [payload, setPayload] = React.useState({
 		unset: true
@@ -69,3 +69,5 @@ export const AuthButton = () => {
 		</div>
 	);
 };
+
+export default AuthButton;

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElectionCard } from './ElectionCard';
+import ElectionCard from './ElectionCard';
 
 import { Grid, GridCell } from '@rmwc/grid';
 import '@material/layout-grid/dist/mdc.layout-grid.css';
@@ -7,6 +7,13 @@ import { Helmet } from 'react-helmet';
 import Loading from '../Loading';
 import backend from '../../utils/backend';
 import Retry from '../Retry';
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+	ElectionsContainer: {
+		maxWidth: '100%'
+	}
+});
 
 const ElectionSelect = () => {
 	const [elections, setElections] = React.useState({
@@ -66,8 +73,14 @@ const ElectionSelect = () => {
 };
 
 const ElectionGrid = ({ elections }) => {
+	const classes = useStyles();
+
 	return (
-		<Grid fixedColumnWidth align={'left'}>
+		<Grid
+			fixedColumnWidth
+			align={'left'}
+			className={classes.ElectionsContainer}
+		>
 			{elections.map(election => (
 				<ElectionCell election={election} key={election.publicUrl} />
 			))}

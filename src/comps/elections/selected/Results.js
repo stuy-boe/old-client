@@ -1,8 +1,9 @@
 import React from 'react';
 import { ElectionContext } from './SelectedElectionRouter';
 import { Helmet } from 'react-helmet';
+import Text from '../../../typography/Text';
 
-export const Results = props => {
+const Results = () => {
 	const election = React.useContext(ElectionContext);
 
 	return (
@@ -20,7 +21,9 @@ export const Results = props => {
 			</Helmet>
 
 			{!election.publicResults && (
-				<p>Results are currently not available for this election.</p>
+				<Text>
+					Results are currently not available for this election.
+				</Text>
 			)}
 
 			{/*	TODO: Early result viewing for people who are admins */}
@@ -29,3 +32,5 @@ export const Results = props => {
 		</div>
 	);
 };
+
+export default Results;

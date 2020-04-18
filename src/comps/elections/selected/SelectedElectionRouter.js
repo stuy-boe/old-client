@@ -3,12 +3,13 @@ import { Route, Switch } from 'react-router-dom';
 import { Overview } from './Overview';
 import Loading from '../../Loading';
 import { Helmet } from 'react-helmet';
-import { Vote } from './Vote';
+import Vote from './Vote';
 import Candidates from './Candidates';
-import { Results } from './Results';
+import Results from './Results';
 import { resolve as resolveUrl } from 'url';
 import backend from '../../../utils/backend';
 import { API_URL } from '../../../constants';
+import Text from '../../../typography/Text';
 
 export const ElectionContext = React.createContext({});
 
@@ -61,7 +62,7 @@ export class SelectedElectionRouter extends React.Component {
 							content={`There is no election at that url... yet!`}
 						/>
 					</Helmet>
-					<p>That election doesn't exist</p>
+					<Text>That election doesn't exist</Text>
 				</div>
 			);
 

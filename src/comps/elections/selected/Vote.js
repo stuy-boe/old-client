@@ -3,7 +3,7 @@ import { ElectionContext } from './SelectedElectionRouter';
 import { Helmet } from 'react-helmet';
 import moment from 'moment-timezone';
 
-export const Vote: React.FC = () => {
+const Vote = () => {
 	const election = React.useContext(ElectionContext);
 
 	const startTimestring = moment(election.startTime)
