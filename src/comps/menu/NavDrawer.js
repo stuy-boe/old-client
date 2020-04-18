@@ -79,9 +79,13 @@ export const NavDrawer = props => {
 
 				<DrawerContent className={['DrawerContent']}>
 					<List
-						onClick={() =>
-							window.innerWidth < 600 && props.toggleDrawer()
-						}
+						onClick={() => {
+							// If we're on mobile
+							// close the drawer upon the click of a list item
+							if (window.innerWidth < 600) {
+								props.toggleDrawer(false);
+							}
+						}}
 					>
 						{context.signedIn && (
 							<SimpleListItem

@@ -36,7 +36,7 @@ export const ElectionCard = props => {
 
 	if (!props.election.completed && now <= end) {
 		// We passed it as a function object to prevent calling it immediately
-		setTimeout(getter => setNow(getter()), 1000, context.getDate);
+		setTimeout(() => setNow(context.getDate()), 1000);
 	}
 
 	let to = generatePath(props.to, props.election);
@@ -94,11 +94,6 @@ export const ElectionCard = props => {
 						<CardActionButton>View</CardActionButton>
 					</Link>
 				</CardActionButtons>
-
-				<CardActionIcons>
-					{/*TODO ADD SHARE DIALOG*/}
-					<CardActionIcon icon="share" />
-				</CardActionIcons>
 			</CardActions>
 		</Card>
 	);

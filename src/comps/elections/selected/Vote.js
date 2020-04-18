@@ -1,7 +1,6 @@
 import React from 'react';
 import { ElectionContext } from './SelectedElectionRouter';
 import { Helmet } from 'react-helmet';
-
 import moment from 'moment-timezone';
 
 export const Vote: React.FC = () => {
@@ -30,3 +29,5 @@ export const Vote: React.FC = () => {
 		</div>
 	);
 };
+
+export default Vote;

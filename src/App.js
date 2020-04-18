@@ -15,9 +15,16 @@ import { Obfuscator } from './comps/Obfuscator';
 import ThemeProvider from './comps/ThemeProvider';
 
 const App = () => {
+	// If the device has a sufficiently large screen, the drawer is open by default
 	const [drawerOpen, setDrawerOpen] = React.useState(window.innerWidth > 800);
 
-	const toggleDrawer = () => setDrawerOpen(!drawerOpen);
+	const toggleDrawer = state => {
+		let newState = state;
+		if (!newState) {
+			newState = !drawerOpen;
+		}
+		setDrawerOpen(newState);
+	};
 
 	window.onresize = event => {
 		const shouldBeOpen = window.innerWidth > 800;
@@ -37,6 +44,8 @@ const App = () => {
 							drawerOpen={drawerOpen}
 							toggleDrawer={toggleDrawer}
 						>
+							{/*We're not using the modal drawer */}
+							{/*need to add our own obfuscator for mobile devices*/}
 							<Obfuscator
 								open={drawerOpen && window.innerWidth < 800}
 								toggleDrawer={toggleDrawer}
