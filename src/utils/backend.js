@@ -1,8 +1,9 @@
 import axios from 'axios';
-import { MessageQueue } from '../comps/MessageQueue';
+import MessageQueue from '../comps/MessageQueue';
+import { API_URL } from '../constants';
 
 const backend = axios.create({
-	baseURL: process.env.REACT_APP_API_URL
+	baseURL: API_URL
 });
 
 backend.defaults.withCredentials = true;

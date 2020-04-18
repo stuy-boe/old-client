@@ -2,7 +2,7 @@ import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { SimpleListItem } from '@rmwc/list';
 
-export const MenuItem = props => {
+const MenuItem = props => {
 	let activated = useRouteMatch(props.activeRoute);
 	if (Boolean(activated) && props.exactRoute) activated = activated.isExact;
 
@@ -17,3 +17,5 @@ export const MenuItem = props => {
 		</Link>
 	);
 };
+
+export default MenuItem;

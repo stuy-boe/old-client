@@ -10,28 +10,47 @@ import {
 import '@material/drawer/dist/mdc.drawer.css';
 
 import { CollapsibleList, List, SimpleListItem } from '@rmwc/list';
+
 import '@material/list/dist/mdc.list.css';
 import '@rmwc/list/collapsible-list.css';
 import { AppContext } from '../AppProvider';
 import { useLocation, useRouteMatch } from 'react-router-dom';
 import { splitPath } from '../../utils/splitPath';
-import { MenuItem } from './MenuItem';
+import MenuItem from './MenuItem';
 import backend from '../../utils/backend';
 
-export const NavDrawer = props => {
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+	NavDrawer: {
+		borderRight: 0,
+		position: 'fixed'
+	},
+	DrawerAppContent: {
+		padding: '1rem'
+	},
+	DrawerLogo: {
+		paddingTop: '1em',
+		width: '100px'
+	}
+});
+
+const NavDrawer = props => {
+	const classes = useStyles();
+
 	const context = React.useContext(AppContext);
 
 	const location = useLocation();
 
 	const getModifiedPath = (index, val) => {
-		let new_path = splitPath(location.pathname);
-		new_path[index] = val;
-		return '/' + new_path.join('/');
+		let newPath = splitPath(location.pathname);
+		newPath[index] = val;
+		return '/' + newPath.join('/');
 	};
 
 	const attemptLogout = () => {
-		backend.get('/auth/logout').then(({ data }) => {
-			if (data.success) context.updateState();
+		backend.get('/api/auth/logout').then(() => {
+			context.updateState();
 		});
 	};
 
@@ -42,15 +61,13 @@ export const NavDrawer = props => {
 			<Drawer
 				dismissible
 				open={props.drawerOpen}
-				className={['NavDrawer']}
-				style={{ position: 'fixed' }}
+				className={classes.NavDrawer}
 			>
 				<DrawerHeader>
 					<img
-						src={'/logo192.png'}
-						width={100}
+						src={'/logo100.png'}
 						alt={'StuyBOE Logo'}
-						style={{ paddingTop: '1em' }}
+						className={classes.DrawerLogo}
 					/>
 					<DrawerTitle>
 						{context.signedIn ? context.user.name : 'Not Signed In'}
@@ -62,9 +79,13 @@ export const NavDrawer = props => {
 
 				<DrawerContent className={['DrawerContent']}>
 					<List
-						onClick={() =>
-							window.innerWidth < 600 && props.toggleDrawer()
-						}
+						onClick={() => {
+							// If we're on mobile
+							// close the drawer upon the click of a list item
+							if (window.innerWidth < 600) {
+								props.toggleDrawer(false);
+							}
+						}}
 					>
 						{context.signedIn && (
 							<SimpleListItem
@@ -161,9 +182,11 @@ export const NavDrawer = props => {
 				</DrawerContent>
 			</Drawer>
 
-			<DrawerAppContent style={{ padding: '1rem' }}>
+			<DrawerAppContent className={classes.DrawerAppContent}>
 				{props.children}
 			</DrawerAppContent>
 		</div>
 	);
 };
+
+export default NavDrawer;

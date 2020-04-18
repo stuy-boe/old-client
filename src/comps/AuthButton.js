@@ -1,14 +1,15 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
 import { AppContext } from './AppProvider';
-import { MessageQueue } from './MessageQueue';
+import MessageQueue from './MessageQueue';
 
 import { SimpleDialog } from '@rmwc/dialog';
 import '@material/dialog/dist/mdc.dialog.css';
 import '@material/button/dist/mdc.button.css';
 import backend from '../utils/backend';
+import { GOOGLE_CLIENT_ID } from '../constants';
 
-export const AuthButton = props => {
+const AuthButton = () => {
 	const context = React.useContext(AppContext);
 	const [payload, setPayload] = React.useState({
 		unset: true
@@ -57,7 +58,7 @@ export const AuthButton = props => {
 			/>
 
 			<GoogleLogin
-				clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+				clientId={GOOGLE_CLIENT_ID}
 				buttonText="Login with Google"
 				onSuccess={handleSuccess}
 				onFailure={er => {
@@ -68,3 +69,5 @@ export const AuthButton = props => {
 		</div>
 	);
 };
+
+export default AuthButton;

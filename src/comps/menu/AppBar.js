@@ -6,26 +6,36 @@ import '@material/icon-button/dist/mdc.icon-button.css';
 
 import '@rmwc/icon/icon.css';
 
-export const AppBar = props => {
+import { createUseStyles } from 'react-jss';
+
+const useStyles = createUseStyles({
+	AppBar: {
+		backgroundColor: 'white',
+		color: 'black',
+		zIndex: 99
+	},
+	Title: {
+		fontFamily: `'Sumana', serif`
+	}
+});
+
+const AppBar = props => {
+	const classes = useStyles();
+
 	return (
 		<div>
 			<SimpleTopAppBar
 				title={
-					<span
-						style={{
-							fontFamily: `'Sumana', serif`
-						}}
-					>
-						Board of Elections
-					</span>
+					<span className={classes.Title}>Board of Elections</span>
 				}
-				navigationIcon
-				onNav={props.toggleDrawer}
-				className={['AppBar']}
+				navigationIcon={true}
+				onNav={() => props.toggleDrawer()}
+				className={classes.AppBar}
 				fixed
-				style={{ zIndex: 99 }}
 			/>
 			<TopAppBarFixedAdjust />
 		</div>
 	);
 };
+
+export default AppBar;
