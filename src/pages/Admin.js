@@ -1,10 +1,10 @@
-// @flow
 import React from 'react';
-import AdminTabs from '../comps/admin/AdminTabs';
 import { AppContext } from '../comps/AppProvider';
 import Title from '../typography/Title';
+import { Switch, Route } from 'react-router-dom';
+import AdminElectionsRouter from '../comps/admin/AdminElectionsRouter';
 
-const Admin = () => {
+const Admin = ({ match }) => {
 	const context = React.useContext(AppContext);
 
 	// TODO: make this route pretty for non-admins
@@ -18,7 +18,12 @@ const Admin = () => {
 
 	return (
 		<div>
-			<AdminTabs />
+			<Switch>
+				<Route
+					path={`${match.path}/elections`}
+					component={AdminElectionsRouter}
+				/>
+			</Switch>
 		</div>
 	);
 };
