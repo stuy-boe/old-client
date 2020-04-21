@@ -6,6 +6,7 @@ import { Elections } from '../pages/Elections';
 import { Helmet } from 'react-helmet';
 import { PUBLIC_URL } from '../constants';
 import { sendPageView } from '../utils/GoogleAnalytics';
+import Admin from '../pages/Admin';
 
 const Content = () => {
 	const context = React.useContext(AppContext);
@@ -40,6 +41,7 @@ const Content = () => {
 			<Switch>
 				<Route path={'/'} component={Hello} exact />
 				<Route path={'/elections'} component={Elections} />
+				<Route path={'/admin'} component={Admin} />
 			</Switch>
 
 			{!context.signedIn && <AuthButton />}
