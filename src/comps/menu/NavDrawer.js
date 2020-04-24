@@ -9,17 +9,18 @@ import {
 } from '@rmwc/drawer';
 import '@material/drawer/dist/mdc.drawer.css';
 
-import { CollapsibleList, List, SimpleListItem } from '@rmwc/list';
+import { List, SimpleListItem } from '@rmwc/list';
 
 import '@material/list/dist/mdc.list.css';
 import '@rmwc/list/collapsible-list.css';
 import { AppContext } from '../AppProvider';
-import { useLocation, useRouteMatch } from 'react-router-dom';
-import { splitPath } from '../../utils/splitPath';
+import { useLocation } from 'react-router-dom';
 import MenuItem from './MenuItem';
 import backend from '../../utils/backend';
 
 import { createUseStyles } from 'react-jss';
+import ElectionItems from './ElectionItems';
+import AdminItems from './AdminItems';
 
 const useStyles = createUseStyles({
 	NavDrawer: {
@@ -35,18 +36,21 @@ const useStyles = createUseStyles({
 	}
 });
 
-const NavDrawer = props => {
+const NavDrawer = ({ toggleDrawer, drawerOpen, children }) => {
 	const classes = useStyles();
 
 	const context = React.useContext(AppContext);
 
 	const location = useLocation();
 
-	const getModifiedPath = (index, val) => {
-		let newPath = splitPath(location.pathname);
-		newPath[index] = val;
-		return '/' + newPath.join('/');
+	// On mobile devices, close the nav bar upon navigation
+	const handleNavigation = () => {
+		if (window.innerWidth < 800 && drawerOpen) {
+			toggleDrawer(false);
+		}
 	};
+
+	React.useEffect(handleNavigation, [location]);
 
 	const attemptLogout = () => {
 		backend.get('/api/auth/logout').then(() => {
@@ -54,15 +58,9 @@ const NavDrawer = props => {
 		});
 	};
 
-	let electionIsSelected = useRouteMatch('/elections/:id');
-
 	return (
 		<div>
-			<Drawer
-				dismissible
-				open={props.drawerOpen}
-				className={classes.NavDrawer}
-			>
+			<Drawer dismissible open={drawerOpen} className={classes.NavDrawer}>
 				<DrawerHeader>
 					<img
 						src={'/logo100.png'}
@@ -78,15 +76,7 @@ const NavDrawer = props => {
 				</DrawerHeader>
 
 				<DrawerContent className={['DrawerContent']}>
-					<List
-						onClick={() => {
-							// If we're on mobile
-							// close the drawer upon the click of a list item
-							if (window.innerWidth < 600) {
-								props.toggleDrawer(false);
-							}
-						}}
-					>
+					<List>
 						{context.signedIn && (
 							<SimpleListItem
 								graphic="power_settings_new"
@@ -96,12 +86,7 @@ const NavDrawer = props => {
 						)}
 
 						{context.signedIn && context.admin.status && (
-							<MenuItem
-								to={'/admin'}
-								text={'Admin'}
-								icon={'build'}
-								activeRoute={'/admin'}
-							/>
+							<AdminItems />
 						)}
 
 						{context.signedIn && context.campaignManager.status && (
@@ -121,49 +106,7 @@ const NavDrawer = props => {
 							exactRoute
 						/>
 
-						<CollapsibleList
-							handle={
-								<MenuItem
-									to={'/elections'}
-									text={'Elections'}
-									icon={'how_to_vote'}
-									activeRoute={'/elections'}
-									metaIcon={'chevron_right'}
-									exactRoute
-								/>
-							}
-							open={electionIsSelected}
-						>
-							<MenuItem
-								to={getModifiedPath(2, '')}
-								text={'Overview'}
-								icon={'dashboard'}
-								activeRoute={'/elections/:id'}
-								exactRoute
-							/>
-
-							<MenuItem
-								to={getModifiedPath(2, 'candidates')}
-								text={'Candidates'}
-								icon={'people'}
-								activeRoute={'/elections/:id/candidates'}
-							/>
-
-							<MenuItem
-								to={getModifiedPath(2, 'vote')}
-								text={'Vote'}
-								icon={'where_to_vote'}
-								activeRoute={'/elections/:id/vote'}
-							/>
-
-							<MenuItem
-								to={getModifiedPath(2, 'results')}
-								text={'Results'}
-								icon={'ballot'}
-								activeRoute={'/elections/:id/results'}
-								fillParams
-							/>
-						</CollapsibleList>
+						<ElectionItems />
 
 						<MenuItem
 							to={'/contact'}
@@ -183,7 +126,7 @@ const NavDrawer = props => {
 			</Drawer>
 
 			<DrawerAppContent className={classes.DrawerAppContent}>
-				{props.children}
+				{children}
 			</DrawerAppContent>
 		</div>
 	);
