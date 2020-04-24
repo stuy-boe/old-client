@@ -1,21 +1,19 @@
-// @flow
 import React from 'react';
-import backend from '../../utils/backend';
+import { Route, Switch } from 'react-router-dom';
+import ElectionsList from './elections/ElectionsList';
+import CreateElection from './elections/CreateElection';
 
-const AdminElectionsRouter = () => {
-	const [elections, setElections] = React.useState([]);
-
-	React.useEffect(() => {
-		backend
-			.get('/api/admin/elections/list')
-			.then(({ data }) => setElections(data.payload));
-	}, []);
-
+const AdminElectionsRouter = ({ match }) => {
 	return (
 		<div>
-			{elections.map(i => (
-				<p>{JSON.stringify(i)}</p>
-			))}
+			<Switch>
+				<Route path={match.path} exact component={ElectionsList} />
+				<Route
+					path={`${match.path}/create`}
+					exact
+					component={CreateElection}
+				/>
+			</Switch>
 		</div>
 	);
 };

@@ -34,10 +34,6 @@ const Content = () => {
 				<title>Stuy BOE Voting Site</title>
 			</Helmet>
 
-			{new Date().toLocaleTimeString()}
-			<br />
-			{context.getDate().toLocaleTimeString()}
-
 			<Switch>
 				<Route path={'/'} component={Hello} exact />
 				<Route path={'/elections'} component={Elections} />
