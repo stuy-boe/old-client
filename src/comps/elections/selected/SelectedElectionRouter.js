@@ -6,7 +6,7 @@ import { Helmet } from 'react-helmet';
 import Vote from './Vote';
 import Candidates from './Candidates';
 import Results from './Results';
-import { resolve as resolveUrl } from 'url';
+import urlJoin from 'url-join';
 import backend from '../../../utils/backend';
 import { API_URL } from '../../../constants';
 import Text from '../../../typography/Text';
@@ -71,9 +71,12 @@ export class SelectedElectionRouter extends React.Component {
 				<Helmet>
 					<meta
 						property="og:image"
-						content={resolveUrl(
+						content={urlJoin(
 							API_URL,
-							this.state.election.picture
+							`/api/s3`,
+							this.state.election.picture,
+							`?flags=lossy`,
+							`?quality=auto`
 						)}
 					/>
 				</Helmet>

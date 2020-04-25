@@ -35,11 +35,7 @@ const ElectionPics = ({ onChange, activePic }) => {
 
 	React.useEffect(() => {
 		backend.get('/api/admin/elections/pics/list').then(({ data }) => {
-			setElectionPics(
-				data.payload.map(picUrl =>
-					urlJoin(API_URL, '/api/s3', picUrl, `?width=360`)
-				)
-			);
+			setElectionPics(data.payload);
 		});
 	}, []);
 
@@ -51,6 +47,15 @@ const ElectionPics = ({ onChange, activePic }) => {
 				className={classes.InnerImageContainer}
 			>
 				{electionPics.map(src => {
+					const absoluteSrc = urlJoin(
+						API_URL,
+						`/api/s3`,
+						src,
+						`?width=360`,
+						`?flags=lossy`,
+						`?quality=auto`
+					);
+
 					const specialClass =
 						activePic === src ? classes.SelectedItem : '';
 
@@ -61,7 +66,7 @@ const ElectionPics = ({ onChange, activePic }) => {
 							style={{ marginBottom: '16px' }}
 							className={specialClass}
 						>
-							<ImageListImage src={src} />
+							<ImageListImage src={absoluteSrc} />
 						</ImageListItem>
 					);
 				})}
