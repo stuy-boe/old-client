@@ -63,7 +63,7 @@ const NavDrawer = ({ toggleDrawer, drawerOpen, children }) => {
 			<Drawer dismissible open={drawerOpen} className={classes.NavDrawer}>
 				<DrawerHeader>
 					<img
-						src={'/logo100.png'}
+						src={'/img/logo100.png'}
 						alt={'StuyBOE Logo'}
 						className={classes.DrawerLogo}
 					/>

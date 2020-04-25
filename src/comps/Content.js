@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import { PUBLIC_URL } from '../constants';
 import { sendPageView } from '../utils/GoogleAnalytics';
 import Admin from '../pages/Admin';
+import Error404 from '../pages/Error404';
 
 const Content = () => {
 	const context = React.useContext(AppContext);
@@ -28,8 +29,14 @@ const Content = () => {
 				/>
 				<meta property="og:type" content={'website'} />
 				<meta
+					property="og:description"
+					content={
+						'This is where voting as well as campaigning for Student Union Elections takes place'
+					}
+				/>
+				<meta
 					property="og:image"
-					content={PUBLIC_URL + '/logo512.png'}
+					content={PUBLIC_URL + '/img/logo512.png'}
 				/>
 				<title>Stuy BOE Voting Site</title>
 			</Helmet>
@@ -38,6 +45,7 @@ const Content = () => {
 				<Route path={'/'} component={Hello} exact />
 				<Route path={'/elections'} component={Elections} />
 				<Route path={'/admin'} component={Admin} />
+				<Route path={'/'} component={Error404} />
 			</Switch>
 
 			{!context.signedIn && <AuthButton />}
@@ -53,12 +61,6 @@ function Hello() {
 				<meta
 					property="og:title"
 					content={'Home | Stuy BOE Voting Site'}
-				/>
-				<meta
-					property="og:description"
-					content={
-						'This is where voting as well as campaigning for Student Union Elections takes place'
-					}
 				/>
 			</Helmet>
 			<h1>Hello World!</h1>
