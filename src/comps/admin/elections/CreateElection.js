@@ -17,33 +17,48 @@ import '@material/menu-surface/dist/mdc.menu-surface.css';
 
 import Text from '../../../typography/Text';
 import backend from '../../../utils/backend';
-import ElectionPics from './ElectionPics';
+import ElectionPicDialog from './ElectionPicDialog';
 
 import { Switch } from '@rmwc/switch';
 import '@rmwc/switch/styles';
 
 import { createUseStyles } from 'react-jss';
 import MessageQueue from '../../MessageQueue';
+import urlJoin from 'url-join';
+import { API_URL } from '../../../constants';
+import FlexCenter from '../../FlexCenter';
+
+import { Grid, GridCell, GridRow } from '@rmwc/grid';
 
 const useStyles = createUseStyles({
 	PageContainer: {
 		paddingBottom: '5rem'
 	},
 	ElectionName: {
-		marginBottom: '2rem'
+		width: '26.5rem',
+		maxWidth: '100%'
 	},
-	ElectionTypeSelect: {
-		maxWidth: '20rem',
-		marginBottom: '2rem'
+	ElectionUrl: {
+		width: '26.5rem',
+		maxWidth: '100%'
 	},
 	DateSelector: {
-		minWidth: '10rem',
-		marginRight: '1rem',
-		marginBottom: '1rem'
+		width: '100%'
 	},
 	TimeSelector: {
-		minWidth: '9rem',
-		marginBottom: '2rem'
+		width: '100%'
+	},
+	SelectedImage: {
+		marginBottom: '1rem',
+		borderRadius: '5px'
+	},
+	SubmitButton: {
+		marginTop: '2rem',
+		color: 'white !important'
+	},
+	FormContainer: {
+		width: '100%',
+		maxWidth: '58rem'
 	}
 });
 
@@ -109,10 +124,10 @@ const CreateElection = () => {
 			encodeURI(
 				name
 					.trim()
-					.replace(/[^a-zA-Z ]/g, '')
 					.toLowerCase()
 					.split(' ')
 					.join('-')
+					.replace(/[^a-z0-9-]/g, '')
 			)
 		);
 	};
@@ -156,114 +171,168 @@ const CreateElection = () => {
 				Create Election
 			</Title>
 
-			<TextField
-				outlined
-				label="Name"
-				value={name}
-				onChange={ev => setName(ev.target.value)}
-				required
-				className={classes.ElectionName}
-				onBlur={checkPublicUrlIsValid}
-			/>
+			<Grid className={classes.FormContainer}>
+				<GridCell span={6} tablet={12}>
+					<TextField
+						outlined
+						label="Name"
+						value={name}
+						onChange={ev => setName(ev.target.value)}
+						required
+						className={classes.ElectionName}
+						onBlur={checkPublicUrlIsValid}
+					/>
+				</GridCell>
+				<GridCell span={6} tablet={12}>
+					<TextField
+						outlined
+						label="Election Url"
+						value={publicUrl}
+						className={classes.ElectionUrl}
+						onChange={ev =>
+							setPublicUrl(ev.target.value.replace(' ', '-'))
+						}
+						required
+						trailingIcon={publicUrlExistsIcon}
+						helpText={{
+							persistent: false,
+							validationMsg: false,
+							children: (
+								<span>
+									Election will be accessible at{' '}
+									{window.location.host}/elections/
+									<strong>
+										{publicUrl || '<election-url>'}
+									</strong>
+								</span>
+							)
+						}}
+						onBlur={checkPublicUrlIsValid}
+					/>
+				</GridCell>
 
-			<br />
+				<GridCell span={12}>
+					<Select
+						label="Election Type"
+						enhanced
+						outlined
+						options={electionTypes}
+						value={type}
+						onChange={ev => setType(ev.target.value)}
+						className={classes.ElectionTypeSelect}
+					/>
+				</GridCell>
 
-			<TextField
-				outlined
-				label="Election Url"
-				value={publicUrl}
-				onChange={ev => setPublicUrl(ev.target.value.replace(' ', '-'))}
-				required
-				trailingIcon={publicUrlExistsIcon}
-				helpText={{
-					persistent: false,
-					validationMsg: false,
-					children: (
-						<span>
-							Election will be accessible at{' '}
-							{window.location.host}/elections/
-							<strong>{publicUrl || '<election-url>'}</strong>
-						</span>
-					)
-				}}
-				onBlur={checkPublicUrlIsValid}
-			/>
+				<GridCell span={12}>
+					<Text>
+						Timezone:{' '}
+						<strong>
+							{Intl.DateTimeFormat().resolvedOptions().timeZone}
+						</strong>
+					</Text>
+				</GridCell>
 
-			<br />
-			<Select
-				label="Election Type"
-				enhanced
-				outlined
-				options={electionTypes}
-				value={type}
-				onChange={ev => setType(ev.target.value)}
-				className={classes.ElectionTypeSelect}
-			/>
+				<GridCell span={6} tablet={12}>
+					<GridRow>
+						<GridCell span={7} tablet={12}>
+							<TextField
+								label="Start Date"
+								type="date"
+								icon={'calendar_today'}
+								className={classes.DateSelector}
+								value={startDate}
+								outlined
+								onChange={ev => setStartDate(ev.target.value)}
+							/>
+						</GridCell>
 
-			<Text>
-				Timezone:{' '}
-				<strong>
-					{Intl.DateTimeFormat().resolvedOptions().timeZone}
-				</strong>
-			</Text>
+						<GridCell span={5} tablet={12}>
+							<TextField
+								label="Start Time"
+								type="time"
+								icon={'schedule'}
+								className={classes.TimeSelector}
+								value={startTime}
+								outlined
+								onChange={ev => setStartTime(ev.target.value)}
+							/>
+						</GridCell>
+					</GridRow>
+				</GridCell>
 
-			<TextField
-				label="Start Date"
-				type="date"
-				icon={'calendar_today'}
-				className={classes.DateSelector}
-				value={startDate}
-				outlined
-				onChange={ev => setStartDate(ev.target.value)}
-			/>
+				<GridCell span={6} tablet={12}>
+					<GridRow>
+						<GridCell span={7} tablet={12}>
+							<TextField
+								label="End Date"
+								type="date"
+								icon={'event'}
+								className={classes.DateSelector}
+								value={endDate}
+								outlined
+								onChange={ev => setEndDate(ev.target.value)}
+							/>
+						</GridCell>
 
-			<TextField
-				label="Start Time"
-				type="time"
-				icon={'schedule'}
-				className={classes.TimeSelector}
-				value={startTime}
-				outlined
-				onChange={ev => setStartTime(ev.target.value)}
-			/>
+						<GridCell span={5} tablet={12}>
+							<TextField
+								label="End Time"
+								type="time"
+								icon={'alarm'}
+								className={classes.TimeSelector}
+								value={endTime}
+								outlined
+								onChange={ev => setEndTime(ev.target.value)}
+							/>
+						</GridCell>
+					</GridRow>
+				</GridCell>
 
-			<br />
+				<GridCell span={12}>
+					<br />
+					<Switch
+						checked={visible}
+						onChange={() => setVisible(!visible)}
+						label={<span>&nbsp;Is Publicly Visible</span>}
+					/>
+				</GridCell>
 
-			<TextField
-				label="End Date"
-				type="date"
-				icon={'event'}
-				className={classes.DateSelector}
-				value={endDate}
-				outlined
-				onChange={ev => setEndDate(ev.target.value)}
-			/>
+				<GridCell span={12}>
+					<Title level={5}>Election Picture:</Title>
 
-			<TextField
-				label="End Time"
-				type="time"
-				icon={'alarm'}
-				className={classes.TimeSelector}
-				value={endTime}
-				outlined
-				onChange={ev => setEndTime(ev.target.value)}
-			/>
-			<br />
+					{picture && (
+						<img
+							src={urlJoin(
+								API_URL,
+								`/api/s3`,
+								picture,
+								`?width=200`,
+								`?height=150`,
+								`?crop=fill`,
+								`?flags=lossy`,
+								`?quality=90`
+							)}
+							className={classes.SelectedImage}
+							alt={'Selected'}
+						/>
+					)}
 
-			<Switch
-				checked={visible}
-				onChange={() => setVisible(!visible)}
-				label={<span>&nbsp;Is Publicly Visible</span>}
-			/>
+					<ElectionPicDialog
+						setSelectedPic={setPicture}
+						selectedPic={picture}
+					/>
+				</GridCell>
 
-			<br />
-			<br />
-			<Title level={6}>Election Picture:</Title>
-			<ElectionPics onChange={setPicture} activePic={picture} />
-
-			<br />
-
-			<Button onClick={submitForm}>Submit</Button>
+				<GridCell span={12}>
+					<Button
+						raised
+						onClick={submitForm}
+						className={classes.SubmitButton}
+					>
+						Submit
+					</Button>
+				</GridCell>
+			</Grid>
 		</div>
 	);
 };

@@ -57,9 +57,9 @@ const ElectionCard = props => {
 		API_URL,
 		'/api/s3',
 		props.election.picture,
-		`?width=360`,
+		`?width=400`,
 		`?flags=lossy`,
-		`?quality=auto`
+		`?quality=95`
 	);
 
 	const classes = useStyles({ electionPic });
