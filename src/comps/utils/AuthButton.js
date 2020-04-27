@@ -6,15 +6,6 @@ import GoogleLogin from 'react-google-login';
 import urlJoin from 'url-join';
 
 const AuthButton = () => {
-	const attemptLogin = idToken => {
-		window.location.href = urlJoin(
-			API_URL,
-			`/api/auth/login`,
-			`?idToken=${encodeURIComponent(idToken)}`,
-			`?redirect=${window.location.href}`
-		);
-	};
-
 	const handleSuccess = async data => {
 		const email = data.Pt.yu;
 		const idToken = data.tc.id_token;
@@ -35,7 +26,12 @@ const AuthButton = () => {
 		}
 
 		if (confirmation) {
-			attemptLogin(idToken);
+			window.location.href = urlJoin(
+				API_URL,
+				`/api/auth/login`,
+				`?idToken=${encodeURIComponent(idToken)}`,
+				`?redirect=${window.location.href}`
+			);
 		}
 	};
 
