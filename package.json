@@ -56,6 +56,5 @@
 		"@testing-library/user-event": "^10.1.0",
 		"prettier": "^2.0.5",
 		"prop-types": "^15.7.2"
-	},
-	"proxy": "http://staging-vote-stuysu-org.herokuapp.com"
+	}
 }

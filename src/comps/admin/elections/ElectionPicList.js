@@ -26,7 +26,7 @@ const useStyles = createUseStyles({
 	}
 });
 
-const ElectionPicList = ({ activePic, setActivePic }) => {
+const ElectionPicList = ({ activePic, setActivePic, uploadedPics }) => {
 	const classes = useStyles();
 	const [electionPics, setElectionPics] = React.useState([]);
 
@@ -36,13 +36,14 @@ const ElectionPicList = ({ activePic, setActivePic }) => {
 		});
 	}, []);
 
+	const completePicsList = [...uploadedPics, ...electionPics];
 	return (
 		<ImageList
 			masonry
 			className={classes.InnerImageContainer}
 			withTextProtection
 		>
-			{electionPics.map(src => {
+			{completePicsList.map(src => {
 				const absoluteSrc = urlJoin(
 					API_URL,
 					`/api/s3`,

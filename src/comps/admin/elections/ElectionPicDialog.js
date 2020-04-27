@@ -14,6 +14,8 @@ import { useDropzone } from 'react-dropzone';
 import FlexCenter from '../../utils/FlexCenter';
 import Text from '../../../typography/Text';
 import MessageQueue from '../../queues/MessageQueue';
+import DialogQueue from '../../queues/DialogQueue';
+import backend from '../../../tools/backend';
 
 const useStyles = createUseStyles({
 	ImageContainer: {
@@ -28,26 +30,89 @@ const useStyles = createUseStyles({
 		marginBottom: '1rem',
 		paddingTop: '0.5rem',
 		cursor: 'pointer'
+	},
+	UploadedPic: {
+		width: '300px',
+		height: '225px',
+		objectFit: 'cover',
+		borderRadius: '5px'
 	}
 });
 
 const ElectionPicDialog = ({ setSelectedPic, selectedPic }) => {
 	const [open, setOpen] = React.useState(false);
 	const [activePic, setActivePic] = React.useState(selectedPic);
+	const [uploadedPics, setUploadedPics] = React.useState([]);
 
 	const { getRootProps, getInputProps, isDragActive, inputRef } = useDropzone(
 		{
 			// Disable click and keydown behavior
 			noClick: true,
 			noKeyboard: true,
-			onDrop: acceptedFiles => {
+			multiple: false,
+			onDrop: async acceptedFiles => {
 				const isImage = Boolean(acceptedFiles.length);
 
 				if (isImage) {
 					// do some stuff with the image
+					const file = acceptedFiles[0];
+					setOpen(false);
+
+					const confirmUpload = await DialogQueue.confirm({
+						title: (
+							<b>Are you sure you want to upload this photo?</b>
+						),
+						body: (
+							<FlexCenter>
+								<img
+									src={window.URL.createObjectURL(file)}
+									alt={'Uploaded file'}
+									className={classes.UploadedPic}
+								/>
+							</FlexCenter>
+						),
+						acceptLabel: 'CONFIRM'
+					});
+
+					if (confirmUpload) {
+						const formData = new FormData();
+
+						formData.append('image', file);
+
+						try {
+							MessageQueue.notify({
+								body: 'Your image is now being uploaded...',
+								timeout: '500'
+							});
+
+							const { data } = await backend.post(
+								'/api/admin/elections/pics/upload',
+								formData
+							);
+							const newPicUrl = data.payload.imageUrl;
+							const newUploadedPics = [
+								newPicUrl,
+								...uploadedPics
+							];
+							setUploadedPics(newUploadedPics);
+
+							MessageQueue.notify({
+								body: 'Your image has been uploaded.'
+							});
+						} catch (e) {
+							if (e.response) {
+								MessageQueue.notify({
+									body: e.response.data.error.message
+								});
+							}
+						}
+					}
+
+					setOpen(true);
 				} else {
 					MessageQueue.notify({
-						body: 'You are only allowed to upload image files.'
+						body:
+							'You are only allowed to upload individual image files.'
 					});
 				}
 			},
@@ -77,6 +142,7 @@ const ElectionPicDialog = ({ setSelectedPic, selectedPic }) => {
 						<ElectionPicList
 							setActivePic={setActivePic}
 							activePic={activePic}
+							uploadedPics={uploadedPics}
 						/>
 					</div>
 				}
