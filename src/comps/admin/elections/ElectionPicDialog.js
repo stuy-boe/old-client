@@ -87,7 +87,7 @@ const ElectionPicDialog = ({ setSelectedPic, selectedPic }) => {
 						try {
 							MessageQueue.notify({
 								body: 'Your image is now being uploaded...',
-								timeout: '500'
+								timeout: 1000
 							});
 
 							const { data } = await backend.post(
@@ -102,7 +102,8 @@ const ElectionPicDialog = ({ setSelectedPic, selectedPic }) => {
 							setUploadedPics(newUploadedPics);
 
 							MessageQueue.notify({
-								body: 'Your image has been uploaded.'
+								body: 'Your image has been uploaded.',
+								timeout: 2000
 							});
 						} catch (e) {
 							if (e.response) {

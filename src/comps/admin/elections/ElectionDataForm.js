@@ -96,7 +96,7 @@ const ElectionDataForm = ({
 			return false;
 		}
 
-		if (!electionTypes.includes(type)) {
+		if (!electionTypes.some(option => option.value === type)) {
 			MessageQueue.notify({
 				body: 'You need to select a valid election type!',
 				actions: [{ icon: 'close' }]
