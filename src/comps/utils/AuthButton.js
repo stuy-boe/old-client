@@ -1,42 +1,18 @@
 import React from 'react';
-import AppContext from '../context/AppContext';
-import MessageQueue from '../queues/MessageQueue';
-import Script from 'react-load-script';
-import backend from '../../tools/backend';
-import { GOOGLE_CLIENT_ID } from '../../constants';
-import { Helmet } from 'react-helmet';
+import { API_URL, GOOGLE_CLIENT_ID } from '../../constants';
 import DialogQueue from '../queues/DialogQueue';
 import Text from '../../typography/Text';
-import { createUseStyles } from 'react-jss';
-
-const useStyles = createUseStyles({
-	GoogleButton: {
-		height: '40px'
-	}
-});
+import GoogleLogin from 'react-google-login';
+import urlJoin from 'url-join';
 
 const AuthButton = () => {
-	const classes = useStyles();
-
-	const { updateState } = React.useContext(AppContext);
-	const [buttonId] = React.useState(`auth-button-${Math.random() * 1000}`);
-
 	const attemptLogin = idToken => {
-		backend
-			.post('/api/auth/login', { idToken })
-			.then(res => {
-				if (res.data.success) {
-					updateState();
-				}
-			})
-			.catch(e => {
-				if (e.response) {
-					MessageQueue.notify({
-						body: e.response.data.error.message,
-						actions: [{ icon: 'close' }]
-					});
-				}
-			});
+		window.location.href = urlJoin(
+			API_URL,
+			`/api/auth/login`,
+			`?idToken=${encodeURIComponent(idToken)}`,
+			`?redirect=${window.location.href}`
+		);
 	};
 
 	const handleSuccess = async data => {
@@ -63,40 +39,12 @@ const AuthButton = () => {
 		}
 	};
 
-	const renderButton = () => {
-		window.gapi.load('auth2', function () {
-			/**
-			 * Retrieve the singleton for the GoogleAuth library and set up the
-			 * client.
-			 */
-
-			const auth2 = window.gapi.auth2.init({
-				client_id: GOOGLE_CLIENT_ID
-			});
-
-			// Attach the click handler to the sign-in button
-			auth2.attachClickHandler(buttonId, {}, handleSuccess, console.log);
-		});
-	};
-
 	return (
-		<div>
-			<Helmet>
-				<meta name="google-signin-scope" content="profile email" />
-				<meta
-					name="google-signin-client_id"
-					content={GOOGLE_CLIENT_ID}
-				/>
-			</Helmet>
-			<Script
-				url="https://apis.google.com/js/platform.js"
-				onLoad={renderButton}
-			/>
-
-			<div id={buttonId} className={classes.GoogleButton}>
-				<p>Google Auth</p>
-			</div>
-		</div>
+		<GoogleLogin
+			onSuccess={handleSuccess}
+			onFailure={console.log}
+			clientId={GOOGLE_CLIENT_ID}
+		/>
 	);
 };
 
