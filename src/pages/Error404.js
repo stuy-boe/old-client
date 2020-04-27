@@ -2,15 +2,17 @@ import React from 'react';
 import { Helmet } from 'react-helmet';
 import Title from '../typography/Title';
 import Text from '../typography/Text';
-import { Button } from '@rmwc/button';
 import FlexCenter from '../comps/utils/FlexCenter';
-import { Link } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
+import BackButton from '../comps/utils/BackButton';
 
 const useStyles = createUseStyles({
 	Image: {
 		maxWidth: '80%',
-		width: '350px'
+		width: '800px'
+	},
+	Text: {
+		color: '#607c8b'
 	}
 });
 
@@ -18,47 +20,44 @@ const Error404 = () => {
 	const classes = useStyles();
 
 	return (
-		<FlexCenter fullHeight>
-			<div>
-				<Helmet>
-					<title>{'Page Not Found | Stuy BOE Voting Site'}</title>
+		<div>
+			<BackButton text={'Back To Home'} to={'/'} />
 
-					<meta
-						property="og:title"
-						content={'Page Not Found | Stuy BOE Voting Site'}
-					/>
+			<FlexCenter>
+				<div>
+					<Helmet>
+						<title>{'Page Not Found | Stuy BOE Voting Site'}</title>
 
-					<meta
-						property="og:description"
-						content={`We looked everywhere, but we couldn't find that page :'(`}
-					/>
-				</Helmet>
-				<Title level={3} center>
-					Page Not Found
-				</Title>
+						<meta
+							property="og:title"
+							content={'Page Not Found | Stuy BOE Voting Site'}
+						/>
 
-				<FlexCenter>
-					<img
-						className={classes.Image}
-						src={'/img/shrug-emote.svg'}
-						alt={'Cloud Shrugging'}
-					/>
-				</FlexCenter>
+						<meta
+							property="og:description"
+							content={`We looked everywhere, but we couldn't find that page :'(`}
+						/>
+					</Helmet>
+					<Title level={2} center className={classes.Text}>
+						Page Not Found
+					</Title>
 
-				<Text center>
-					We looked everywhere, but that page doesn't seem to be in
-					the clouds
-				</Text>
+					<FlexCenter>
+						<img
+							className={classes.Image}
+							src={'/img/ship-not-found.svg'}
+							alt={
+								'Someone looking through clouds with a telescope'
+							}
+						/>
+					</FlexCenter>
 
-				<br />
-
-				<FlexCenter>
-					<Link to={'/'}>
-						<Button outlined>Go Back Home</Button>
-					</Link>
-				</FlexCenter>
-			</div>
-		</FlexCenter>
+					<Text center className={classes.Text}>
+						That page doesn't seem to be in the clouds
+					</Text>
+				</div>
+			</FlexCenter>
+		</div>
 	);
 };
 

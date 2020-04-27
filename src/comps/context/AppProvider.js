@@ -87,7 +87,8 @@ class AppProvider extends React.Component {
 					{this.state.status === 'error' && (
 						<Retry
 							onRetry={this.updateState}
-							message={'There was an error loading the app.'}
+							message={'There was an error loading the app'}
+							image={'/img/loading-maze-error.svg'}
 						/>
 					)}
 				</div>
