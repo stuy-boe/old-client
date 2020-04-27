@@ -5,7 +5,7 @@ import '@rmwc/circular-progress/circular-progress.css';
 
 import { Theme } from '@rmwc/theme';
 import FlexCenter from './FlexCenter';
-import Text from '../typography/Text';
+import Text from '../../typography/Text';
 
 const Loading = props => {
 	const [hasBeenSomeTime, setHasBeenSomeTime] = React.useState(false);

@@ -18,7 +18,12 @@ const Obfuscator = ({ open, toggleDrawer }) => {
 
 	if (!open) return null;
 
-	return <div className={classes.Obfuscator} onClick={toggleDrawer} />;
+	return (
+		<div
+			className={classes.Obfuscator}
+			onClick={() => toggleDrawer(false)}
+		/>
+	);
 };
 
 export default Obfuscator;

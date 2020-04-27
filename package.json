@@ -9,6 +9,7 @@
 		"moment-timezone": "^0.5.28",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"react-dropzone": "^10.2.2",
 		"react-ga": "^2.7.0",
 		"react-google-login": "^5.1.10",
 		"react-helmet": "^6.0.0",
@@ -55,6 +56,5 @@
 		"@testing-library/user-event": "^10.1.0",
 		"prettier": "^2.0.5",
 		"prop-types": "^15.7.2"
-	},
-	"proxy": "http://staging-vote-stuysu-org.herokuapp.com"
+	}
 }

@@ -8,25 +8,34 @@ const useStyles = createUseStyles({
 		display: 'flex',
 		justifyContent: 'center',
 		alignItems: 'center',
-		height: props => (props.fullHeight ? '100%' : 'unset')
+		height: props => props.height
 	}
 });
 
 type PropTypes = {
 	children: Node,
-	fullHeight: boolean
+	fullHeight: boolean,
+	height: string,
+	className: string
 };
 
 const FlexCenter = (props: PropTypes) => {
 	const fullHeight = Boolean(props.fullHeight);
-	const classes: Object = useStyles({ fullHeight });
+	const height = fullHeight ? '100%' : props.height;
+	const classes: Object = useStyles({ height });
 
-	return <div className={classes.FlexCenter}>{props.children}</div>;
+	return (
+		<div className={`${classes.FlexCenter} ${props.className}`}>
+			{props.children}
+		</div>
+	);
 };
 
 FlexCenter.defaultProps = {
 	children: <></>,
-	fullHeight: false
+	fullHeight: false,
+	height: '',
+	className: ''
 };
 
 export default FlexCenter;

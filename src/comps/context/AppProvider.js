@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Loading from './Loading';
-import backend from '../utils/backend';
-import Retry from './Retry';
+import Loading from '../utils/Loading';
+import backend from '../../tools/backend';
+import Retry from '../utils/Retry';
+import AppContext from './AppContext';
 
 import withStyles from 'react-jss';
 
@@ -11,10 +12,6 @@ const styles = {
 		height: '100vh'
 	}
 };
-
-export const AppContext = React.createContext({
-	initialized: false
-});
 
 class AppProvider extends React.Component {
 	constructor(props) {
@@ -90,7 +87,8 @@ class AppProvider extends React.Component {
 					{this.state.status === 'error' && (
 						<Retry
 							onRetry={this.updateState}
-							message={'There was an error loading the app.'}
+							message={'There was an error loading the app'}
+							image={'/img/loading-maze-error.svg'}
 						/>
 					)}
 				</div>

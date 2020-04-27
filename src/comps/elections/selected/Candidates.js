@@ -1,9 +1,9 @@
 import React, { useEffect } from 'react';
 import { ElectionContext } from './SelectedElectionRouter';
-import Loading from '../../Loading';
+import Loading from '../../utils/Loading';
 import { Helmet } from 'react-helmet';
-import backend from '../../../utils/backend';
-import Retry from '../../Retry';
+import backend from '../../../tools/backend';
+import Retry from '../../utils/Retry';
 
 const Candidates = () => {
 	const election = React.useContext(ElectionContext);

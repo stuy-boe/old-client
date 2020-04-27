@@ -19,7 +19,7 @@ import moment from 'moment';
 import urlJoin from 'url-join';
 
 import { API_URL } from '../../constants';
-import { AppContext } from '../AppProvider';
+import AppContext from '../context/AppContext';
 
 import { createUseStyles } from 'react-jss';
 import Title from '../../typography/Title';
@@ -46,10 +46,18 @@ const ElectionCard = props => {
 
 	const [now, setNow] = React.useState(context.getDate());
 
-	if (!props.election.completed && now <= end) {
-		// We passed it as a function object to prevent calling it immediately
-		setTimeout(() => setNow(context.getDate()), 1000);
-	}
+	const updateNow = () => {
+		if (!props.election.completed && now <= end) {
+			// We passed it as a function object to prevent calling it immediately
+			const timeoutID = setTimeout(() => setNow(context.getDate()), 1000);
+
+			// In the case that the component unmounts before the timeout goes off
+			// Clear the timeout to prevent setting the state of an unmounted component
+			return () => clearTimeout(timeoutID);
+		}
+	};
+
+	React.useEffect(updateNow, [now]);
 
 	let to = generatePath(props.to, props.election);
 
@@ -57,7 +65,9 @@ const ElectionCard = props => {
 		API_URL,
 		'/api/s3',
 		props.election.picture,
-		`?width=360`
+		`?width=400`,
+		`?flags=lossy`,
+		`?quality=95`
 	);
 
 	const classes = useStyles({ electionPic });

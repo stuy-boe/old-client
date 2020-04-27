@@ -2,7 +2,7 @@
 import React from 'react';
 import { Theme } from '@rmwc/theme';
 import { createUseStyles } from 'react-jss';
-import clampNumber from '../utils/clampNumber';
+import clampNumber from '../tools/clampNumber';
 
 const useStyles = createUseStyles({
 	Title: {
