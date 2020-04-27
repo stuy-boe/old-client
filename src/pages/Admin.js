@@ -1,5 +1,5 @@
 import React from 'react';
-import { AppContext } from '../comps/AppProvider';
+import AppContext from '../comps/context/AppContext';
 import Title from '../typography/Title';
 import { Switch, Route } from 'react-router-dom';
 import AdminElectionsRouter from '../comps/admin/AdminElectionsRouter';

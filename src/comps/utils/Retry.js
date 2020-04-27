@@ -5,7 +5,7 @@ import type { Node } from 'react';
 
 import { Button } from '@rmwc/button';
 import '@material/button/dist/mdc.button.css';
-import Title from '../typography/Title';
+import Title from '../../typography/Title';
 import FlexCenter from './FlexCenter';
 
 type Props = {

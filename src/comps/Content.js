@@ -1,11 +1,11 @@
 import React from 'react';
-import AuthButton from './AuthButton';
-import { AppContext } from './AppProvider';
+import AuthButton from './utils/AuthButton';
+import AppContext from './context/AppContext';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { Elections } from '../pages/Elections';
 import { Helmet } from 'react-helmet';
 import { PUBLIC_URL } from '../constants';
-import { sendPageView } from '../utils/GoogleAnalytics';
+import { sendPageView } from '../tools/GoogleAnalytics';
 import Admin from '../pages/Admin';
 import Error404 from '../pages/Error404';
 

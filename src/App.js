@@ -5,14 +5,16 @@ import Content from './comps/Content';
 import AppBar from './comps/menu/AppBar';
 import NavDrawer from './comps/menu/NavDrawer';
 import { BrowserRouter } from 'react-router-dom';
-import AppProvider from './comps/AppProvider';
+import AppProvider from './comps/context/AppProvider';
 
 import { SnackbarQueue } from '@rmwc/snackbar';
-import MessageQueue from './comps/MessageQueue';
+import MessageQueue from './comps/queues/MessageQueue';
 import '@material/snackbar/dist/mdc.snackbar.css';
 import '@material/button/dist/mdc.button.css';
-import Obfuscator from './comps/Obfuscator';
-import ThemeProvider from './comps/ThemeProvider';
+import Obfuscator from './comps/menu/Obfuscator';
+import ThemeProvider from './comps/context/ThemeProvider';
+import { DialogQueue as Dialogs } from '@rmwc/dialog';
+import DialogQueue from './comps/queues/DialogQueue';
 
 const App = () => {
 	// If the device has a sufficiently large screen, the drawer is open by default
@@ -56,6 +58,7 @@ const App = () => {
 				</BrowserRouter>
 
 				<SnackbarQueue messages={MessageQueue.messages} />
+				<Dialogs dialogs={DialogQueue.dialogs} />
 			</div>
 		</ThemeProvider>
 	);

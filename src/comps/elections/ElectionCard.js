@@ -19,7 +19,7 @@ import moment from 'moment';
 import urlJoin from 'url-join';
 
 import { API_URL } from '../../constants';
-import { AppContext } from '../AppProvider';
+import AppContext from '../context/AppContext';
 
 import { createUseStyles } from 'react-jss';
 import Title from '../../typography/Title';

@@ -3,7 +3,7 @@ import { Helmet } from 'react-helmet';
 import Title from '../typography/Title';
 import Text from '../typography/Text';
 import { Button } from '@rmwc/button';
-import FlexCenter from '../comps/FlexCenter';
+import FlexCenter from '../comps/utils/FlexCenter';
 import { Link } from 'react-router-dom';
 import { createUseStyles } from 'react-jss';
 

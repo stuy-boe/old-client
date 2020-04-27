@@ -1,7 +1,7 @@
 import React from 'react';
 import MenuItem from './MenuItem';
 import { CollapsibleList, SimpleListItem } from '@rmwc/list';
-import { AppContext } from '../AppProvider';
+import AppContext from '../context/AppContext';
 import { useRouteMatch, useLocation } from 'react-router-dom';
 
 const meta = {

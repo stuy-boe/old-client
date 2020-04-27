@@ -1,13 +1,13 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { Overview } from './Overview';
-import Loading from '../../Loading';
+import Loading from '../../utils/Loading';
 import { Helmet } from 'react-helmet';
 import Vote from './Vote';
 import Candidates from './Candidates';
 import Results from './Results';
 import urlJoin from 'url-join';
-import backend from '../../../utils/backend';
+import backend from '../../../tools/backend';
 import { API_URL } from '../../../constants';
 import Text from '../../../typography/Text';
 

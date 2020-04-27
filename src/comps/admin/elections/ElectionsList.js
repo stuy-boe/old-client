@@ -1,10 +1,10 @@
 import React from 'react';
 import { List, SimpleListItem } from '@rmwc/list';
-import backend from '../../../utils/backend';
+import backend from '../../../tools/backend';
 import Title from '../../../typography/Title';
-import Loading from '../../Loading';
-import Retry from '../../Retry';
-import FlexCenter from '../../FlexCenter';
+import Loading from '../../utils/Loading';
+import Retry from '../../utils/Retry';
+import FlexCenter from '../../utils/FlexCenter';
 import { Button } from '@rmwc/button';
 import { Link } from 'react-router-dom';
 

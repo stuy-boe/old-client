@@ -1,6 +1,6 @@
 import React from 'react';
 import Title from '../../../typography/Title';
-import BackButton from '../../BackButton';
+import BackButton from '../../utils/BackButton';
 
 import { Redirect } from 'react-router-dom';
 
@@ -16,17 +16,16 @@ import '@material/line-ripple/dist/mdc.line-ripple.css';
 import '@material/menu-surface/dist/mdc.menu-surface.css';
 
 import Text from '../../../typography/Text';
-import backend from '../../../utils/backend';
+import backend from '../../../tools/backend';
 import ElectionPicDialog from './ElectionPicDialog';
 
 import { Switch } from '@rmwc/switch';
 import '@rmwc/switch/styles';
 
 import { createUseStyles } from 'react-jss';
-import MessageQueue from '../../MessageQueue';
+import MessageQueue from '../../queues/MessageQueue';
 import urlJoin from 'url-join';
 import { API_URL } from '../../../constants';
-import FlexCenter from '../../FlexCenter';
 
 import { Grid, GridCell, GridRow } from '@rmwc/grid';
 

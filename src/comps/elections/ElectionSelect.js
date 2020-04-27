@@ -4,9 +4,9 @@ import ElectionCard from './ElectionCard';
 import { Grid, GridCell } from '@rmwc/grid';
 import '@material/layout-grid/dist/mdc.layout-grid.css';
 import { Helmet } from 'react-helmet';
-import Loading from '../Loading';
-import backend from '../../utils/backend';
-import Retry from '../Retry';
+import Loading from '../utils/Loading';
+import backend from '../../tools/backend';
+import Retry from '../utils/Retry';
 import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({

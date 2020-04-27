@@ -1,8 +1,9 @@
 import React from 'react';
 
-import Loading from './Loading';
-import backend from '../utils/backend';
-import Retry from './Retry';
+import Loading from '../utils/Loading';
+import backend from '../../tools/backend';
+import Retry from '../utils/Retry';
+import AppContext from './AppContext';
 
 import withStyles from 'react-jss';
 
@@ -11,10 +12,6 @@ const styles = {
 		height: '100vh'
 	}
 };
-
-export const AppContext = React.createContext({
-	initialized: false
-});
 
 class AppProvider extends React.Component {
 	constructor(props) {

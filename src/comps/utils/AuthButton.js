@@ -1,13 +1,13 @@
 import React from 'react';
 import { GoogleLogin } from 'react-google-login';
-import { AppContext } from './AppProvider';
-import MessageQueue from './MessageQueue';
+import AppContext from '../context/AppContext';
+import MessageQueue from '../queues/MessageQueue';
 
 import { SimpleDialog } from '@rmwc/dialog';
 import '@material/dialog/dist/mdc.dialog.css';
 import '@material/button/dist/mdc.button.css';
-import backend from '../utils/backend';
-import { GOOGLE_CLIENT_ID } from '../constants';
+import backend from '../../tools/backend';
+import { GOOGLE_CLIENT_ID } from '../../constants';
 
 const AuthButton = () => {
 	const context = React.useContext(AppContext);

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import MessageQueue from '../comps/MessageQueue';
+import MessageQueue from '../comps/queues/MessageQueue';
 import { API_URL } from '../constants';
 
 const backend = axios.create({

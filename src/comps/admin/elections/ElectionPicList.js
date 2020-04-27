@@ -1,5 +1,5 @@
 import React from 'react';
-import backend from '../../../utils/backend';
+import backend from '../../../tools/backend';
 
 import { ImageList, ImageListImage, ImageListItem } from '@rmwc/image-list';
 import '@rmwc/image-list/styles';
