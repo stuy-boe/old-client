@@ -21,8 +21,7 @@ const App = () => {
 	// If the device has a sufficiently large screen, the drawer is open by default
 	const [drawerOpen, setDrawerOpen] = React.useState(window.innerWidth > 800);
 
-	const toggleDrawer = state => {
-		let newState = state;
+	const toggleDrawer = newState => {
 		if (!newState) {
 			newState = !drawerOpen;
 		}
