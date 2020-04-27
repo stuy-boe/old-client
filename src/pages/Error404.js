@@ -9,7 +9,7 @@ import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
 	Image: {
-		maxWidth: '80vw',
+		maxWidth: '80%',
 		width: '350px'
 	}
 });

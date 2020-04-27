@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link, useRouteMatch } from 'react-router-dom';
 import { SimpleListItem } from '@rmwc/list';
-import useModifiedRoute from './useModifiedRoute';
+import useModifiedRoute from '../../tools/useModifiedRoute';
 
 const MenuItem = props => {
 	let activated = useRouteMatch(props.activeRoute);

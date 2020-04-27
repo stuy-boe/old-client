@@ -15,6 +15,7 @@ import Obfuscator from './comps/menu/Obfuscator';
 import ThemeProvider from './comps/context/ThemeProvider';
 import { DialogQueue as Dialogs } from '@rmwc/dialog';
 import DialogQueue from './comps/queues/DialogQueue';
+import '@rmwc/dialog/styles';
 
 const App = () => {
 	// If the device has a sufficiently large screen, the drawer is open by default
