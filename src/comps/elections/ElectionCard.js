@@ -46,10 +46,18 @@ const ElectionCard = props => {
 
 	const [now, setNow] = React.useState(context.getDate());
 
-	if (!props.election.completed && now <= end) {
-		// We passed it as a function object to prevent calling it immediately
-		setTimeout(() => setNow(context.getDate()), 1000);
-	}
+	const updateNow = () => {
+		if (!props.election.completed && now <= end) {
+			// We passed it as a function object to prevent calling it immediately
+			const timeoutID = setTimeout(() => setNow(context.getDate()), 1000);
+
+			// In the case that the component unmounts before the timeout goes off
+			// Clear the timeout to prevent setting the state of an unmounted component
+			return () => clearTimeout(timeoutID);
+		}
+	};
+
+	React.useEffect(updateNow, [now]);
 
 	let to = generatePath(props.to, props.election);
 

@@ -28,7 +28,9 @@ const useStyles = createUseStyles({
 		borderRadius: '5px',
 		border: '2px solid gray',
 		marginBottom: '1rem',
-		paddingTop: '0.5rem',
+		width: () =>
+			window.innerWidth < 800 ? 'calc(100% - 32px)' : 'calc(100% - 48px)',
+		paddingTop: '2rem',
 		cursor: 'pointer'
 	},
 	UploadedPic: {
@@ -36,6 +38,9 @@ const useStyles = createUseStyles({
 		height: '225px',
 		objectFit: 'cover',
 		borderRadius: '5px'
+	},
+	DialogTitle: {
+		paddingLeft: '24px'
 	}
 });
 
@@ -125,18 +130,27 @@ const ElectionPicDialog = ({ setSelectedPic, selectedPic }) => {
 	return (
 		<div>
 			<SimpleDialog
-				title={'Select An Election Picture'}
+				title={
+					<span className={classes.DialogTitle}>
+						Select An Election Picture
+					</span>
+				}
 				open={open}
 				{...getRootProps()}
 				body={
 					<div className={classes.ImageContainer}>
-						<FlexCenter className={classes.UploadContainer}>
-							<div onClick={() => inputRef.current.click()}>
+						<FlexCenter>
+							<div
+								onClick={() => inputRef.current.click()}
+								className={classes.UploadContainer}
+							>
 								<FlexCenter>
 									<input {...getInputProps()} type={'file'} />
 									<Icon icon={'add_photo_alternate'} />
 								</FlexCenter>
-								<Text>Click Here To Upload A New Image</Text>
+								<Text center>
+									Click Here To Upload A New Image
+								</Text>
 							</div>
 						</FlexCenter>
 						<ElectionPicList

@@ -58,7 +58,10 @@ const App = () => {
 					</AppProvider>
 				</BrowserRouter>
 
-				<SnackbarQueue messages={MessageQueue.messages} />
+				<SnackbarQueue
+					messages={MessageQueue.messages}
+					dismissesOnAction
+				/>
 				<Dialogs dialogs={DialogQueue.dialogs} />
 			</div>
 		</ThemeProvider>
