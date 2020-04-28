@@ -39,7 +39,7 @@ const useStyles = createUseStyles({
 	},
 	FormContainer: {
 		width: '100%',
-		maxWidth: '58rem'
+		maxWidth: '65rem'
 	}
 });
 

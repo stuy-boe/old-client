@@ -1,16 +1,14 @@
 import React from 'react';
-import AuthButton from './utils/AuthButton';
-import AppContext from './context/AppContext';
 import { Switch, Route, useLocation } from 'react-router-dom';
 import { Elections } from '../pages/Elections';
 import { Helmet } from 'react-helmet';
 import { PUBLIC_URL } from '../constants';
 import { sendPageView } from '../tools/GoogleAnalytics';
 import Admin from '../pages/Admin';
-import Error404 from '../pages/Error404';
+import ErrorPage from '../pages/ErrorPage';
+import SearchingVector from '../vectors/searching.svg';
 
 const Content = () => {
-	const context = React.useContext(AppContext);
 	const location = useLocation();
 
 	React.useEffect(sendPageView, [location]);
@@ -45,10 +43,14 @@ const Content = () => {
 				<Route path={'/'} component={Hello} exact />
 				<Route path={'/elections'} component={Elections} />
 				<Route path={'/admin'} component={Admin} />
-				<Route path={'/'} component={Error404} />
+				<Route path={'/'}>
+					<ErrorPage
+						image={SearchingVector}
+						title={'Page Not Found'}
+						subtitle={`We've looked everywhere...`}
+					/>
+				</Route>
 			</Switch>
-
-			{!context.signedIn && <AuthButton />}
 		</div>
 	);
 };
