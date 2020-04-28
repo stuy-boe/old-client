@@ -78,8 +78,8 @@ class CreateElection extends React.Component {
 			visible
 		} = this.state;
 
-		const start = new Date(`${startDate} ${startTime}`);
-		const end = new Date(`${endDate} ${endTime}`);
+		const start = new Date(`${startDate}T${startTime}`);
+		const end = new Date(`${endDate}T${endTime}`);
 
 		const formattedStartTime = start.toISOString();
 		const formattedEndTime = end.toISOString();

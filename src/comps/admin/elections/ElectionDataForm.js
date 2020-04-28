@@ -113,8 +113,8 @@ const ElectionDataForm = ({
 		}
 
 		try {
-			new Date(`${startDate} ${startTime}`).toISOString();
-			new Date(`${endDate} ${endTime}`).toISOString();
+			new Date(`${startDate}T${startTime}`).toISOString();
+			new Date(`${endDate}T${endTime}`).toISOString();
 		} catch (e) {
 			MessageQueue.notify({
 				body: 'You need to select valid start and end dates/times.',
