@@ -25,9 +25,12 @@ import { createUseStyles } from 'react-jss';
 import Title from '../../typography/Title';
 import Subtitle from '../../typography/Subtitle';
 
+import MediaErrorVector from '../../vectors/media-error.svg';
+
 const useStyles = createUseStyles({
 	Media: {
-		backgroundImage: props => `url(${props.electionPic})`
+		backgroundImage: props =>
+			`url(${props.electionPic}), url(${MediaErrorVector})`
 	},
 	TextContainer: {
 		padding: '0 1rem 1rem 1rem'
@@ -67,7 +70,8 @@ const ElectionCard = props => {
 		props.election.picture,
 		`?width=400`,
 		`?flags=lossy`,
-		`?quality=95`
+		`?quality=95`,
+		`?background=white`
 	);
 
 	const classes = useStyles({ electionPic });
