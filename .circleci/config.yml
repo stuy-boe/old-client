@@ -2,15 +2,10 @@ version: 2.1
 orbs:
     node: circleci/node@1.1.6
 
-jobs:
-    test:
-        parameters:
-            script:
-                type: string
-        executor:
-            name: node/default
+commands:
+    install-dependencies:
+        description: "Check if dependencies exist in cache and store newly installed dependencies to cache"
         steps:
-            - checkout
             - restore_cache:
                   keys:
                       - v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
@@ -20,13 +15,33 @@ jobs:
             - save_cache:
                   key: v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
                   paths:
-                      - node_modules
+                      - node_modules/
+jobs:
+    unit-tests:
+        executor:
+            name: node/default
+        steps:
+            - checkout
+            - install-dependencies
+            - run: npm test
+    flow-typings:
+        executor:
+            name: node/default
+            steps:
+                - checkout
+                - install-dependencies
+                - run: npm run flow
+    build:
+        executor:
+            name: node/default
+            steps:
+                - checkout
+                - install-dependencies
+                - run: npm run build
 
-            - run: npm run << parameters.script >>
 workflows:
-    all-tests:
+    build-and-test:
         jobs:
-            - test:
-                  matrix:
-                      parameters:
-                          script: ["build", "flow", "test"]
+            - unit-tests
+            - flow-typings
+            - build
