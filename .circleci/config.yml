@@ -1,38 +1,38 @@
 version: 2.1
-orbs:
-    node: circleci/node@1.1.6
-jobs:
-    check-unit-tests:
-        executor:
-            name: node/default
-        steps:
-            - checkout
-            - node/with-cache:
-                  steps:
-                      - run: npm install
-                      - run: npm test
+executors:
+    linux:
+        docker:
+            - image: cimg/base:2020.01
+    macos:
+        macos:
+            xcode: 11.4
 
-    check-flow-typings:
-        executor:
-            name: node/default
+orbs:
+    node: circleci/node@2.0.0
+jobs:
+    test:
+        parameters:
+            os:
+                type: executor
+            node-version:
+                type: string
+            script:
+                type: string
+        executor: << parameters.os >>
         steps:
             - checkout
+            - node/install:
+                  node-version: << parameters.node-version >>
             - node/with-cache:
                   steps:
                       - run: npm install
-                      - run: npm run flow
-    build-and-test:
-        executor:
-            name: node/default
-        steps:
-            - checkout
-            - node/with-cache:
-                  steps:
-                      - run: npm install
-                      - run: npm run build
+                      - run: npm run << parameters.script >>
 workflows:
-    build-and-test:
+    all-tests:
         jobs:
-            - check-flow-typings
-            - build-and-test
-            - check-unit-tests
+            - test:
+                  matrix:
+                      parameters:
+                          os: [linux, macos]
+                          node-version: ["10.10.0", "12.12.0"]
+                          script: ["build", "flow", "test"]
