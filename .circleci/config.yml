@@ -4,10 +4,6 @@ executors:
     linux:
         docker:
             - image: cimg/base:2020.01
-    macos:
-        macos:
-            xcode: 11.4
-
 orbs:
     node: circleci/node@2.0.0
 
@@ -21,14 +17,27 @@ jobs:
         executor: << parameters.os >>
         steps:
             - checkout
+            - restore_cache:
+                  keys:
+                      - v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                      - v1-npm-deps-{{ .Branch }}-
+                      - v1-npm-deps-
             - node/install:
                   node-version: << parameters.node-version >>
-            - run: npm test
+
+            - run: npm install
+
+            - save_cache:
+                  key: v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                  paths:
+                      - node_modules
+
+            - run: npm run build
 workflows:
     all-tests:
         jobs:
             - test:
                   matrix:
                       parameters:
-                          os: [linux, macos]
-                          node-version: ['10.9.0', '11.9.0', '12.9.1', '13.9.0']
+                          os: [linux]
+                          node-version: ['10.10.0','12.12.0']
