@@ -2,6 +2,16 @@ version: 2.1
 orbs:
     node: circleci/node@1.1.6
 jobs:
+    check-unit-tests:
+        executor:
+            name: node/default
+            steps:
+                - checkout
+                - node/with-cache:
+                      steps:
+                          - run: npm install
+                          - run: npm test
+
     check-flow-typings:
         executor:
             name: node/default
@@ -9,6 +19,7 @@ jobs:
             - checkout
             - node/with-cache:
                   steps:
+                      - run: npm install
                       - run: npm run flow
     build-and-test:
         executor:
@@ -18,7 +29,6 @@ jobs:
             - node/with-cache:
                   steps:
                       - run: npm install
-                      - run: npm test
                       - run: npm run build
 workflows:
     build-and-test:
