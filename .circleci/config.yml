@@ -1,24 +1,12 @@
 version: 2.1
-executors:
-    linux:
-        docker:
-            - image: cimg/base:2020.01
-    macos:
-        macos:
-            xcode: 11.4
-
 orbs:
     node: circleci/node@1.1.6
 jobs:
     test:
         parameters:
-            os:
-                type: executor
-            node-version:
-                type: string
             script:
                 type: string
-        executor: << parameters.os >>
+        executor: node/default
         steps:
             - checkout
             - node/with-cache:
