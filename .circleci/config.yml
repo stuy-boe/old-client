@@ -7,7 +7,8 @@ jobs:
         parameters:
             script:
                 type: string
-        executor: node/latest
+        executor:
+            name: node/default
         steps:
             - checkout
             - restore_cache:
