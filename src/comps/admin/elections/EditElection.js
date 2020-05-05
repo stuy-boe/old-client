@@ -1,7 +1,6 @@
 import React from 'react';
 import AdminElectionContext from './AdminElectionContext';
 import backend from '../../../tools/backend';
-import MessageQueue from '../../queues/MessageQueue';
 import ElectionDataForm from './ElectionDataForm';
 
 class EditElection extends React.Component {
