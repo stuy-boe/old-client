@@ -42,5 +42,5 @@ workflows:
                   matrix:
                       parameters:
                           os: [linux]
-                          node-version: ['10.10.0','12.12.0']
+                          node-version: ['latest']
                           script: ["build", "flow", "test"]
