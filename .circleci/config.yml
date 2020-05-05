@@ -1,27 +1,57 @@
 version: 2.1
 orbs:
     node: circleci/node@1.1.6
+
+commands:
+    install-dependencies:
+        description: 'Check if dependencies exist in cache and store newly installed dependencies to cache'
+        steps:
+            - restore_cache:
+                  keys:
+                      - v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                      - v1-npm-deps-{{ .Branch }}-
+                      - v1-npm-deps-
+            - run: npm install
+            - save_cache:
+                  key: v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                  paths:
+                      - node_modules/
 jobs:
-    check-flow-typings:
+    unit-tests:
         executor:
             name: node/default
         steps:
             - checkout
-            - node/with-cache:
-                  steps:
-                      - run: npm run flow
-    build-and-test:
+            - install-dependencies
+            - run: npm test
+    flow-typings:
         executor:
             name: node/default
         steps:
             - checkout
-            - node/with-cache:
-                  steps:
-                      - run: npm install
-                      - run: npm test
-                      - run: npm build
+            - install-dependencies
+            - run: npm run flow
+    build:
+        executor:
+            name: node/default
+        steps:
+            - checkout
+            - install-dependencies
+            - restore_cache:
+                  keys:
+                      - v1-react-build-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                      - v1-react-build-{{ .Branch }}-
+                      - v1-react-build-
+
+            - run: npm run build
+            - save_cache:
+                  key: v1-react-build-{{ .Branch }}-{{ checksum "package-lock.json" }}
+                  paths:
+                      - build
+
 workflows:
     build-and-test:
         jobs:
-            - check-flow-typings
-            - build-and-test
+            - unit-tests
+            - flow-typings
+            - build

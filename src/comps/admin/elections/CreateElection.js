@@ -17,7 +17,9 @@ class CreateElection extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.setFormValue = this.setFormValue.bind(this);
+		this.setFormValue = (name, value) => {
+			this.setState({ [name]: value });
+		};
 		this.onSubmit = this.onSubmit.bind(this);
 		this.checkPublicUrl = this.checkPublicUrl.bind(this);
 
@@ -78,8 +80,8 @@ class CreateElection extends React.Component {
 			visible
 		} = this.state;
 
-		const start = new Date(`${startDate} ${startTime}`);
-		const end = new Date(`${endDate} ${endTime}`);
+		const start = new Date(`${startDate}T${startTime}`);
+		const end = new Date(`${endDate}T${endTime}`);
 
 		const formattedStartTime = start.toISOString();
 		const formattedEndTime = end.toISOString();
@@ -106,10 +108,6 @@ class CreateElection extends React.Component {
 					actions: [{ icon: 'close' }]
 				});
 			});
-	}
-
-	setFormValue(name, value) {
-		this.setState({ [name]: value });
 	}
 
 	render() {

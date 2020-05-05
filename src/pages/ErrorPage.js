@@ -3,43 +3,50 @@ import FlexCenter from '../comps/utils/FlexCenter';
 import Title from '../typography/Title';
 
 import { createUseStyles } from 'react-jss';
-import Text from '../typography/Text';
 import BackButton from '../comps/utils/BackButton';
+import Text from '../typography/Text';
+
 const useStyles = createUseStyles({
 	ErrorImage: {
-		width: '700px',
-		maxWidth: '80%'
+		width: '800px',
+		maxWidth: '100%',
+		maxHeight: '50vh'
 	},
 	Text: {
-		color: '#904e69'
+		color: '#23286a'
+	},
+	Subtitle: {
+		color: 'grey'
 	}
 });
 
-const Error403 = () => {
+const ErrorPage = ({ title, image, subtitle, back, children }) => {
 	const classes = useStyles();
 
 	return (
 		<div>
-			<BackButton text={'Back To Home'} to={'/'} />
+			{back || <BackButton text={'Back To Home'} to={'/'} />}
+
 			<FlexCenter>
 				<div>
 					<Title level={2} center className={classes.Text}>
-						Access Denied
+						{title}
 					</Title>
 					<FlexCenter>
 						<img
 							className={classes.ErrorImage}
-							src={'/img/unauthorized-bouncer.svg'}
-							alt={'A person gets reviewed by a bouncer'}
+							src={image}
+							alt={'Error'}
 						/>
 					</FlexCenter>
-					<Text center className={classes.Text}>
-						Sorry, but you don't have permission to view this page.
+					<Text center className={classes.Subtitle}>
+						{subtitle}
 					</Text>
+					{children}
 				</div>
 			</FlexCenter>
 		</div>
 	);
 };
 
-export default Error403;
+export default ErrorPage;

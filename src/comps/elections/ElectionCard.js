@@ -25,9 +25,12 @@ import { createUseStyles } from 'react-jss';
 import Title from '../../typography/Title';
 import Subtitle from '../../typography/Subtitle';
 
+import MediaErrorVector from '../../vectors/media-error.svg';
+
 const useStyles = createUseStyles({
 	Media: {
-		backgroundImage: props => `url(${props.electionPic})`
+		backgroundImage: props =>
+			`url(${props.electionPic}), url(${MediaErrorVector})`
 	},
 	TextContainer: {
 		padding: '0 1rem 1rem 1rem'
@@ -39,15 +42,15 @@ const useStyles = createUseStyles({
 });
 
 const ElectionCard = props => {
-	const start = new Date(props.election.startTime);
-	const end = new Date(props.election.endTime);
+	const start = new Date(props.startTime);
+	const end = new Date(props.endTime);
 
 	const context = React.useContext(AppContext);
 
 	const [now, setNow] = React.useState(context.getDate());
 
 	const updateNow = () => {
-		if (!props.election.completed && now <= end) {
+		if (!props.completed && now <= end) {
 			// We passed it as a function object to prevent calling it immediately
 			const timeoutID = setTimeout(() => setNow(context.getDate()), 1000);
 
@@ -59,15 +62,16 @@ const ElectionCard = props => {
 
 	React.useEffect(updateNow, [now]);
 
-	let to = generatePath(props.to, props.election);
+	let to = generatePath(props.to, { publicUrl: props.publicUrl });
 
 	const electionPic = urlJoin(
 		API_URL,
 		'/api/s3',
-		props.election.picture,
+		props.picture,
 		`?width=400`,
 		`?flags=lossy`,
-		`?quality=95`
+		`?quality=95`,
+		`?background=white`
 	);
 
 	const classes = useStyles({ electionPic });
@@ -80,7 +84,7 @@ const ElectionCard = props => {
 
 					<div className={classes.TextContainer}>
 						<Title level={5} className={classes.Title}>
-							{props.election.name}
+							{props.name}
 						</Title>
 
 						<Subtitle className={classes.Subtitle}>

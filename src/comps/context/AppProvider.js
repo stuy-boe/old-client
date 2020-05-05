@@ -6,6 +6,7 @@ import Retry from '../utils/Retry';
 import AppContext from './AppContext';
 
 import withStyles from 'react-jss';
+import MazeErrorVector from '../../vectors/maze-loading-error.svg';
 
 const styles = {
 	LoadingContainer: {
@@ -88,7 +89,7 @@ class AppProvider extends React.Component {
 						<Retry
 							onRetry={this.updateState}
 							message={'There was an error loading the app'}
-							image={'/img/loading-maze-error.svg'}
+							image={MazeErrorVector}
 						/>
 					)}
 				</div>

@@ -90,7 +90,7 @@ const ElectionGrid = ({ elections }) => {
 
 const ElectionCell = ({ election }) => (
 	<GridCell span={4}>
-		<ElectionCard to={'/elections/:publicUrl'} election={election} />
+		<ElectionCard to={'/elections/:publicUrl'} {...election} />
 	</GridCell>
 );
 

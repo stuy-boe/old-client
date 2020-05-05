@@ -9,23 +9,12 @@ import Results from './Results';
 import urlJoin from 'url-join';
 import backend from '../../../tools/backend';
 import { API_URL } from '../../../constants';
-import Text from '../../../typography/Text';
 import Retry from '../../utils/Retry';
-import FlexCenter from '../../utils/FlexCenter';
 
-import withStyles from 'react-jss';
-import Title from '../../../typography/Title';
 import BackButton from '../../utils/BackButton';
 
-const styles = {
-	ErrorImage: {
-		height: '400px',
-		maxWidth: '80%'
-	},
-	ErrorText: {
-		color: '#ed747c;'
-	}
-};
+import ConfusedPersonVector from '../../../vectors/confused-person.svg';
+import ErrorPage from '../../../pages/ErrorPage';
 
 export const ElectionContext = React.createContext({});
 
@@ -95,25 +84,18 @@ class SelectedElectionRouter extends React.Component {
 							content={`There is no election at that url... yet!`}
 						/>
 					</Helmet>
-					<BackButton text={'All Elections'} to={'/elections'} />
-					<Title
-						center
-						level={2}
-						className={this.props.classes.ErrorText}
-					>
-						Election Not Found
-					</Title>
-					<FlexCenter>
-						<img
-							src={'/img/cherry-no-comments.svg'}
-							alt={'Woman doing a shocked gasp'}
-							className={this.props.classes.ErrorImage}
-						/>
-					</FlexCenter>
 
-					<Text center className={this.props.classes.ErrorText}>
-						Looks like that election... doesn't exist.
-					</Text>
+					<ErrorPage
+						title={'Election Not Found'}
+						image={ConfusedPersonVector}
+						subtitle={"That election... doesn't exist."}
+						back={
+							<BackButton
+								text={'All Elections'}
+								to={'/elections'}
+							/>
+						}
+					/>
 				</div>
 			);
 		}
@@ -162,4 +144,4 @@ class SelectedElectionRouter extends React.Component {
 	}
 }
 
-export default withStyles(styles)(SelectedElectionRouter);
+export default SelectedElectionRouter;
