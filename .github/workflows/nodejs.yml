@@ -1,0 +1,36 @@
+name: Node.js CI
+on: [push, pull_request]
+jobs:
+    build-and-test:
+        runs-on: ubuntu-latest
+
+        strategy:
+            matrix:
+                node-version: [10.x, 12.x]
+
+        steps:
+            - uses: actions/checkout@v2
+
+            - name: Cache node modules
+              uses: actions/cache@v1
+              env:
+                  cache-name: cache-node-modules
+              with:
+                  path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
+                  key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+                  restore-keys: |
+                      ${{ runner.os }}-build-${{ env.cache-name }}-
+                      ${{ runner.os }}-build-
+                      ${{ runner.os }}-
+
+            - name: Install Dependencies From package-lock.json File
+              run: npm ci
+
+            - name: Check flow-typings
+              run: npm run flow
+
+            - name: Build
+              run: npm build
+
+            - name: Test
+              run: npm test

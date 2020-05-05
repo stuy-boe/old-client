@@ -1,6 +1,6 @@
 import React from 'react';
 import AppContext from '../comps/context/AppContext';
-import { Switch, Route } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
 import AdminElectionsRouter from '../comps/admin/AdminElectionsRouter';
 import AccessDeniedVector from '../vectors/x-on-laptop.svg';
 import SignInVector from '../vectors/carrying-key.svg';
@@ -42,6 +42,11 @@ const Admin = ({ match }) => {
 	return (
 		<div>
 			<Switch>
+				<Route path={match.path} exact>
+					<Redirect
+						to={`${match.path}/${context.admin.privileges[0]}`}
+					/>
+				</Route>
 				<Route
 					path={`${match.path}/elections`}
 					component={AdminElectionsRouter}

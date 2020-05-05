@@ -17,7 +17,9 @@ class CreateElection extends React.Component {
 	constructor(props) {
 		super(props);
 
-		this.setFormValue = this.setFormValue.bind(this);
+		this.setFormValue = (name, value) => {
+			this.setState({ [name]: value });
+		};
 		this.onSubmit = this.onSubmit.bind(this);
 		this.checkPublicUrl = this.checkPublicUrl.bind(this);
 
@@ -106,10 +108,6 @@ class CreateElection extends React.Component {
 					actions: [{ icon: 'close' }]
 				});
 			});
-	}
-
-	setFormValue(name, value) {
-		this.setState({ [name]: value });
 	}
 
 	render() {

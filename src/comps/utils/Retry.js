@@ -7,6 +7,7 @@ import { Button } from '@rmwc/button';
 import '@material/button/dist/mdc.button.css';
 import Title from '../../typography/Title';
 import FlexCenter from './FlexCenter';
+import ConfusedPersonVector from '../../vectors/confused-person.svg';
 
 import { createUseStyles } from 'react-jss';
 
@@ -65,7 +66,7 @@ const Retry = (props: Props) => {
 
 Retry.defaultProps = {
 	fullHeight: true,
-	image: '/img/spaceship-crash.svg',
+	image: ConfusedPersonVector,
 	textColor: '#55597a'
 };
 

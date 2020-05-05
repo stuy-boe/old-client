@@ -47,17 +47,22 @@ const ElectionsList = ({ match }) => {
 			<List twoLine>
 				{elections.map(election => {
 					return (
-						<SimpleListItem
-							key={election.publicUrl}
-							graphic={
-								election.completed
-									? 'offline_pin'
-									: 'track_changes'
-							}
-							text={election.name}
-							secondaryText={election.publicUrl}
-							meta={<p>MANAGE</p>}
-						/>
+						<Link
+							to={`${match.path}/${election.publicUrl}`}
+							key={election.id}
+						>
+							<SimpleListItem
+								key={election.publicUrl}
+								graphic={
+									election.completed
+										? 'offline_pin'
+										: 'track_changes'
+								}
+								text={election.name}
+								secondaryText={election.publicUrl}
+								meta={<p>MANAGE</p>}
+							/>
+						</Link>
 					);
 				})}
 			</List>
