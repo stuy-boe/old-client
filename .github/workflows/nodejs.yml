@@ -7,6 +7,7 @@ jobs:
         strategy:
             matrix:
                 node-version: [10.x, 12.x]
+                script: [build, test, flow]
 
         steps:
             - uses: actions/checkout@v2
@@ -14,7 +15,7 @@ jobs:
             - name: Cache node modules
               uses: actions/cache@v1
               env:
-                  cache-name: cache-node-modules
+                  cache-name: cache-node-modules-${{ matrix.script }}
               with:
                   path: ~/.npm # npm cache files are stored in `~/.npm` on Linux/macOS
                   key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
@@ -24,13 +25,7 @@ jobs:
                       ${{ runner.os }}-
 
             - name: Install Dependencies From package-lock.json File
-              run: npm ci
+              run: npm install
 
-            - name: Check flow-typings
-              run: npm run flow
-
-            - name: Build
-              run: npm run build
-
-            - name: Test
-              run: npm test
+            - name: Script ${{ matrix.script }}
+              run: npm run ${{ matrix.script }}
