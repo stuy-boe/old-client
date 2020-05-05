@@ -27,17 +27,17 @@ jobs:
     flow-typings:
         executor:
             name: node/default
-            steps:
-                - checkout
-                - install-dependencies
-                - run: npm run flow
+        steps:
+            - checkout
+            - install-dependencies
+            - run: npm run flow
     build:
         executor:
             name: node/default
-            steps:
-                - checkout
-                - install-dependencies
-                - run: npm run build
+        steps:
+            - checkout
+            - install-dependencies
+            - run: npm run build
 
 workflows:
     build-and-test:
