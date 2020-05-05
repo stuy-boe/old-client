@@ -5,12 +5,12 @@ jobs:
     check-unit-tests:
         executor:
             name: node/default
-            steps:
-                - checkout
-                - node/with-cache:
-                      steps:
-                          - run: npm install
-                          - run: npm test
+        steps:
+            - checkout
+            - node/with-cache:
+                  steps:
+                      - run: npm install
+                      - run: npm test
 
     check-flow-typings:
         executor:
@@ -35,3 +35,4 @@ workflows:
         jobs:
             - check-flow-typings
             - build-and-test
+            - check-unit-tests
