@@ -14,10 +14,9 @@ jobs:
                       - run: npm install
                       - run: npm run << parameters.script >>
 workflows:
-    all-tests:
-        jobs:
-            - test:
-                  matrix:
-                      parameters:
-                          os: [linux, macos]
-                          script: ["build", "flow", "test"]
+    jobs:
+        - test:
+            matrix:
+                parameters:
+                    os: [linux, macos]
+                    script: ["build", "flow", "test"]
