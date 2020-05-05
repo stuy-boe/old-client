@@ -24,9 +24,6 @@ jobs:
                       - v1-npm-deps-{{ .Branch }}-{{ checksum "package-lock.json" }}
                       - v1-npm-deps-{{ .Branch }}-
                       - v1-npm-deps-
-            - node/install:
-                  node-version: << parameters.node-version >>
-
             - run: npm install
 
             - save_cache:
