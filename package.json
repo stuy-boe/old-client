@@ -6,7 +6,7 @@
 		"axios": "^0.19.2",
 		"flow-bin": "^0.124.0",
 		"moment": "^2.25.3",
-		"moment-timezone": "^0.5.28",
+		"moment-timezone": "^0.5.31",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
 		"react-dropzone": "^11.0.1",
