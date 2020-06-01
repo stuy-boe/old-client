@@ -7,8 +7,8 @@ import urlJoin from 'url-join';
 
 const AuthButton = () => {
 	const handleSuccess = async data => {
-		const email = data.Pt.yu;
-		const idToken = data.tc.id_token;
+		const email = data.profileObj.email;
+		const idToken = data.tokenId;
 		let confirmation = true;
 		if (!email.endsWith('@stuy.edu')) {
 			confirmation = await DialogQueue.confirm({
