@@ -2,7 +2,7 @@ import React from 'react';
 import GoogleLogin from 'react-google-login';
 import urlJoin from 'url-join';
 
-import {API_URL, GOOGLE_CLIENT_ID} from '../../constants';
+import { API_URL, GOOGLE_CLIENT_ID } from '../../constants';
 import Text from '../../typography/Text';
 import DialogQueue from '../queues/DialogQueue';
 
