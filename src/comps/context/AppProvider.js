@@ -30,7 +30,19 @@ class AppProvider extends React.Component {
 			updateState: this.updateState,
 			getDate: this.getDate,
 			status: 'loading'
-		};
+		}; 
+
+		try {
+			const existingState = JSON.parse(window.localStorage.getItem("state"));
+			const now = new Date();
+			const expiration = new Date(existingState?.expires);
+
+			if(expiration > now){
+				this.state.status = "loaded";
+				Object.assign(this.state, existingState);
+			}			
+
+		} catch (e){}
 	}
 
 	getDate() {
@@ -39,8 +51,10 @@ class AppProvider extends React.Component {
 		return new Date(localTimestamp + this.state.dateOffset);
 	}
 
-	async updateState() {
-		this.setState({ status: 'loading' });
+	async updateState(silent = false) {
+		if( ! silent){
+			this.setState({ status: 'loading' });
+		}
 
 		try {
 			// The reason we make two requests is because the server might be sleeping
@@ -70,13 +84,16 @@ class AppProvider extends React.Component {
 				dateOffset,
 				...payload
 			});
+
+			window.localStorage.setItem("state", JSON.stringify(payload));
+
 		} catch (e) {
 			this.setState({ status: 'error' });
 		}
 	}
 
 	componentDidMount() {
-		this.updateState();
+		this.updateState(true);
 	}
 
 	render() {
