@@ -1,9 +1,10 @@
 import React from 'react';
-import { API_URL, GOOGLE_CLIENT_ID } from '../../constants';
-import DialogQueue from '../queues/DialogQueue';
-import Text from '../../typography/Text';
 import GoogleLogin from 'react-google-login';
 import urlJoin from 'url-join';
+
+import {API_URL, GOOGLE_CLIENT_ID} from '../../constants';
+import Text from '../../typography/Text';
+import DialogQueue from '../queues/DialogQueue';
 
 const AuthButton = () => {
 	const handleSuccess = async data => {
