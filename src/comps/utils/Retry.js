@@ -1,34 +1,38 @@
 // @flow
 import React from 'react';
 
-import type {Node} from 'react';
+import type { Node } from 'react';
 
-import {Button} from '@rmwc/button';
+import { Button } from '@rmwc/button';
 import '@material/button/dist/mdc.button.css';
 import Title from '../../typography/Title';
 import FlexCenter from './FlexCenter';
 import ConfusedPersonVector from '../../vectors/confused-person.svg';
 
-import {createUseStyles} from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 const useStyles = createUseStyles({
-  Image :
-      {width : '400px', maxWidth : '80%', margin : '5%', marginBottom : '4rem'},
-  Text : {color : props => props.textColor}
+	Image: {
+		width: '400px',
+		maxWidth: '80%',
+		margin: '5%',
+		marginBottom: '4rem'
+	},
+	Text: { color: props => props.textColor }
 });
 
 type Props = {
-  onRetry: Function,
-  message: string|Node,
-  fullHeight: boolean,
-  image: string,
-  textColor: string,
-  buttonText: string
+	onRetry: Function,
+	message: string | Node,
+	fullHeight: boolean,
+	image: string,
+	textColor: string,
+	buttonText: string
 };
 
 const Retry = (props: Props) => {
-  const classes = useStyles({textColor : props.textColor});
-        return (
+	const classes = useStyles({ textColor: props.textColor });
+	return (
 		<FlexCenter fullHeight={props.fullHeight}>
 			<div>
 				{typeof props.message === 'string' ? (
@@ -43,10 +47,9 @@ const Retry = (props: Props) => {
 
 				<FlexCenter>
 					<img
-                                                src={props.image}
+						src={props.image}
 						alt={'Cute vector to make user feel better'}
-						className={
-    classes.Image}
+						className={classes.Image}
 					/>
 				</FlexCenter>
 
@@ -61,10 +64,10 @@ const Retry = (props: Props) => {
 };
 
 Retry.defaultProps = {
-  fullHeight : true,
-  image : ConfusedPersonVector,
-  textColor : '#55597a',
-  buttonText : 'Retry'
+	fullHeight: true,
+	image: ConfusedPersonVector,
+	textColor: '#55597a',
+	buttonText: 'Retry'
 };
 
 export default Retry;

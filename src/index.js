@@ -14,5 +14,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.register();
 
 if (window.location.hash === '#print') {
-  setTimeout(window.print, 1.5 * 1000);
+	setTimeout(window.print, 1.5 * 1000);
 }
