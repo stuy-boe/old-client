@@ -7,6 +7,7 @@ import '@material/icon-button/dist/mdc.icon-button.css';
 import '@rmwc/icon/icon.css';
 
 import { createUseStyles } from 'react-jss';
+import useIsOnline from '../../tools/useIsOnline';
 
 const useStyles = createUseStyles({
 	AppBar: {
@@ -16,17 +17,28 @@ const useStyles = createUseStyles({
 	},
 	Title: {
 		fontFamily: `'Sumana', serif`
+	},
+	OfflineIndicator: {
+		color: 'grey'
 	}
 });
 
 const AppBar = props => {
+	const isOnline = useIsOnline();
 	const classes = useStyles();
 
 	return (
 		<div>
 			<SimpleTopAppBar
 				title={
-					<span className={classes.Title}>Board of Elections</span>
+					<span className={classes.Title}>
+						Board of Elections{' '}
+						{!isOnline && (
+							<span className={classes.OfflineIndicator}>
+								| Offline App
+							</span>
+						)}
+					</span>
 				}
 				navigationIcon={true}
 				onNav={() => props.toggleDrawer()}
