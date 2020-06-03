@@ -27,7 +27,7 @@ const useApi = url => {
 					if (difference < maxAge) {
 						setData(entry.data);
 					} else {
-						entry.delete();
+						apiCache.requests.where({ url }).delete();
 					}
 				}
 			})

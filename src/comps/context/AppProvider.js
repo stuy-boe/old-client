@@ -91,13 +91,15 @@ class AppProvider extends React.Component {
 
 					const expiration = new Date(entry.data?.expires);
 
-					if (difference < maxAge && expiration > now) {
+					const isValid = !entry.data?.signedIn || expiration > now;
+
+					if (difference < maxAge && isValid) {
 						this.setState({
 							...entry.data,
 							status: 'loaded'
 						});
 					} else {
-						entry.delete();
+						apiCache.requests.where({ url: '/api/state' }).delete();
 					}
 				}
 			})
