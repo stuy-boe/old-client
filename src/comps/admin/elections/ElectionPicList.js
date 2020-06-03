@@ -1,34 +1,26 @@
+import {Grid, GridCell} from '@rmwc/grid';
 import React from 'react';
-
+import {createUseStyles} from 'react-jss';
 import urlJoin from 'url-join';
-import { API_URL } from '../../../constants';
-import { createUseStyles } from 'react-jss';
 
-import { Grid, GridCell } from '@rmwc/grid';
+import {API_URL} from '../../../constants';
 import useApi from '../../../tools/useApi';
 import Loading from '../../utils/Loading';
 
 const useStyles = createUseStyles({
-	ImageCell: {
-		marginBottom: '10px',
-		borderRadius: '5px',
-		overflow: 'hidden',
-		cursor: 'pointer'
-	},
-	ImageGrid: {
-		width: '50rem',
-		maxWidth: '100%'
-	},
-	Image: {
-		width: '100%'
-	},
-	SelectedImage: {
-		border: 'solid 0.5rem #1abc9c',
-		width: 'calc( 100% - 1rem )'
-	}
+  ImageCell : {
+    marginBottom : '10px',
+    borderRadius : '5px',
+    overflow : 'hidden',
+    cursor : 'pointer'
+  },
+  ImageGrid : {width : '50rem', maxWidth : '100%'},
+  Image : {width : '100%'},
+  SelectedImage :
+      {border : 'solid 0.5rem #1abc9c', width : 'calc( 100% - 1rem )'}
 });
 
-const ElectionPicList = ({ activePic, setActivePic, uploadedPics }) => {
+const ElectionPicList = ({activePic, setActivePic, uploadedPics}) => {
 	const classes = useStyles();
 	const { data: electionPics } = useApi('/api/admin/elections/pics/list');
 
