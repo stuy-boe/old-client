@@ -7,6 +7,7 @@ import AppContext from './AppContext';
 
 import withStyles from 'react-jss';
 import MazeErrorVector from '../../vectors/maze-loading-error.svg';
+import apiCache from '../../tools/apiCache';
 
 const styles = {
 	LoadingContainer: {
@@ -30,19 +31,7 @@ class AppProvider extends React.Component {
 			updateState: this.updateState,
 			getDate: this.getDate,
 			status: 'loading'
-		}; 
-
-		try {
-			const existingState = JSON.parse(window.localStorage.getItem("state"));
-			const now = new Date();
-			const expiration = new Date(existingState?.expires);
-
-			if(expiration > now){
-				this.state.status = "loaded";
-				Object.assign(this.state, existingState);
-			}			
-
-		} catch (e){}
+		};
 	}
 
 	getDate() {
@@ -52,7 +41,7 @@ class AppProvider extends React.Component {
 	}
 
 	async updateState(silent = false) {
-		if( ! silent){
+		if (!silent) {
 			this.setState({ status: 'loading' });
 		}
 
@@ -85,15 +74,42 @@ class AppProvider extends React.Component {
 				...payload
 			});
 
-			window.localStorage.setItem("state", JSON.stringify(payload));
+			await apiCache.requests.where({ url: '/api/state' }).delete();
 
+			await apiCache.requests.add({
+				url: '/api/state',
+				data: payload,
+				date: this.getDate()
+			});
 		} catch (e) {
 			this.setState({ status: 'error' });
 		}
 	}
 
 	componentDidMount() {
-		this.updateState(true);
+		apiCache.requests
+			.where({ url: '/api/state' })
+			.first(entry => {
+				if (entry) {
+					const now = this.getDate();
+					const maxAge = 1000 * 86400 * 7;
+					const difference = now.getTime() - entry.date.getTime();
+
+					const expiration = new Date(entry.data?.expires);
+
+					if (difference < maxAge && expiration > now) {
+						this.setState({
+							...entry.data,
+							status: 'loaded'
+						});
+					} else {
+						entry.delete();
+					}
+				}
+			})
+			.finally(async () => {
+				await this.updateState(true);
+			});
 	}
 
 	render() {
@@ -104,9 +120,10 @@ class AppProvider extends React.Component {
 
 					{this.state.status === 'error' && (
 						<Retry
-							onRetry={this.updateState}
-							message={'There was an error loading the app'}
+							onRetry={() => this.setState({ status: 'loaded' })}
+							message={`Couldn't get latest information from the server.`}
 							image={MazeErrorVector}
+							buttonText={'Continue Offline'}
 						/>
 					)}
 				</div>

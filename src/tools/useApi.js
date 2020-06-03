@@ -2,15 +2,10 @@ import React, { useCallback } from 'react';
 import axios from 'axios';
 import { API_URL } from '../constants';
 import useIsOnline from './useIsOnline';
-import Dexie from 'dexie';
 import AppContext from '../comps/context/AppContext';
+import apiCache from './apiCache';
 
 const maxAge = 1000 * 86400 * 14;
-
-const db = new Dexie('apiCache');
-db.version(1).stores({
-	requests: '++id, url, data, date'
-});
 
 const useApi = url => {
 	const context = React.useContext(AppContext);
@@ -20,7 +15,7 @@ const useApi = url => {
 	const [data, setData] = React.useState(null);
 
 	React.useEffect(() => {
-		db.requests
+		apiCache.requests
 			.where({ url })
 			.first(entry => {
 				if (entry) {
@@ -50,9 +45,9 @@ const useApi = url => {
 				if (res.data.success) {
 					setData(res.data.payload);
 
-					await db.requests.where({ url }).delete();
+					await apiCache.requests.where({ url }).delete();
 
-					await db.requests.add({
+					await apiCache.requests.add({
 						url,
 						data: res.data.payload,
 						date: context.getDate()
