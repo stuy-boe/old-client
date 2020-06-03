@@ -28,7 +28,8 @@ type Props = {
 	message: string | Node,
 	fullHeight: boolean,
 	image: string,
-	textColor: string
+	textColor: string,
+	buttonText: string
 };
 
 const Retry = (props: Props) => {
@@ -56,7 +57,7 @@ const Retry = (props: Props) => {
 
 				<FlexCenter>
 					<Button outlined onClick={props.onRetry}>
-						Retry
+						{props.buttonText}
 					</Button>
 				</FlexCenter>
 			</div>
@@ -67,7 +68,8 @@ const Retry = (props: Props) => {
 Retry.defaultProps = {
 	fullHeight: true,
 	image: ConfusedPersonVector,
-	textColor: '#55597a'
+	textColor: '#55597a',
+	buttonText: 'Retry'
 };
 
 export default Retry;
