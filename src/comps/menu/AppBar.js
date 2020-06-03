@@ -2,16 +2,16 @@ import '@material/top-app-bar/dist/mdc.top-app-bar.css';
 import '@material/icon-button/dist/mdc.icon-button.css';
 import '@rmwc/icon/icon.css';
 
-import {SimpleTopAppBar, TopAppBarFixedAdjust} from '@rmwc/top-app-bar';
+import { SimpleTopAppBar, TopAppBarFixedAdjust } from '@rmwc/top-app-bar';
 import React from 'react';
-import {createUseStyles} from 'react-jss';
+import { createUseStyles } from 'react-jss';
 
 import useIsOnline from '../../tools/useIsOnline';
 
 const useStyles = createUseStyles({
-  AppBar : {backgroundColor : 'white', color : 'black', zIndex : 99},
-  Title : {fontFamily : `'Sumana', serif`},
-  OfflineIndicator : {color : 'grey'}
+	AppBar: { backgroundColor: 'white', color: 'black', zIndex: 99 },
+	Title: { fontFamily: `'Sumana', serif` },
+	OfflineIndicator: { color: 'grey' }
 });
 
 const AppBar = props => {
