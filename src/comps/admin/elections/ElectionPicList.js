@@ -1,11 +1,12 @@
 import React from 'react';
-import backend from '../../../tools/backend';
 
 import urlJoin from 'url-join';
 import { API_URL } from '../../../constants';
 import { createUseStyles } from 'react-jss';
 
 import { Grid, GridCell } from '@rmwc/grid';
+import useApi from '../../../tools/useApi';
+import Loading from '../../utils/Loading';
 
 const useStyles = createUseStyles({
 	ImageCell: {
@@ -29,13 +30,11 @@ const useStyles = createUseStyles({
 
 const ElectionPicList = ({ activePic, setActivePic, uploadedPics }) => {
 	const classes = useStyles();
-	const [electionPics, setElectionPics] = React.useState([]);
+	const { data: electionPics } = useApi('/api/admin/elections/pics/list');
 
-	React.useEffect(() => {
-		backend.get('/api/admin/elections/pics/list').then(({ data }) => {
-			setElectionPics(data.payload);
-		});
-	}, []);
+	if (electionPics === null) {
+		return <Loading />;
+	}
 
 	const completePicsList = [...uploadedPics, ...electionPics];
 	return (

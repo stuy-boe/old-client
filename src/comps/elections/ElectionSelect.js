@@ -5,9 +5,9 @@ import { Grid, GridCell } from '@rmwc/grid';
 import '@material/layout-grid/dist/mdc.layout-grid.css';
 import { Helmet } from 'react-helmet';
 import Loading from '../utils/Loading';
-import backend from '../../tools/backend';
 import Retry from '../utils/Retry';
 import { createUseStyles } from 'react-jss';
+import useApi from '../../tools/useApi';
 
 const useStyles = createUseStyles({
 	ElectionsContainer: {
@@ -16,34 +16,16 @@ const useStyles = createUseStyles({
 });
 
 const ElectionSelect = () => {
-	const [elections, setElections] = React.useState({
-		active: [],
-		completed: []
-	});
-	const [status, setStatus] = React.useState('loading');
+	const { data: elections, error, updateData } = useApi('/api/elections');
 
-	const getElections = () => {
-		backend
-			.get('/api/elections')
-			.then(res => {
-				setElections(res.data.payload);
-				setStatus('loaded');
-			})
-			.catch(() => {
-				setStatus('error');
-			});
-	};
-
-	React.useEffect(getElections, []);
-
-	if (status === 'loading') {
+	if (elections === null) {
 		return <Loading />;
 	}
 
-	if (status === 'error') {
+	if (error) {
 		return (
 			<Retry
-				onRetry={getElections}
+				onRetry={updateData}
 				message={'There was an error getting the elections.'}
 			/>
 		);
