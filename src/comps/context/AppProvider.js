@@ -3,6 +3,7 @@ import withStyles from 'react-jss';
 
 import apiCache from '../../tools/apiCache';
 import backend from '../../tools/backend';
+import axios from 'axios';
 import MazeErrorVector from '../../vectors/maze-loading-error.svg';
 import Loading from '../utils/Loading';
 import Retry from '../utils/Retry';
@@ -28,8 +29,10 @@ class AppProvider extends React.Component {
 			dateOffset: 0,
 			updateState: this.updateState,
 			getDate: this.getDate,
-			status: 'loading'
+			status: 'loaded'
 		};
+
+		this.cancelTokenSource = axios.CancelToken.source();
 	}
 
 	getDate() {
@@ -49,11 +52,15 @@ class AppProvider extends React.Component {
 			// The first /api/state request would wake up the server
 			// Then the server is already awake when we get /api/date
 
-			const getState = await backend.get('/api/state');
+			const getState = await backend.get('/api/state', {
+				cancelToken: this.cancelTokenSource.token
+			});
 			const payload = getState.data.payload;
 
 			const requestStartTime = new Date();
-			const getDate = await backend.get('/api/date');
+			const getDate = await backend.get('/api/date', {
+				cancelToken: this.cancelTokenSource.token
+			});
 			const serverDateString = getDate.data.payload.date;
 
 			const now = new Date();
@@ -106,6 +113,10 @@ class AppProvider extends React.Component {
 			.finally(async () => {
 				await this.updateState(true);
 			});
+	}
+
+	componentWillUnmount() {
+		this.cancelTokenSource.cancel('Component will unmount');
 	}
 
 	render() {

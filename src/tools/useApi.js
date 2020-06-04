@@ -15,6 +15,39 @@ const useApi = url => {
 	const [error, setError] = React.useState(null);
 	const [refreshed, setPerformedRequest] = React.useState(false);
 	const [data, setData] = React.useState(null);
+	const [cancelTokenSource] = React.useState(axios.CancelToken.source());
+
+	const updateData = useCallback(() => {
+		const backend = axios.create({ baseURL: API_URL });
+
+		backend.defaults.withCredentials = true;
+
+		backend
+			.get(url, { cancelToken: cancelTokenSource.token })
+			.then(async res => {
+				if (res.data.success) {
+					setData(res.data.payload);
+
+					await apiCache.requests.where({ url }).delete();
+
+					await apiCache.requests.add({
+						url,
+						data: res.data.payload,
+						date: context.getDate()
+					});
+				} else {
+					setError(new Error(res.data.error.message));
+				}
+			})
+			.catch(er => {
+				if (!axios.isCancel(er)) {
+					setError(er);
+				}
+			})
+			.finally(() => {
+				setPerformedRequest(true);
+			});
+	}, [context, cancelTokenSource, url]);
 
 	React.useEffect(() => {
 		apiCache.requests
@@ -34,41 +67,14 @@ const useApi = url => {
 			.catch('NotFoundError', e => {});
 	}, [context, url]);
 
-	const updateData = useCallback(() => {
-		const backend = axios.create({ baseURL: API_URL });
-
-		backend.defaults.withCredentials = true;
-
-		backend
-			.get(url)
-			.then(async res => {
-				if (res.data.success) {
-					setData(res.data.payload);
-
-					await apiCache.requests.where({ url }).delete();
-
-					await apiCache.requests.add({
-						url,
-						data: res.data.payload,
-						date: context.getDate()
-					});
-				} else {
-					setError(new Error(res.data.error.message));
-				}
-			})
-			.catch(er => {
-				setError(er);
-			})
-			.finally(() => {
-				setPerformedRequest(true);
-			});
-	}, [context, url]);
-
 	React.useEffect(() => {
 		if (!refreshed && isOnline) {
 			updateData();
+			return () => {
+				cancelTokenSource.cancel('Component unmounted');
+			};
 		}
-	}, [updateData, refreshed, isOnline]);
+	}, [cancelTokenSource, updateData, refreshed, isOnline]);
 
 	return { data, error, refreshed, updateData };
 };
