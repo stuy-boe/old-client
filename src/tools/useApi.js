@@ -7,7 +7,6 @@ import { API_URL } from '../constants';
 import apiCache from './apiCache';
 import useIsOnline from './useIsOnline';
 
-
 const maxAge = 1000 * 86400 * 14;
 
 const useApi = url => {

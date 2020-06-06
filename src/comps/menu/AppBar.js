@@ -13,7 +13,6 @@ const useStyles = createUseStyles({
 	AppBar: { backgroundColor: 'white', color: 'black', zIndex: 99 },
 	Title: { fontFamily: `'Sumana', serif` },
 	OfflineIndicator: { color: 'grey' }
-
 });
 
 const AppBar = props => {
