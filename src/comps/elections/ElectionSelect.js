@@ -19,7 +19,6 @@ const useStyles = createUseStyles({ ElectionsContainer: { maxWidth: '100%' } });
 const ElectionSelect = () => {
 	const { data: elections, error, updateData } = useApi('/api/elections');
 
-
 	if (elections === null) {
 		return <Loading />;
 	}

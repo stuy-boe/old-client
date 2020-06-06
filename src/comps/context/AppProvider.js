@@ -36,7 +36,6 @@ class AppProvider extends React.Component {
 		};
 
 		this.cancelTokenSource = axios.CancelToken.source();
-
 	}
 
 	getDate() {
