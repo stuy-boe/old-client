@@ -1,12 +1,12 @@
-import React, {useEffect} from 'react';
-import {Helmet} from 'react-helmet';
+import React, { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
 
 import backend from '../../../tools/backend';
 import useApi from '../../../tools/useApi';
 import Loading from '../../utils/Loading';
 import Retry from '../../utils/Retry';
 
-import {ElectionContext} from './SelectedElectionRouter';
+import { ElectionContext } from './SelectedElectionRouter';
 
 const Candidates = () => {
 	const election = React.useContext(ElectionContext);
