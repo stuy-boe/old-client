@@ -9,6 +9,9 @@ import Loading from '../utils/Loading';
 import Retry from '../utils/Retry';
 
 import AppContext from './AppContext';
+import withStyles from 'react-jss';
+import MazeErrorVector from '../../vectors/maze-loading-error.svg';
+import apiCache from '../../tools/apiCache';
 
 const styles = {
 	LoadingContainer: { height: '100vh' }
@@ -33,6 +36,7 @@ class AppProvider extends React.Component {
 		};
 
 		this.cancelTokenSource = axios.CancelToken.source();
+
 	}
 
 	getDate() {
