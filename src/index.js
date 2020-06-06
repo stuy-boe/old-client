@@ -1,6 +1,8 @@
+import './index.css';
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
@@ -12,5 +14,5 @@ ReactDOM.render(<App />, document.getElementById('root'));
 serviceWorker.register();
 
 if (window.location.hash === '#print') {
-	setTimeout(window.print, 1.5 * 1000);
+  setTimeout(window.print, 1.5 * 1000);
 }
