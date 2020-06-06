@@ -1,9 +1,9 @@
 import '@material/layout-grid/dist/mdc.layout-grid.css';
 
-import {Grid, GridCell} from '@rmwc/grid';
+import { Grid, GridCell } from '@rmwc/grid';
 import React from 'react';
-import {Helmet} from 'react-helmet';
-import {createUseStyles} from 'react-jss';
+import { Helmet } from 'react-helmet';
+import { createUseStyles } from 'react-jss';
 
 import useApi from '../../tools/useApi';
 import Loading from '../utils/Loading';
@@ -11,7 +11,7 @@ import Retry from '../utils/Retry';
 
 import ElectionCard from './ElectionCard';
 
-const useStyles = createUseStyles({ElectionsContainer : {maxWidth : '100%'}});
+const useStyles = createUseStyles({ ElectionsContainer: { maxWidth: '100%' } });
 
 const ElectionSelect = () => {
 	const { data: elections, error, updateData } = useApi('/api/elections');
