@@ -7,8 +7,6 @@ import Loading from '../utils/Loading';
 import Retry from '../utils/Retry';
 import { createUseStyles } from 'react-jss';
 import useApi from '../../tools/useApi';
-import Loading from '../utils/Loading';
-import Retry from '../utils/Retry';
 
 import ElectionCard from './ElectionCard';
 

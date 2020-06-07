@@ -1,8 +1,7 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ElectionContext } from './SelectedElectionRouter';
 import Loading from '../../utils/Loading';
 import { Helmet } from 'react-helmet';
-import backend from '../../../tools/backend';
 import Retry from '../../utils/Retry';
 import useApi from '../../../tools/useApi';
 

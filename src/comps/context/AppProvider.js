@@ -1,15 +1,12 @@
 import React from 'react';
 import withStyles from 'react-jss';
 
-import apiCache from '../../tools/apiCache';
 import backend from '../../tools/backend';
 import axios from 'axios';
-import MazeErrorVector from '../../vectors/maze-loading-error.svg';
 import Loading from '../utils/Loading';
 import Retry from '../utils/Retry';
 
 import AppContext from './AppContext';
-import withStyles from 'react-jss';
 import MazeErrorVector from '../../vectors/maze-loading-error.svg';
 import apiCache from '../../tools/apiCache';
 
