@@ -1,18 +1,17 @@
 import React from 'react';
-
-import Loading from '../utils/Loading';
-import backend from '../../tools/backend';
-import Retry from '../utils/Retry';
-import AppContext from './AppContext';
-
 import withStyles from 'react-jss';
+
+import backend from '../../tools/backend';
+import axios from 'axios';
+import Loading from '../utils/Loading';
+import Retry from '../utils/Retry';
+
+import AppContext from './AppContext';
 import MazeErrorVector from '../../vectors/maze-loading-error.svg';
 import apiCache from '../../tools/apiCache';
 
 const styles = {
-	LoadingContainer: {
-		height: '100vh'
-	}
+	LoadingContainer: { height: '100vh' }
 };
 
 class AppProvider extends React.Component {
@@ -30,8 +29,10 @@ class AppProvider extends React.Component {
 			dateOffset: 0,
 			updateState: this.updateState,
 			getDate: this.getDate,
-			status: 'loading'
+			status: 'loaded'
 		};
+
+		this.cancelTokenSource = axios.CancelToken.source();
 	}
 
 	getDate() {
@@ -51,11 +52,15 @@ class AppProvider extends React.Component {
 			// The first /api/state request would wake up the server
 			// Then the server is already awake when we get /api/date
 
-			const getState = await backend.get('/api/state');
+			const getState = await backend.get('/api/state', {
+				cancelToken: this.cancelTokenSource.token
+			});
 			const payload = getState.data.payload;
 
 			const requestStartTime = new Date();
-			const getDate = await backend.get('/api/date');
+			const getDate = await backend.get('/api/date', {
+				cancelToken: this.cancelTokenSource.token
+			});
 			const serverDateString = getDate.data.payload.date;
 
 			const now = new Date();
@@ -68,11 +73,7 @@ class AppProvider extends React.Component {
 
 			const dateOffset = serverTime.getTime() - now.getTime();
 
-			this.setState({
-				status: 'loaded',
-				dateOffset,
-				...payload
-			});
+			this.setState({ status: 'loaded', dateOffset, ...payload });
 
 			await apiCache.requests.where({ url: '/api/state' }).delete();
 
@@ -97,19 +98,25 @@ class AppProvider extends React.Component {
 
 					const expiration = new Date(entry.data?.expires);
 
-					if (difference < maxAge && expiration > now) {
+					const isValid = !entry.data?.signedIn || expiration > now;
+
+					if (difference < maxAge && isValid) {
 						this.setState({
 							...entry.data,
 							status: 'loaded'
 						});
 					} else {
-						entry.delete();
+						apiCache.requests.where({ url: '/api/state' }).delete();
 					}
 				}
 			})
 			.finally(async () => {
 				await this.updateState(true);
 			});
+	}
+
+	componentWillUnmount() {
+		this.cancelTokenSource.cancel('Component will unmount');
 	}
 
 	render() {

@@ -1,10 +1,10 @@
+import { Grid, GridCell } from '@rmwc/grid';
 import React from 'react';
 
 import urlJoin from 'url-join';
 import { API_URL } from '../../../constants';
 import { createUseStyles } from 'react-jss';
 
-import { Grid, GridCell } from '@rmwc/grid';
 import useApi from '../../../tools/useApi';
 import Loading from '../../utils/Loading';
 
@@ -15,13 +15,8 @@ const useStyles = createUseStyles({
 		overflow: 'hidden',
 		cursor: 'pointer'
 	},
-	ImageGrid: {
-		width: '50rem',
-		maxWidth: '100%'
-	},
-	Image: {
-		width: '100%'
-	},
+	ImageGrid: { width: '50rem', maxWidth: '100%' },
+	Image: { width: '100%' },
 	SelectedImage: {
 		border: 'solid 0.5rem #1abc9c',
 		width: 'calc( 100% - 1rem )'

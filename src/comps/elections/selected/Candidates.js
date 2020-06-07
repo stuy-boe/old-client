@@ -1,40 +1,27 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ElectionContext } from './SelectedElectionRouter';
 import Loading from '../../utils/Loading';
 import { Helmet } from 'react-helmet';
-import backend from '../../../tools/backend';
 import Retry from '../../utils/Retry';
+import useApi from '../../../tools/useApi';
 
 const Candidates = () => {
 	const election = React.useContext(ElectionContext);
-	const [status, setStatus] = React.useState('loading');
-	const [candidates, setCandidates] = React.useState([]);
+	const { data: candidates, error, updateData } = useApi(
+		`/api/elections/${election.publicUrl}/candidates`
+	);
 
-	const getCandidates = () => {
-		backend
-			.get(`/api/elections/${election.publicUrl}/candidates`)
-			.then(({ data }) => {
-				setCandidates(data.payload);
-				setStatus('loaded');
-			})
-			.catch(() => {
-				setStatus('error');
-			});
-	};
-
-	useEffect(getCandidates, []);
-
-	if (status === 'loading') {
-		return <Loading />;
-	}
-
-	if (status === 'error') {
+	if (error !== null) {
 		return (
 			<Retry
-				onRetry={getCandidates}
+				onRetry={updateData}
 				message={'There was an error getting the candidates'}
 			/>
 		);
+	}
+
+	if (candidates === null) {
+		return <Loading />;
 	}
 
 	return (

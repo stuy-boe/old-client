@@ -18,9 +18,7 @@ const useStyles = createUseStyles({
 		margin: '5%',
 		marginBottom: '4rem'
 	},
-	Text: {
-		color: props => props.textColor
-	}
+	Text: { color: props => props.textColor }
 });
 
 type Props = {

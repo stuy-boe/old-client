@@ -1,9 +1,11 @@
-import React, { useCallback } from 'react';
 import axios from 'axios';
-import { API_URL } from '../constants';
-import useIsOnline from './useIsOnline';
+import React, { useCallback } from 'react';
+
 import AppContext from '../comps/context/AppContext';
+import { API_URL } from '../constants';
+
 import apiCache from './apiCache';
+import useIsOnline from './useIsOnline';
 
 const maxAge = 1000 * 86400 * 14;
 
@@ -13,34 +15,15 @@ const useApi = url => {
 	const [error, setError] = React.useState(null);
 	const [refreshed, setPerformedRequest] = React.useState(false);
 	const [data, setData] = React.useState(null);
-
-	React.useEffect(() => {
-		apiCache.requests
-			.where({ url })
-			.first(entry => {
-				if (entry) {
-					const difference =
-						context.getDate().getTime() - entry.date.getTime();
-
-					if (difference < maxAge) {
-						setData(entry.data);
-					} else {
-						entry.delete();
-					}
-				}
-			})
-			.catch('NotFoundError', e => {});
-	}, [context, url]);
+	const [cancelTokenSource] = React.useState(axios.CancelToken.source());
 
 	const updateData = useCallback(() => {
-		const backend = axios.create({
-			baseURL: API_URL
-		});
+		const backend = axios.create({ baseURL: API_URL });
 
 		backend.defaults.withCredentials = true;
 
 		backend
-			.get(url)
+			.get(url, { cancelToken: cancelTokenSource.token })
 			.then(async res => {
 				if (res.data.success) {
 					setData(res.data.payload);
@@ -57,18 +40,41 @@ const useApi = url => {
 				}
 			})
 			.catch(er => {
-				setError(er);
+				if (!axios.isCancel(er)) {
+					setError(er);
+				}
 			})
 			.finally(() => {
 				setPerformedRequest(true);
 			});
+	}, [context, cancelTokenSource, url]);
+
+	React.useEffect(() => {
+		apiCache.requests
+			.where({ url })
+			.first(entry => {
+				if (entry) {
+					const difference =
+						context.getDate().getTime() - entry.date.getTime();
+
+					if (difference < maxAge) {
+						setData(entry.data);
+					} else {
+						apiCache.requests.where({ url }).delete();
+					}
+				}
+			})
+			.catch('NotFoundError', e => {});
 	}, [context, url]);
 
 	React.useEffect(() => {
 		if (!refreshed && isOnline) {
 			updateData();
+			return () => {
+				cancelTokenSource.cancel('Component unmounted');
+			};
 		}
-	}, [updateData, refreshed, isOnline]);
+	}, [cancelTokenSource, updateData, refreshed, isOnline]);
 
 	return { data, error, refreshed, updateData };
 };
