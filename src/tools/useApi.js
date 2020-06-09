@@ -9,12 +9,12 @@ import useIsOnline from './useIsOnline';
 
 const maxAge = 1000 * 86400 * 14;
 
-const useApi = url => {
+const useApi = (url, defaultVal = null) => {
 	const context = React.useContext(AppContext);
 	const isOnline = useIsOnline();
 	const [error, setError] = React.useState(null);
 	const [refreshed, setPerformedRequest] = React.useState(false);
-	const [data, setData] = React.useState(null);
+	const [data, setData] = React.useState(defaultVal);
 	const [cancelTokenSource] = React.useState(axios.CancelToken.source());
 
 	const updateData = useCallback(() => {

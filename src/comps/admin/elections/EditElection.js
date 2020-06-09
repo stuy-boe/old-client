@@ -130,6 +130,7 @@ class EditElection extends React.Component {
 			})
 			.then(res => {
 				if (res.data.success) {
+					this.context.reload();
 					this.setState({ success: true });
 				}
 			})
