@@ -47,7 +47,7 @@ class CreateElection extends React.Component {
 			// Set the trailingIcon to a loading icon while we check the avilability
 			this.setState({ publicUrlIcon: 'autorenew' });
 			backend
-				.get(`/api/elections/${this.state.publicUrl}`)
+				.get(`/api/admin/elections/${this.state.publicUrl}`)
 				.then(res => {
 					if (res.data.payload) {
 						this.setState({ publicUrlIcon: 'error_outline' });
@@ -104,7 +104,7 @@ class CreateElection extends React.Component {
 			})
 			.catch(er => {
 				MessageQueue.notify({
-					body: er.response.data.error.message,
+					body: er?.response?.data?.error?.message || 'Network Error',
 					actions: [{ icon: 'close' }]
 				});
 			});

@@ -25,7 +25,7 @@ const useStyles = createUseStyles({
 
 const ElectionPicList = ({ activePic, setActivePic, uploadedPics }) => {
 	const classes = useStyles();
-	const { data: electionPics } = useApi('/api/admin/elections/pics/list');
+	const { data: electionPics } = useApi('/api/admin/elections/pics');
 
 	if (electionPics === null) {
 		return <Loading />;

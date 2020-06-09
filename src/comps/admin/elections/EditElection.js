@@ -2,6 +2,10 @@ import React from 'react';
 import AdminElectionContext from './AdminElectionContext';
 import backend from '../../../tools/backend';
 import ElectionDataForm from './ElectionDataForm';
+import MessageQueue from '../../queues/MessageQueue';
+import { Redirect } from 'react-router-dom';
+import Title from '../../../typography/Title';
+import BackButton from '../../utils/BackButton';
 
 class EditElection extends React.Component {
 	static contextType = AdminElectionContext;
@@ -38,8 +42,8 @@ class EditElection extends React.Component {
 	formatDate(date) {
 		const year = 1900 + date.getYear();
 		const month = String(date.getMonth() + 1).padStart(2, '0');
-
-		return `${year}-${month}-${date.getDate()}`;
+		const day = String(date.getDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
 	}
 
 	formatTime(date) {
@@ -72,7 +76,7 @@ class EditElection extends React.Component {
 			this.setState({ publicUrlIcon: 'autorenew' });
 
 			backend
-				.get(`/api/elections/${this.state.publicUrl}`)
+				.get(`/api/admin/elections/${this.state.publicUrl}`)
 				.then(res => {
 					if (res.data.payload) {
 						this.setState({ publicUrlIcon: 'error_outline' });
@@ -93,10 +97,68 @@ class EditElection extends React.Component {
 		}
 	}
 
-	onSubmit() {}
+	onSubmit() {
+		const {
+			name,
+			type,
+			startDate,
+			startTime,
+			endDate,
+			endTime,
+			publicUrl,
+			grades,
+			picture,
+			visible
+		} = this.state;
 
-	render(): React.ReactNode {
-		return <ElectionDataForm {...this.state} />;
+		const start = new Date(`${startDate}T${startTime}`);
+		const end = new Date(`${endDate}T${endTime}`);
+
+		const formattedStartTime = start.toISOString();
+		const formattedEndTime = end.toISOString();
+
+		backend
+			.post(`/api/admin/elections/${this.context.publicUrl}/edit`, {
+				name,
+				type,
+				publicUrl,
+				picture,
+				grades,
+				visible,
+				startTime: formattedStartTime,
+				endTime: formattedEndTime
+			})
+			.then(res => {
+				if (res.data.success) {
+					this.setState({ success: true });
+				}
+			})
+			.catch(er => {
+				MessageQueue.notify({
+					body: er?.response?.data?.error?.message || 'Network Error',
+					actions: [{ icon: 'close' }]
+				});
+			});
+	}
+
+	render() {
+		if (this.state.success) {
+			return <Redirect to={`/admin/elections/${this.state.publicUrl}`} />;
+		}
+
+		return (
+			<div>
+				<BackButton
+					text={`Manage ${this.context.name}`}
+					to={`/admin/elections/${this.context.publicUrl}`}
+				/>
+				<Title level={2} center>
+					Edit Election:{' '}
+					<span style={{ color: '#16a085' }}>{this.state.name}</span>
+				</Title>
+				<ElectionDataForm {...this.state} />
+			</div>
+		);
 	}
 }
 

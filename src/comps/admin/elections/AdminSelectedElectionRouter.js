@@ -17,7 +17,7 @@ const AdminSelectedElectionRouter = ({ match }) => {
 
 	const getElectionData = () => {
 		backend
-			.get(`/api/admin/elections/info/${publicUrl}`)
+			.get(`/api/admin/elections/${publicUrl}`)
 			.then(res => {
 				setElection(res.data.payload);
 				setStatus('loaded');

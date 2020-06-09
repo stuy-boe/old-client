@@ -14,7 +14,7 @@ const ElectionsList = ({ match }) => {
 
 	const loadElections = () => {
 		backend
-			.get('/api/admin/elections/list')
+			.get('/api/admin/elections')
 			.then(({ data }) => {
 				setElections(data.payload);
 				setStatus('loaded');
