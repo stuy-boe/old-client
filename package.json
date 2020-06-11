@@ -54,7 +54,7 @@
 	},
 	"devDependencies": {
 		"@testing-library/jest-dom": "^5.9.0",
-		"fake-indexeddb": "^3.0.1",
+		"fake-indexeddb": "^3.0.2",
 		"@testing-library/react": "^10.2.0",
 		"@testing-library/user-event": "^11.3.1",
 		"prettier": "^2.0.5",
